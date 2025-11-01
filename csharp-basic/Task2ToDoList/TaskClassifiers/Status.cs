@@ -1,4 +1,4 @@
-﻿namespace Task2ToDoList;
+﻿namespace Task2ToDoList.TaskClassifiers;
 
 public enum Status
 {
