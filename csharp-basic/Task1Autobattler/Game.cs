@@ -35,7 +35,7 @@ public static class Game
             Console.WriteLine("1) Атаковать");
             Console.WriteLine("2) Использовать зелье");
             Console.WriteLine("3) Выбрать оружие из инвентаря");
-            Console.WriteLine("4) Использовать зелье из инвентаря)");
+            Console.WriteLine("4) Использовать зелье из инвентаря");
             Console.WriteLine("5) Показать статус героя");
             Console.WriteLine("0) Выход");
             Console.Write("Твой выбор: ");
@@ -57,7 +57,6 @@ public static class Game
                     if (pot == null) Console.WriteLine("Нет зелий в инвентаре.");
                     else {
                         pot.Consume(player);
-                        player.Inventory.Remove(pot);
                         enemyGetsTurn = true;
                     }
                     break;
