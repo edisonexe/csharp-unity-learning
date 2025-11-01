@@ -1,6 +1,8 @@
-﻿namespace Task2ToDoList;
+﻿using Task2ToDoList.TaskClassifiers;
 
-public class Task
+namespace Task2ToDoList;
+
+public class TaskItem
 {
     public string Name { get; }
     public string? Description { get; }
@@ -8,10 +10,10 @@ public class Task
     public Category Category { get; }
     public Status Status { get; private set; }
 
-    public Task(string name, string description, Priority priority, Category category, Status status)
+    public TaskItem(string name, string? description, Priority priority, Category category, Status status)
     {
         Name = name;
-        Description = description;
+        Description = string.IsNullOrWhiteSpace(description) ? null : description;
         Priority = priority;
         Category = category;
         Status = status;
