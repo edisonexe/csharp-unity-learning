@@ -1,4 +1,6 @@
 ﻿using Task1Autobattler.Items;
+using Task1Autobattler.Items.Potions;
+using Task1Autobattler.Items.Weapons;
 
 namespace Task1Autobattler.Characters;
 
@@ -9,9 +11,16 @@ public class Player : Character
     
     public int Gold { get; private set; } = 50;
     public Weapon? EquippedWeapon { get; private set; }
-    public List<Item> Inventory { get; } = new List<Item>();
+    public List<Item> Inventory { get; private set; } = new List<Item>();
 
-    public Player(string name, int maxHealth, int baseDamage) : base(name, maxHealth, baseDamage) { }
+    public Player(string name, int maxHealth, int baseDamage) : base(name, maxHealth, baseDamage)
+    {
+        Inventory.Add(new HealingPotion());
+        Inventory.Add(new RagePotion());
+        Inventory.Add(new Axe());
+        Inventory.Add(new Sword());
+        Inventory.Add(new Dagger());
+    }
 
     public int CurrentDamage => BaseDamage + (EquippedWeapon?.DamageBonus ?? 0) + temporaryDamageBuff;
 
@@ -70,17 +79,6 @@ public class Player : Character
         Gold += amount;
         Console.WriteLine($"Получено золото: +{amount}. Всего: {Gold}");
     }
-
-    // public bool SpendGold(int amount)
-    // {
-    //     if (Gold >= amount)
-    //     {
-    //         Gold -= amount; 
-    //         return true;
-    //     }
-    //     Console.WriteLine("Недостаточно золота!");
-    //     return false;
-    // }
 
     public void ShowStatus()
     {

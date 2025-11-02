@@ -12,15 +12,7 @@ public static class Game
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         var player = new Player("Герой", maxHealth: 100, baseDamage: 5);
-        player.Inventory.Add(new HealingPotion());
-        player.Inventory.Add(new RagePotion());
-        player.Inventory.Add(new Axe());
-        player.Inventory.Add(new Sword());
-        Weapon dagger = new Dagger();
-        player.Inventory.Add(dagger);
-        player.EquipWeapon(dagger);
-
-
+        
         int level = 1;
         Enemy enemy = Enemy.CreateRandom(level);
 
@@ -56,7 +48,7 @@ public static class Game
                     var pot = player.Inventory.OfType<Potion>().FirstOrDefault();
                     if (pot == null) Console.WriteLine("Нет зелий в инвентаре.");
                     else {
-                        pot.Consume(player);
+                        player.Use(pot);
                         enemyGetsTurn = true;
                     }
                     break;
@@ -116,9 +108,7 @@ public static class Game
         {
             if (idx == 0) return;
             if (idx >= 1 && idx <= weapons.Count)
-            {
-                player.EquipWeapon(weapons[idx - 1]);
-            }
+                player.Use(weapons[idx - 1]);
         }
     }
 
@@ -142,9 +132,7 @@ public static class Game
             if (idx == 0) return;
             if (idx >= 1 && idx <= potions.Count)
             {
-                var p = potions[idx - 1];
-                p.Consume(player);
-                player.Inventory.Remove(p);
+                player.Use(potions[idx - 1]);
                 used = true;
             }
         }
