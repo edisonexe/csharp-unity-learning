@@ -1,7 +1,5 @@
 ﻿using Task1Autobattler.Characters;
 using Task1Autobattler.Items;
-using Task1Autobattler.Items.Potions;
-using Task1Autobattler.Items.Weapons;
 
 namespace Task1Autobattler;
 
@@ -13,8 +11,8 @@ public static class Game
 
         var player = new Player("Герой", maxHealth: 100, baseDamage: 5);
         
-        int level = 1;
-        Enemy enemy = Enemy.CreateRandom(level);
+        var level = 1;
+        var enemy = Enemy.CreateRandom(level);
 
         while (player.IsAlive)
         {
@@ -32,11 +30,11 @@ public static class Game
             Console.WriteLine("0) Выход");
             Console.Write("Твой выбор: ");
 
-            string? input = Console.ReadLine();
+            var input = Console.ReadLine();
             Console.WriteLine();
             if (!int.TryParse(input, out int choice)) continue;
 
-            bool enemyGetsTurn = false;
+            var enemyGetsTurn = false;
 
             switch (choice)
             {

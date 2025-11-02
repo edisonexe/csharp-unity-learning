@@ -4,8 +4,8 @@ public abstract class Character
 {
     public string Name { get; }
     public int MaxHealth { get; }
-    public int Health { get; protected set; }
-    public int BaseDamage { get; protected set; }
+    public int Health { get; private set; }
+    public int BaseDamage { get; private set; }
     public bool IsAlive => Health > 0;
     
     protected Character(string name, int maxHealth, int baseDamage)

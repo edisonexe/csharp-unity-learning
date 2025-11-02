@@ -10,10 +10,8 @@ public abstract class Weapon : Item, IEquippable
     {
         DamageBonus = damageBonus;
     }
-    public override void Use(Player player)
-    {
-        player.EquipWeapon(this);
-    }
+    public override void Use(Player player) => player.EquipWeapon(this);
+
     public virtual void Equip(Player player)
     {
         Console.WriteLine($"Герой экипировал {Name} (+{DamageBonus} к урону)");

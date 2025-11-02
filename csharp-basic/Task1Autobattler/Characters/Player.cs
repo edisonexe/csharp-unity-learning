@@ -6,23 +6,25 @@ namespace Task1Autobattler.Characters;
 
 public class Player : Character
 {
-    private int temporaryDamageBuff;
-    private int buffTurnsLeft;
+    private int _temporaryDamageBuff;
+    private int _buffTurnsLeft;
     
-    public int Gold { get; private set; } = 50;
-    public Weapon? EquippedWeapon { get; private set; }
-    public List<Item> Inventory { get; private set; } = new List<Item>();
+    private int _gold;
+    private Weapon? _equippedWeapon;
+    
+    private readonly List<Item> _inventory = new ();
+    public IReadOnlyList<Item> Inventory => _inventory.AsReadOnly();
 
     public Player(string name, int maxHealth, int baseDamage) : base(name, maxHealth, baseDamage)
     {
-        Inventory.Add(new HealingPotion());
-        Inventory.Add(new RagePotion());
-        Inventory.Add(new Axe());
-        Inventory.Add(new Sword());
-        Inventory.Add(new Dagger());
+        AddItem(new HealingPotion());
+        AddItem(new RagePotion());
+        AddItem(new Axe());
+        AddItem(new Sword());
+        AddItem(new Dagger());
     }
 
-    public int CurrentDamage => BaseDamage + (EquippedWeapon?.DamageBonus ?? 0) + temporaryDamageBuff;
+    public int CurrentDamage => BaseDamage + (_equippedWeapon?.DamageBonus ?? 0) + _temporaryDamageBuff;
 
     public override void Attack(Character target)
     {
@@ -34,22 +36,22 @@ public class Player : Character
 
     public void EquipWeapon(Weapon weapon)
     {
-        if (EquippedWeapon == weapon)
+        if (_equippedWeapon == weapon)
         {
             Console.WriteLine($"{weapon.Name} уже экипирован.");
             return;
         }
         UnequipWeapon();
-        EquippedWeapon = weapon;
+        _equippedWeapon = weapon;
         weapon.Equip(this);
     }
 
     public void UnequipWeapon()
     {
-        if (EquippedWeapon != null)
+        if (_equippedWeapon != null)
         {
-            EquippedWeapon.Unequip(this);
-            EquippedWeapon = null;
+            _equippedWeapon.Unequip(this);
+            _equippedWeapon = null;
         }
     }
 
@@ -57,40 +59,43 @@ public class Player : Character
 
     public void ApplyDamageBuff(int amount, int turns)
     {
-        temporaryDamageBuff += amount;
-        buffTurnsLeft = Math.Max(buffTurnsLeft, turns);
+        _temporaryDamageBuff += amount;
+        _buffTurnsLeft = Math.Max(_buffTurnsLeft, turns);
     }
 
     private void TickBuff()
     {
-        if (buffTurnsLeft > 0)
+        if (_buffTurnsLeft > 0)
         {
-            buffTurnsLeft--;
-            if (buffTurnsLeft == 0)
+            _buffTurnsLeft--;
+            if (_buffTurnsLeft == 0)
             {
-                Console.WriteLine($"Бафф урона закончился (-{temporaryDamageBuff} урона).");
-                temporaryDamageBuff = 0;
+                Console.WriteLine($"Бафф урона закончился (-{_temporaryDamageBuff} урона).");
+                _temporaryDamageBuff = 0;
             }
         }
     }
 
     public void AddGold(int amount)
     {
-        Gold += amount;
-        Console.WriteLine($"Получено золото: +{amount}. Всего: {Gold}");
+        _gold += amount;
+        Console.WriteLine($"Получено золото: +{amount}. Всего: {_gold}");
     }
 
+    public void AddItem(Item item) => _inventory.Add(item);
+    public bool RemoveItem(Item item) => _inventory.Remove(item);
+    
     public void ShowStatus()
     {
         Console.WriteLine("==== Статус героя ====");
         Console.WriteLine($"Имя: {Name}");
         Console.WriteLine($"HP: {Health}/{MaxHealth}");
         Console.WriteLine($"Базовый урон: {BaseDamage}");
-        Console.WriteLine($"Оружие: {(EquippedWeapon != null ? EquippedWeapon.Name + 
-                                                               $" (+{EquippedWeapon.DamageBonus})" : "нет")}");
-        Console.WriteLine($"Временный бонус к урону: {temporaryDamageBuff}");
+        Console.WriteLine($"Оружие: {(_equippedWeapon != null ? _equippedWeapon.Name + 
+                                                               $" (+{_equippedWeapon.DamageBonus})" : "нет")}");
+        Console.WriteLine($"Временный бонус к урону: {_temporaryDamageBuff}");
         Console.WriteLine($"Текущий урон атаки: {CurrentDamage}");
-        Console.WriteLine($"Золото: {Gold}");
+        Console.WriteLine($"Золото: {_gold}");
         Console.WriteLine("Инвентарь:");
         if (Inventory.Count == 0) Console.WriteLine("  (пусто)");
         else

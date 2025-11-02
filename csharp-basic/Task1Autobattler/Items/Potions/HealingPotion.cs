@@ -4,12 +4,12 @@ namespace Task1Autobattler.Items.Potions;
 
 public class HealingPotion : Potion
 {
-    public int HealAmount { get; }
-    public HealingPotion() : base("Зелье лечения", 15) => HealAmount = 25;
+    private int _healAmount;
+    public HealingPotion() : base("Зелье лечения", 15) => _healAmount = 25;
 
     public override void Consume(Player player)
     {
-        int healed = player.Heal(HealAmount);
+        var healed = player.Heal(_healAmount);
         Console.WriteLine($"Герой использовал {Name}, здоровье восстановлено на {healed}");
     }
 }

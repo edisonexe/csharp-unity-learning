@@ -4,16 +4,16 @@ namespace Task1Autobattler.Items.Potions;
 
 public class RagePotion : Potion
 {
-    public int DamageBuff { get; }
-    public int Duration { get; }
+    private int _damageBuff;
+    private int _duration;
     public RagePotion() : base("Зелье ярости", 25)
     {
-        DamageBuff = 3;
-        Duration = 3;
+        _damageBuff = 3;
+        _duration = 3;
     }
     public override void Consume(Player player)
     {
-        player.ApplyDamageBuff(DamageBuff, Duration);
-        Console.WriteLine($"Герой выпил {Name}: урон +{DamageBuff} на {Duration} ходов");
+        player.ApplyDamageBuff(_damageBuff, _duration);
+        Console.WriteLine($"Герой выпил {Name}: урон +{_damageBuff} на {_duration} ходов");
     }
 }

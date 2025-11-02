@@ -10,7 +10,7 @@ public class Enemy : Character
 
     public static Enemy CreateRandom(int level)
     {
-        level = int.Max(1, level);
+        level = Math.Max(1, level);
         int hp = 25 + level * 5 + Rng.Next(-5, 6);
         int dmg = 4 + level + Rng.Next(0, 3);
         int reward = 15 + level * 5 + Rng.Next(0, 6);
