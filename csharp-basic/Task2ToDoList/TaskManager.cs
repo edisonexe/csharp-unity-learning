@@ -14,32 +14,39 @@ public class TaskManager
                 PrintMenu();
                 var choice = ReadInt("Ваш выбор: ");
 
-                switch (choice)
+                if (!Enum.IsDefined(typeof(TaskManagerAction), choice))
                 {
-                    case 1:
+                    Console.WriteLine("Неизвестный пункт меню. Повторите ввод.");
+                    continue;
+                }
+
+                var action = (TaskManagerAction)choice;
+                
+                switch (action)
+                {
+                    case TaskManagerAction.AddTask:
                         AddTask();
                         break;
-                    case 2:
+                    case TaskManagerAction.ShowAllTasks:
                         ShowAllTasks();
                         break;
-                    case 3:
+                    case TaskManagerAction.FilterByStatus:
                         FilterByStatus();
                         break;
-                    case 4:
+                    case TaskManagerAction.FilterByCategory:
                         FilterByCategory();
                         break;
-                    case 5:
+                    case TaskManagerAction.MarkAsDone:
                         MarkAsDone();
                         break;
-                    case 6:
+                    case TaskManagerAction.DeleteByIndex:
                         DeleteByIndex();
                         break;
-                    case 0:
+                    case TaskManagerAction.Exit:
                         Console.WriteLine("Выход.");
                         return;
                     default:
-                        Console.WriteLine("Неизвестный пункт меню. Повторите ввод.");
-                        break;
+                        continue;
                 }
             }
         }
