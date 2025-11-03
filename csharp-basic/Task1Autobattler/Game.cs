@@ -32,17 +32,17 @@ public static class Game
 
             var input = Console.ReadLine();
             Console.WriteLine();
-            if (!int.TryParse(input, out int choice)) continue;
-
+            if (!Enum.TryParse<GameAction>(input, out var action)) continue;
+            
             var enemyGetsTurn = false;
 
-            switch (choice)
+            switch (action)
             {
-                case 1: // Attack
+                case GameAction.Attack:
                     player.Attack(enemy);
                     enemyGetsTurn = true;
                     break;
-                case 2: // Use potion
+                case GameAction.UsePotion:
                     var pot = player.Inventory.OfType<Potion>().FirstOrDefault();
                     if (pot == null) Console.WriteLine("Нет зелий в инвентаре.");
                     else {
@@ -50,17 +50,17 @@ public static class Game
                         enemyGetsTurn = true;
                     }
                     break;
-                case 3: // Select weapon to equip
+                case GameAction.SelectWeapon:
                     SelectWeapon(player);
                     break;
-                case 4: // Select potion to use
+                case GameAction.SelectPotion:
                     SelectPotion(player, out bool used);
                     if (used) enemyGetsTurn = true;
                     break;
-                case 5:
+                case GameAction.ShowStatus:
                     player.ShowStatus();
                     break;
-                case 0:
+                case GameAction.Exit:
                     Console.WriteLine("Выход из игры.");
                     return;
                 default:
