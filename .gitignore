@@ -98,15 +98,3 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# Rider
-.idea/
-.vs/
-*.user
-
-# Build artifacts
-bin/
-obj/
-
-# Other
-*.log
-
