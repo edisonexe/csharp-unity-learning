@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,8 +8,7 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private Transform _firePoint;
-    [SerializeField] private float _shootForce = 20f;
-    [SerializeField] private float _fireCooldown = 0.5f;
+    [SerializeField] private GunConfig _gunCfg;
     
     private Camera _camera;
     private float _lastShotTime;
@@ -16,7 +16,12 @@ public class PlayerController : MonoBehaviour
     private float _rotationX;
     private float _rotationY;
 
-    private void Start() => _camera = Camera.main;
+    private void Start()
+    {
+        _camera = Camera.main;
+        if (_gunCfg == null) 
+            Debug.Log("Gun config is NULL");
+    }
 
     private void Update()
     {
@@ -40,7 +45,7 @@ public class PlayerController : MonoBehaviour
     
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time >= _lastShotTime + _fireCooldown)
+        if (Input.GetMouseButtonDown(0) && Time.time >= _lastShotTime + _gunCfg.FireCooldown)
         {
             Shoot();
             _lastShotTime = Time.time;
@@ -51,6 +56,6 @@ public class PlayerController : MonoBehaviour
     {
         GameObject projectile = Instantiate(_projectilePrefab, _firePoint.position, Quaternion.identity);
         Vector3 direction = _camera.transform.forward;
-        projectile.GetComponent<Projectile>().AddForce(direction, _shootForce);
+        projectile.GetComponent<Projectile>().AddForce(direction, _gunCfg.ProjectileSpeed);
     }
 }
