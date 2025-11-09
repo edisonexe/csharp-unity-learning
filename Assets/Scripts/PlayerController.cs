@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GunConfig _gunCfg;
     
+    [Header("Sounds")]
+    [SerializeField] private AudioSource _audioSrc;
+    [SerializeField] private AudioClip _shootSound;
+    
     private Camera _camera;
     private float _lastShotTime;
     
@@ -57,5 +61,8 @@ public class PlayerController : MonoBehaviour
         GameObject projectile = Instantiate(_projectilePrefab, _firePoint.position, Quaternion.identity);
         Vector3 direction = _camera.transform.forward;
         projectile.GetComponent<Projectile>().AddForce(direction, _gunCfg.ProjectileSpeed);
+        
+        if(_audioSrc != null && _shootSound != null)
+            _audioSrc.PlayOneShot(_shootSound);
     }
 }
