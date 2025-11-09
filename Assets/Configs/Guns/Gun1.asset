@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Gun1
   m_EditorClassIdentifier: 
   _projectileSpeed: 20
-  _fireCooldown: 0.5
+  _fireCooldown: 0.7
   _damage: 10
