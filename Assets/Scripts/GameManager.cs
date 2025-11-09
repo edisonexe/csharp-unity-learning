@@ -27,10 +27,12 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(MENU_SCENE_NAME);
+            BackToMenu();
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void BackToMenu() => SceneManager.LoadScene(MENU_SCENE_NAME);
 
     private void SpawnTarget()
     {
@@ -57,4 +59,5 @@ public class GameManager : MonoBehaviour
         if (_targetsSpawnedText != null)
             _targetsSpawnedText.text = $"Targets spawned: {_totalTargetsSpawned}";
     }
+    
 }
