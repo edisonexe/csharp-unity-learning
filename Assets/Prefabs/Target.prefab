@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 654101190207708888}
   - component: {fileID: 3656312099794914407}
   - component: {fileID: 1123082598396148184}
-  - component: {fileID: 3547953566002891963}
   - component: {fileID: 6453263112442237517}
   - component: {fileID: 7338748752715991306}
+  - component: {fileID: 3547953566002891963}
   m_Layer: 0
   m_Name: Target
   m_TagString: Target
@@ -89,23 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3547953566002891963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5438964141267029183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7722979f9f3197448ab708a6bf564798, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeToDestroy: 3
-  _rotationSpeed: 20
-  _minScale: 1
-  _maxScale: 2
-  _scaleSpeed: 1
 --- !u!54 &6453263112442237517
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -154,3 +137,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3547953566002891963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5438964141267029183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7722979f9f3197448ab708a6bf564798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeToDestroy: 3
+  _rotationSpeed: 20
+  _minScale: 1
+  _maxScale: 2
+  _scaleSpeed: 1
+  _hitSound: {fileID: 8300000, guid: f53d55d7be46cb0439256af34b52af9c, type: 3}
