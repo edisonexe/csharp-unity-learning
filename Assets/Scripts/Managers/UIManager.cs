@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefaultNamespace
+namespace Managers
 {
     public class UIManager : MonoBehaviour
     {

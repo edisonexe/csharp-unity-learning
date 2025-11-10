@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 
-namespace DefaultNamespace
+namespace Managers
 {
     public class AudioManager : MonoBehaviour
     {
