@@ -17,7 +17,6 @@ public class Target : MonoBehaviour
     
     private void Start()
     {
-        Debug.Log("Target created.");
         _scaleCoroutine = StartCoroutine(Scale());
         Destroy(gameObject, _timeToDestroy);
     }
@@ -27,16 +26,10 @@ public class Target : MonoBehaviour
         transform.Rotate(0, _rotationSpeed * Time.deltaTime,0);
         _lifeTime += Time.deltaTime;
         _logTick += Time.deltaTime;
-        if (_logTick >= 0.99f)
-        {
-            Debug.Log($"Target still alive {_lifeTime}s.");
-            _logTick = 0;
-        }
     }
 
     private void OnDestroy()
     {
-        Debug.Log("Target destroyed.");
         if (_scaleCoroutine != null)
             StopCoroutine(_scaleCoroutine);
     }

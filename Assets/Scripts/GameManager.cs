@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,14 +11,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _minViewportBound = 0.1f;
     [SerializeField] private float _maxViewportBound = 0.9f;
     [SerializeField] private float _spawnDistanceFromCamera = 10f;
-    
-    [Header("UI Settings")]
-    [SerializeField] private Text _targetsSpawnedText;
+
+    [SerializeField] private GameEvents _events;
     
     private Camera _cam;
-    private int _totalTargetsSpawned = 0;
     private const string MENU_SCENE_NAME = "Menu";
-    
+
     private void Start()
     {
         _cam = Camera.main;
@@ -41,9 +40,7 @@ public class GameManager : MonoBehaviour
         Vector3 pos = GetRandomWorldPosInView();
         Instantiate(_targetPrefab, pos, Quaternion.identity);
 
-        _totalTargetsSpawned++;
-        UpdateUIText();
-        Debug.Log($"Targets spawned: {_totalTargetsSpawned}");
+        _events.RaiseTargetSpawned();
     }
     
     private Vector3 GetRandomWorldPosInView()
@@ -53,11 +50,4 @@ public class GameManager : MonoBehaviour
 
         return _cam.ViewportToWorldPoint(new Vector3(randomX, randomY, _spawnDistanceFromCamera));
     }
-    
-    private void UpdateUIText()
-    {
-        if (_targetsSpawnedText != null)
-            _targetsSpawnedText.text = $"Targets spawned: {_totalTargetsSpawned}";
-    }
-    
 }

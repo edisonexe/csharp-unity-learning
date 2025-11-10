@@ -13,19 +13,29 @@ namespace DefaultNamespace
         [Header("GameEvents")]
         [SerializeField] private GameEvents _events;
 
+        private int _targetsSpawned;
         private int _shots;
         private int _hits;
         
         private void OnEnable()
         {
+            _events.OnTargetSpawned += TargetSpawned;
             _events.OnShotFired += ShotsFired;
             _events.OnTargetHit += TargetHit;
         }
 
         private void OnDisable()
         {
+            _events.OnTargetSpawned -= TargetSpawned;
             _events.OnShotFired -= ShotsFired;
             _events.OnTargetHit -= TargetHit;
+        }
+        
+        private void TargetSpawned()
+        {
+            _targetsSpawned ++;
+            if (_targetsSpawnedText)
+                _targetsSpawnedText.text = $"Targets spawned: {_targetsSpawned}";
         }
         
         private void TargetHit()
@@ -39,7 +49,7 @@ namespace DefaultNamespace
         {
             _shots++;
             if (_shotsText)
-                _shotsText.text = $"Shots {_shots}";
+                _shotsText.text = $"Shots: {_shots}";
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using DefaultNamespace;
 using UnityEngine;
 
@@ -10,16 +9,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GunConfig _gunCfg;
     
-    [Header("Sounds")]
-    [SerializeField] private AudioSource _audioSrc;
-    [SerializeField] private AudioClip _shootSound;
+    [SerializeField] private GameEvents _events;
+    [SerializeField] private AudioManager _audioManager;
+    
+    private int _shotsFired;
+    private int _targetHits;
+    
     
     private Camera _camera;
     private float _lastShotTime;
     
     private float _rotationX;
     private float _rotationY;
-
+    
     private void Start()
     {
         _camera = Camera.main;
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = _camera.transform.forward;
         projectile.GetComponent<Projectile>().AddForce(direction, _gunCfg.ProjectileSpeed);
         
-        if(_audioSrc != null && _shootSound != null)
-            _audioSrc.PlayOneShot(_shootSound);
+        _events.RaiseShotFired();
     }
+    
 }
