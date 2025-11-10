@@ -3,14 +3,16 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class GameEvents : MonoBehaviour
+    [CreateAssetMenu(fileName = "GameEvents", menuName = "Configs/GameEvents")]
+    public class GameEvents : ScriptableObject
     {
+        public event Action OnTargetSpawned;
         public event Action OnShotFired;
         public event Action OnTargetHit;
-        public event Action OnTargetDestroyed;
+
         
-        public void ShotFired() => OnShotFired?.Invoke();
-        public void TargetHit() => OnTargetHit?.Invoke();
-        public void TargetDestroyed() => OnTargetDestroyed?.Invoke();
+        public void RaiseTargetSpawned() => OnTargetSpawned?.Invoke();
+        public void RaiseShotFired() => OnShotFired?.Invoke();
+        public void RaiseTargetHit() => OnTargetHit?.Invoke();
     }
 }
