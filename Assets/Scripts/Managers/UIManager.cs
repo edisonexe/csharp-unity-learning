@@ -17,6 +17,7 @@ namespace Managers
         private int _targetsSpawned;
         private int _shots;
         private int _hits;
+        private int _bestHits;
         
         private void OnEnable()
         {
@@ -24,6 +25,8 @@ namespace Managers
             _events.OnShotFired += ShotsFired;
             _events.OnTargetHit += TargetHit;
         }
+
+        private void Start() => _bestHits = PlayerPrefs.GetInt(PrefsKeys.SCORE_HITS, 0);
 
         private void OnDisable()
         {
@@ -44,6 +47,11 @@ namespace Managers
             _hits ++;
             if (_targetHitsText)
                 _targetHitsText.text = $"Hits: {_hits}";
+
+            if (_hits <= _bestHits) return;
+            _bestHits = _hits;
+            PlayerPrefs.SetInt(PrefsKeys.SCORE_HITS, _bestHits);
+            PlayerPrefs.SetInt(PrefsKeys.SCORE_SHOTS, _shots);
         }
 
         private void ShotsFired()
