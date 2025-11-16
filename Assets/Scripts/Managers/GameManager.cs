@@ -20,6 +20,8 @@ namespace Managers
 
         private void Start()
         {
+            if (_targetPrefab == null)
+                Debug.LogError("[ERROR] Target Prefab is NULL!");
             _cam = Camera.main;
             InvokeRepeating(nameof(SpawnTarget), 0f, _spawnInterval);
         }

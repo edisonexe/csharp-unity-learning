@@ -45,6 +45,8 @@ namespace Managers
         private void TargetHit()
         {
             _hits ++;
+            Debug.Log("[HIT] Hit detected!");
+            
             if (_targetHitsText)
                 _targetHitsText.text = $"Hits: {_hits}";
 
@@ -52,6 +54,8 @@ namespace Managers
             _bestHits = _hits;
             PlayerPrefs.SetInt(PrefsKeys.SCORE_HITS, _bestHits);
             PlayerPrefs.SetInt(PrefsKeys.SCORE_SHOTS, _shots);
+            
+            Debug.Log($"[RECORD] New hits record: {_bestHits}.");
         }
 
         private void ShotsFired()

@@ -24,6 +24,7 @@ namespace Managers
         public void QuitGame()
         {
             PlayerPrefs.Save();
+            Debug.Log("[SAVE] Data saved on application quit.");
             Application.Quit();
         }
     }

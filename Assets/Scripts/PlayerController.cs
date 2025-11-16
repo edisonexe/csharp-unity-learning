@@ -26,7 +26,9 @@ public class PlayerController : MonoBehaviour
     {
         _camera = Camera.main;
         if (_gunCfg == null) 
-            Debug.Log("Gun config is NULL");
+            Debug.LogError("[ERROR] Gun Config is NULL!");
+        if (_projectilePrefab == null)
+            Debug.LogError("[ERROR] Projectile Prefab is NULL!");
     }
 
     private void Update()
@@ -50,8 +52,15 @@ public class PlayerController : MonoBehaviour
     
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time >= _lastShotTime + _gunCfg.FireCooldown)
+        
+        if (Input.GetMouseButtonDown(0))
         {
+            if (Time.time < _lastShotTime + _gunCfg.FireCooldown)
+            {
+                Debug.LogWarning("[WARNING] Attempted to shoot while reloading");
+                return;
+            }
+            
             Shoot();
             _lastShotTime = Time.time;
         }
@@ -64,6 +73,7 @@ public class PlayerController : MonoBehaviour
         projectile.GetComponent<Projectile>().AddForce(direction, _gunCfg.ProjectileSpeed);
         
         _events.RaiseShotFired();
+        Debug.Log("[SHOT] Shot fired");
     }
     
 }
