@@ -8,5 +8,6 @@ namespace Managers
         private const string GAME_SCENE_NAME = "Game";
     
         public void StartGame() => SceneManager.LoadScene(GAME_SCENE_NAME);
+        public void QuitGame() => Application.Quit();
     }
 }
