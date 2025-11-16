@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     private int _shotsFired;
     private int _targetHits;
     
-    
     private Camera _camera;
     private float _lastShotTime;
     
@@ -44,8 +43,7 @@ public class PlayerController : MonoBehaviour
         _rotationY += mouseX;
         _rotationX -= mouseY;
         
-        _rotationX = Mathf.Clamp(_rotationX, -20f, 20f);
-        _rotationY = Mathf.Clamp(_rotationY, -30f, 30f);
+        _rotationX = Mathf.Clamp(_rotationX, -50f, 30f);
         
         transform.rotation = Quaternion.Euler(_rotationX, _rotationY, 0f);
     }

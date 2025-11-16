@@ -9,8 +9,8 @@ namespace Managers
         [Header("Spawn Settings")]
         [SerializeField] private GameObject _targetPrefab;
         [SerializeField] private float _spawnInterval = 4f;
-        [SerializeField] private float _minViewportBound = 0.1f;
-        [SerializeField] private float _maxViewportBound = 0.9f;
+        [SerializeField] private float _minViewportBound = 0.3f;
+        [SerializeField] private float _maxViewportBound = 0.7f;
         [SerializeField] private float _spawnDistanceFromCamera = 10f;
 
         [SerializeField] private GameEvents _events;
