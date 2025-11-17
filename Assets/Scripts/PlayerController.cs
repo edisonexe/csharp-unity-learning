@@ -1,3 +1,4 @@
+using System;
 using DefaultNamespace;
 using Managers;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameEvents _events;
     [SerializeField] private AudioManager _audioManager;
     
+    [SerializeField] private Animator _animator;
+    
     private int _shotsFired;
     private int _targetHits;
     
@@ -21,7 +24,9 @@ public class PlayerController : MonoBehaviour
     
     private float _rotationX;
     private float _rotationY;
-    
+
+    private const string ON_SHOOT = "OnShoot"; 
+
     private void Start()
     {
         _camera = Camera.main;
@@ -61,6 +66,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             
+            _animator.SetTrigger(ON_SHOOT);
             Shoot();
             _lastShotTime = Time.time;
         }
