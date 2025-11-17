@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1123082598396148184}
   - component: {fileID: 6453263112442237517}
   - component: {fileID: 7338748752715991306}
+  - component: {fileID: 4588990041735020131}
   - component: {fileID: 3547953566002891963}
   m_Layer: 0
   m_Name: Target
@@ -67,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5ce4b2a6d37fe534c8c7792a230fb1d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,6 +138,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &4588990041735020131
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5438964141267029183}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 99d77836530661e4196e358ad6fa1157, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3547953566002891963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,4 +177,3 @@ MonoBehaviour:
   _minScale: 1
   _maxScale: 2
   _scaleSpeed: 1
-  _hitSound: {fileID: 8300000, guid: f53d55d7be46cb0439256af34b52af9c, type: 3}
