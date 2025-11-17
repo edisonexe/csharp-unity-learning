@@ -18,8 +18,10 @@ public class Projectile : MonoBehaviour
         if(other.gameObject.CompareTag("Target"))
         {
             _events.RaiseTargetHit();
+            var target = other.gameObject.GetComponent<Target>();
+            if (target != null) target.Hit();
+            
             Destroy(gameObject);
-            Destroy(other.gameObject);
         }
     }
 }

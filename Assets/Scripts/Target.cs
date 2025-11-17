@@ -5,21 +5,20 @@ public class Target : MonoBehaviour
 {
     [SerializeField] private float _timeToDestroy = 3f;
     [SerializeField] private float _rotationSpeed = 20f;
-    private float _lifeTime;
-    private float _logTick;
-    private Coroutine _scaleCoroutine;
     
-    [Header("Scaling")]
-    [SerializeField] private float _minScale = 1f;
-    [SerializeField] private float _maxScale = 2f;
-    [SerializeField] private float _scaleSpeed = 1f;
+    private Animator _animator;
+    private const string IS_HIT = "IsHit";
+    private bool _isHit;
+    
     private bool _scalingUp = true;
     
-    private void Start()
-    {
-        _scaleCoroutine = StartCoroutine(Scale());
-        Destroy(gameObject, _timeToDestroy);
-    }
+    private float _lifeTime;
+    private float _logTick;
+    private Coroutine _lifeCoroutine;
+
+    private void Awake() => _animator = GetComponent<Animator>();
+
+    private void Start() => _lifeCoroutine = StartCoroutine(LifeTimer());
 
     private void Update()
     {
@@ -30,26 +29,32 @@ public class Target : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_scaleCoroutine != null)
-            StopCoroutine(_scaleCoroutine);
+        if (_lifeCoroutine != null)
+            StopCoroutine(_lifeCoroutine);
     }
 
-    private IEnumerator Scale()
+    public void Hit()
     {
-        while (true)
-        {
-            float targetScale = _scalingUp ? _maxScale : _minScale;
-            Vector3 startScale = transform.localScale;
-            Vector3 endScale = Vector3.one * targetScale;
-            float scaleProgress = 0f;
-            
-            while (scaleProgress < 1f)
-            {
-                scaleProgress += Time.deltaTime * _scaleSpeed;
-                transform.localScale = Vector3.Lerp(startScale, endScale, scaleProgress);
-                yield return null;
-            }
-            _scalingUp = !_scalingUp;
-        }
+        if (_isHit) return;
+
+        _isHit = true;
+        
+        var collider = GetComponent<Collider>();
+        if (collider != null)
+            collider.enabled = false;
+        
+        if (_animator != null) 
+            _animator.SetBool(IS_HIT, true);
     }
+    
+    public void DestroySelf() => Destroy(gameObject);
+    
+    private IEnumerator LifeTimer()
+    {
+        yield return new WaitForSeconds(_timeToDestroy);
+        
+        if (!_isHit) 
+            Hit();
+    }
+
 }
