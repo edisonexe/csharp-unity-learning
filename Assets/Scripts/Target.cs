@@ -10,8 +10,6 @@ public class Target : MonoBehaviour
     private const string IS_HIT = "IsHit";
     private bool _isHit;
     
-    private bool _scalingUp = true;
-    
     private float _lifeTime;
     private float _logTick;
     private Coroutine _lifeCoroutine;
@@ -48,7 +46,7 @@ public class Target : MonoBehaviour
     }
     
     public void DestroySelf() => Destroy(gameObject);
-    
+
     private IEnumerator LifeTimer()
     {
         yield return new WaitForSeconds(_timeToDestroy);
