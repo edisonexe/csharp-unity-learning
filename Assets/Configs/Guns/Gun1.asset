@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba251afe7b2e4f9fa9f33b23aa644649, type: 3}
   m_Name: Gun1
   m_EditorClassIdentifier: 
-  _projectileSpeed: 20
+  _projectileSpeed: 40
   _fireCooldown: 0.7
   _damage: 10

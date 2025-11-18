@@ -383,6 +383,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3876192312941838702, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.607
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876192312941838702, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876192312941838702, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876192312941838702, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876192312941838702, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4007238582357610111, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -435,6 +455,18 @@ PrefabInstance:
       propertyPath: _audioManager
       value: 
       objectReference: {fileID: 3845127874201658396}
+    - target: {fileID: 6697157024490988853, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.658
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697157024490988853, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7177490421938328589, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.149
+      objectReference: {fileID: 0}
     - target: {fileID: 7177490421938328589, guid: 74c600fb44ef64047b01742ba205d86a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
