@@ -5,7 +5,7 @@ namespace DefaultNamespace
     [CreateAssetMenu(fileName = "GunConfig", menuName = "Configs/GunConfig")]
     public class GunConfig : ScriptableObject
     {
-        [SerializeField][Min(0f)] private float _projectileSpeed = 20f;
+        [SerializeField, Range(40f, 80f)] private float _projectileSpeed = 40f;
         [SerializeField][Min(0f)] private float _fireCooldown = 0.5f;
         [SerializeField][Min(0f)] private int _damage = 10;
         

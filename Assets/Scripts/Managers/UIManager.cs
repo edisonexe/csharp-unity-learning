@@ -14,6 +14,9 @@ namespace Managers
         [Header("GameEvents")]
         [SerializeField] private GameEvents _events;
 
+        [Header("Slider")]
+        [SerializeField] private Slider _speedSlider;
+        
         private int _targetsSpawned;
         private int _shots;
         private int _hits;
@@ -26,13 +29,31 @@ namespace Managers
             _events.OnTargetHit += TargetHit;
         }
 
-        private void Start() => _bestHits = PlayerPrefs.GetInt(PrefsKeys.SCORE_HITS, 0);
+        private void Start()
+        {
+            _bestHits = PlayerPrefs.GetInt(PrefsKeys.SCORE_HITS, 0);
+            if (_speedSlider != null)
+            {
+                float defaultValue = _speedSlider.value;
+                float saved = PlayerPrefs.GetFloat(PrefsKeys.PROJECTILE_SPEED, defaultValue);
+                _speedSlider.value = saved;
+
+                _speedSlider.onValueChanged.AddListener(OnSliderChanged);
+            }
+        }
 
         private void OnDisable()
         {
             _events.OnTargetSpawned -= TargetSpawned;
             _events.OnShotFired -= ShotsFired;
             _events.OnTargetHit -= TargetHit;
+        }
+        
+        public float ProjectileSpeed => _speedSlider != null ? _speedSlider.value : 0f;
+
+        private void OnSliderChanged(float value)
+        {
+            PlayerPrefs.SetFloat(PrefsKeys.PROJECTILE_SPEED, value);
         }
         
         private void TargetSpawned()

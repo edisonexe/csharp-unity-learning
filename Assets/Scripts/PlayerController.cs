@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Animator _animator;
     
+    [SerializeField] private UIManager _uiManager;
+    
     private int _shotsFired;
     private int _targetHits;
     
@@ -25,6 +27,9 @@ public class PlayerController : MonoBehaviour
     private float _rotationX;
     private float _rotationY;
 
+    private float _cfgSpeed;
+    private float _finalSpeed;
+    
     private const string ON_SHOOT = "OnShoot"; 
 
     private void Start()
@@ -34,6 +39,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("[ERROR] Gun Config is NULL!");
         if (_projectilePrefab == null)
             Debug.LogError("[ERROR] Projectile Prefab is NULL!");
+        _cfgSpeed = _gunCfg.ProjectileSpeed;
     }
 
     private void Update()
@@ -76,7 +82,12 @@ public class PlayerController : MonoBehaviour
     {
         GameObject projectile = Instantiate(_projectilePrefab, _firePoint.position, Quaternion.identity);
         Vector3 direction = _camera.transform.forward;
-        projectile.GetComponent<Projectile>().AddForce(direction, _gunCfg.ProjectileSpeed);
+        
+        float sliderSpeed = _uiManager.ProjectileSpeed;
+        
+        _finalSpeed = Mathf.Approximately(sliderSpeed, _cfgSpeed) ? _cfgSpeed : sliderSpeed;
+        
+        projectile.GetComponent<Projectile>().AddForce(direction, _finalSpeed);
         
         _events.RaiseShotFired();
         Debug.Log("[SHOT] Shot fired");
