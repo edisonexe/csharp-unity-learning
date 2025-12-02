@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class NPC : MonoBehaviour
         Vector3 newPosition = Vector3.MoveTowards(transform.position, _target, 
             _moveSpeed * Time.fixedDeltaTime);
         _rb.MovePosition(newPosition);
+        
+        if (Vector3.Distance(newPosition, _target) < 0.1f) 
+            _hasTarget = false;
     }
     
     private void OnDisable() => EventManager.OnEnemySpotted -= OnEnemySpotted;
@@ -38,7 +42,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (_hasTarget && other.gameObject.CompareTag("Enemy"))
         {
