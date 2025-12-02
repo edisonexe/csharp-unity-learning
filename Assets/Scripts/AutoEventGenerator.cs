@@ -27,7 +27,7 @@ public class AutoEventGenerator : MonoBehaviour
             GameEventType.BattleStart  => "Битва началась!",
             GameEventType.ItemPicked     => "Кто-то подобрал случайный предмет.",
             GameEventType.WeatherChanged => "Погода изменилась.",
-            GameEventType.EnemySpotted   => "Замечен враг в случайной точке.",
+            GameEventType.EnemySpotted   => "Враг создан.",
             _                            => "Произошло случайное событие."
         };
 

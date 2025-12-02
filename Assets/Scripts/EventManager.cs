@@ -29,7 +29,7 @@ public static class EventManager
     
     public static IEnumerable<GameEvent> GetEventsByType(GameEventType eventType)
     {
-        return _eventHistory.Where(e => e.Type == eventType); 
+        return _eventHistory.Where(e => e.Type == eventType);
     }
 
     public static int GetEventCountByType(GameEventType eventType)
