@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class NPC : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _target;
     private bool _hasTarget;
-    private float _moveSpeed = 5f;
+    private float _moveSpeed = 12f;
     
     private void Awake() => _rb = GetComponent<Rigidbody>();
 
@@ -30,18 +29,22 @@ public class NPC : MonoBehaviour
         _hasTarget = true;
     }
     
-    private void OnEnemySpotted(float x, float y)
+    private void OnEnemySpotted(float x, float z)
     {
-        SetTarget(x, y);
-        Debug.Log($"{_name} побежал на битву с врагом на координаты ({x},{y})");
+        if (!_hasTarget)
+        {
+            SetTarget(x, z);
+            Debug.Log($"{_name} побежал на битву с врагом на координаты ({x:F1},{z:F1})");
+        }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (_hasTarget && other.gameObject.CompareTag("Enemy"))
         {
-            _hasTarget = false;
+            Debug.Log(other.gameObject.name);
             Destroy(other.gameObject);
+            _hasTarget = false;
         }
     }
 }

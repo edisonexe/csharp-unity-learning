@@ -1,17 +1,25 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    private void OnEnable() => EventManager.OnGameEvent += OnGameEventReceived;
+    [SerializeField] private GameObject _enemyPrefab;
+    
+    private void OnEnable() => EventManager.OnEnemySpotted += OnEnemySpotted;
 
-    private void OnDisable() => EventManager.OnGameEvent -= OnGameEventReceived;
+    private void OnDisable() => EventManager.OnEnemySpotted += OnEnemySpotted;
 
-    private void OnGameEventReceived(GameEvent e)
+    private void OnEnemySpotted(float x, float z)
     {
-        if (e.Type == GameEventType.EnemySpotted)
+        if (!_enemyPrefab)
         {
-            Debug.Log($"[EnemyManager] Появился враг");
+            Debug.LogWarning("Префаб врага не задан.");
+            return;
         }
+
+        Vector3 spawnPos = new Vector3(x, 1, z);
+
+        Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
+
+        Debug.Log($"[EnemyManager] Спавн врага по координатам ({x}, 1, {z})");
     }
 }

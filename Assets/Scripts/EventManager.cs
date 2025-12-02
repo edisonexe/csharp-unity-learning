@@ -22,9 +22,9 @@ public static class EventManager
         OnGameEvent?.Invoke(gameEvent);
     }
 
-    public static void TriggerEnemySpotted(float x, float y)
+    public static void TriggerEnemySpotted(float x, float z)
     {
-        OnEnemySpotted?.Invoke(x, y);
+        OnEnemySpotted?.Invoke(x, z);
     }
     
     public static IEnumerable<GameEvent> GetEventsByType(GameEventType eventType)
