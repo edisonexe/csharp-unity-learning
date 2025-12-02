@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public static class EventMananger
+public static class EventManager
 {
     public delegate void GameEventHandler(GameEvent e);
     public static event GameEventHandler OnGameEvent;
+    
+    public delegate void EnemySpottedHandler(float x, float y);
+    public static event EnemySpottedHandler OnEnemySpotted;
 
     private static readonly List<GameEvent> _eventHistory = new();
     public static IReadOnlyList<GameEvent> EventHistory => _eventHistory;
@@ -19,6 +22,11 @@ public static class EventMananger
         OnGameEvent?.Invoke(gameEvent);
     }
 
+    public static void TriggerEnemySpotted(float x, float y)
+    {
+        OnEnemySpotted?.Invoke(x, y);
+    }
+    
     public static IEnumerable<GameEvent> GetEventsByType(GameEventType eventType)
     {
         return _eventHistory.Where(e => e.Type == eventType); 

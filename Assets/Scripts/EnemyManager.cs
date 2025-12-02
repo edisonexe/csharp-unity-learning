@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    private void OnEnable() => EventMananger.OnGameEvent += OnGameEventReceived;
+    private void OnEnable() => EventManager.OnGameEvent += OnGameEventReceived;
 
-    private void OnDisable() => EventMananger.OnGameEvent -= OnGameEventReceived;
+    private void OnDisable() => EventManager.OnGameEvent -= OnGameEventReceived;
 
     private void OnGameEventReceived(GameEvent e)
     {
