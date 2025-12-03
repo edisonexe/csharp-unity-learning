@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-public static class GameEventExtensions
+﻿public static class GameEventExtensions
 {
     public static string ToLogString(this GameEvent e)
     {

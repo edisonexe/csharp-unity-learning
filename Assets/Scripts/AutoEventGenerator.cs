@@ -5,6 +5,11 @@ using System.Collections;
 public class AutoEventGenerator : MonoBehaviour
 {
     [SerializeField] private float _delay = 2f;
+    [SerializeField] private Vector2 _enemySpawnRange = new Vector2(-10f, 10f);
+    private GameEventType[] _eventTypes;
+
+    private void Awake() => _eventTypes = (GameEventType[])Enum.GetValues(typeof(GameEventType));
+
     private void Start() => StartCoroutine(EventRoutine());
 
     private IEnumerator EventRoutine()
@@ -19,8 +24,7 @@ public class AutoEventGenerator : MonoBehaviour
 
     private void TriggerRandomEvent()
     {
-        Array values = Enum.GetValues(typeof(GameEventType));
-        GameEventType randomType = (GameEventType)values.GetValue(UnityEngine.Random.Range(0, values.Length));
+        var randomType = _eventTypes[UnityEngine.Random.Range(0, _eventTypes.Length)];
 
         string description = randomType switch
         {
@@ -47,11 +51,9 @@ public class AutoEventGenerator : MonoBehaviour
 
     private void TriggerRandomEnemySpotted()
     {
-        float x = UnityEngine.Random.Range(-10f, 10f);
-        float z = UnityEngine.Random.Range(-10f, 10f);
+        float x = UnityEngine.Random.Range(_enemySpawnRange.x, _enemySpawnRange.y);
+        float z = UnityEngine.Random.Range(_enemySpawnRange.x, _enemySpawnRange.y);
         
         EventManager.TriggerEnemySpotted(x, z);
-
-        Debug.Log($"[AutoEvent] Враг замечен на координатах ({x:F1}, {z:F1})");
     }
 }

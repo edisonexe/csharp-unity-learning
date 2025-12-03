@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour
     
     private void OnEnable() => EventManager.OnEnemySpotted += OnEnemySpotted;
 
-    private void OnDisable() => EventManager.OnEnemySpotted += OnEnemySpotted;
+    private void OnDisable() => EventManager.OnEnemySpotted -= OnEnemySpotted;
 
     private void OnEnemySpotted(float x, float z)
     {

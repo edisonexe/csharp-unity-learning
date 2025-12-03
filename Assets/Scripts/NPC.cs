@@ -7,7 +7,7 @@ public class NPC : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _target;
     private bool _hasTarget;
-    private float _moveSpeed = 12f;
+    [SerializeField] private float _moveSpeed = 12f;
     
     private void Awake() => _rb = GetComponent<Rigidbody>();
 

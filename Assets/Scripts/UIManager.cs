@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -57,7 +56,8 @@ public class UIManager : MonoBehaviour
         _logsPanel.SetActive(_logsOpened);
         _showLogsBtnText.text = _logsOpened ? CLOSE_LOGS : SHOW_LOGS;
     }
-
+    
+    // копипаста, но в инспекторе можно только int задавать
     public void OnShowAllClicked()
     {
         _mode = LogViewMode.All;
@@ -125,7 +125,7 @@ public class UIManager : MonoBehaviour
                 break;
             
             case LogViewMode.PickedItems:
-                RenderCoundPickedItems();
+                RenderCountPickedItems();
                 break;
         }
     }
@@ -153,7 +153,7 @@ public class UIManager : MonoBehaviour
         _logText.text = _builder.ToString();
     }
 
-    private void RenderCoundPickedItems()
+    private void RenderCountPickedItems()
     {
         _builder.Clear();
         var count = EventManager.GetEventCountByType(GameEventType.ItemPicked);

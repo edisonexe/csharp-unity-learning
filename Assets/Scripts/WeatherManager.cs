@@ -1,16 +1,15 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class WeatherManager : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
+    private Camera _camera;
 
-    private Color[] _colors = 
+    private readonly Color[] _colors = 
     {
-        new Color(0.29f, 0.35f, 0.35f),
-        new Color(0.56f, 1f, 0.92f),
-        new Color(0.90f, 0.90f, 0.90f)
+        new (0.29f, 0.35f, 0.35f),
+        new (0.56f, 1f, 0.92f),
+        new (0.90f, 0.90f, 0.90f)
     };
     
     private void Awake() => _camera = Camera.main;

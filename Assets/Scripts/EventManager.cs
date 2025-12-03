@@ -7,7 +7,7 @@ public static class EventManager
     public delegate void GameEventHandler(GameEvent e);
     public static event GameEventHandler OnGameEvent;
     
-    public delegate void EnemySpottedHandler(float x, float y);
+    public delegate void EnemySpottedHandler(float x, float z);
     public static event EnemySpottedHandler OnEnemySpotted;
 
     private static readonly List<GameEvent> _eventHistory = new();
