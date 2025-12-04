@@ -280,6 +280,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3922373375158158046, guid: 5f05a72314e9b164a87242a42683d0d5, type: 3}
+      propertyPath: _newsDisplayCfg
+      value: 
+      objectReference: {fileID: 11400000, guid: b1a7e0707ee2d7c47992cb29ae5225ed, type: 2}
+    - target: {fileID: 4042688875614240920, guid: 5f05a72314e9b164a87242a42683d0d5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042688875614240920, guid: 5f05a72314e9b164a87242a42683d0d5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042688875614240920, guid: 5f05a72314e9b164a87242a42683d0d5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4195013006754069384, guid: 5f05a72314e9b164a87242a42683d0d5, type: 3}
       propertyPath: m_Pivot.x
       value: 0

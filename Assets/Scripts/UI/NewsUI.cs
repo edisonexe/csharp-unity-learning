@@ -26,9 +26,11 @@ namespace UI
         private readonly List<NewsItem> _newsList = new();
         
         private bool _hadErrorDuringLoad;
-    
+        
         private void Start()
         {
+            EnsureConfigs();
+            
             _loader = new NewsLoader(OnLoadError);
             _refreshButton.onClick.AddListener(OnRefreshClicked);
 
@@ -108,6 +110,21 @@ namespace UI
         {
             _loadingSpinner.SetActive(value);
             _refreshButton.interactable = !value;
+        }
+        
+        private void EnsureConfigs()
+        {
+            if (_newsDisplayCfg == null)
+            {
+                _newsDisplayCfg = ScriptableObject.CreateInstance<NewsDisplayConfig>();
+                Debug.LogWarning("NewsDisplayConfig не назначен — используются дефолтные значения.");
+            }
+
+            if (_statusDisplayCfg == null)
+            {
+                _statusDisplayCfg = ScriptableObject.CreateInstance<StatusTextDisplayConfig>();
+                Debug.LogWarning("StatusTextDisplayConfig не назначен — используются дефолтные значения.");
+            }
         }
     }
 }

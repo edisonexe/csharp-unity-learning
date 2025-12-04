@@ -6,9 +6,9 @@ namespace Configs
     public class NewsDisplayConfig : ScriptableObject
     {
         [Header("Colors")]
-        [SerializeField] private Color _titleColor = Color.white;
-        [SerializeField] private Color _contentColor = Color.white;
-        [SerializeField] private Color _dateColor = Color.gray;
+        [SerializeField] private Color _titleColor = Color.blue;
+        [SerializeField] private Color _contentColor = Color.black;
+        [SerializeField] private Color _dateColor = Color.cyan;
 
         public Color TitleColor => _titleColor;
         public Color ContentColor => _contentColor;
