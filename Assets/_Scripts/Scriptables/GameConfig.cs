@@ -4,10 +4,10 @@ using UnityEngine;
 public class GameConfig : ScriptableObject
 {
     [SerializeField][Min(0)] private float _playerMoveSpeed = 2f;
-    [SerializeField][Min(0)] private float _enemySpawnTime = 2.5f;
+    [SerializeField][Min(0)] private float _enemySpawnInterval = 2.5f;
     [SerializeField][Min(0)] private int _targetScore = 500;
 
     public int TargetScore => _targetScore;
-    public float EnemySpawnTime => _enemySpawnTime;
+    public float EnemySpawnInterval => _enemySpawnInterval;
     public float PlayerMoveSpeed => _playerMoveSpeed;
 }
