@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="feb37dc0-0db3-4a45-bd56-c6cdcba3d65a" name="Changes" comment="" />
+    <list default="true" id="feb37dc0-0db3-4a45-bd56-c6cdcba3d65a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/GameEventType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/GameEventType.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,11 +20,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/EventBus/GameEventType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/25ce29052dfe4e49a635a42f7798806b1e0000/66/e5fe06b2/ScriptableObject.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "customColor": "",
   "associatedIndex": 4
 }]]></component>
   <component name="ProjectId" id="38NdQS20zSQgytJXVqbIkP0WKrx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -102,7 +117,7 @@
       <option name="presentableId" value="Default" />
       <updated>1756036400248</updated>
       <workItem from="1756036405700" duration="4000" />
-      <workItem from="1768643952277" duration="340000" />
+      <workItem from="1768643952277" duration="2540000" />
     </task>
     <servers />
   </component>
