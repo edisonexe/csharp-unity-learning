@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="feb37dc0-0db3-4a45-bd56-c6cdcba3d65a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/GameEventType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/GameEventType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Services.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/GameState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/GameState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +24,8 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/EventBus/EventBus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/EventBus/GameEventType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Services/GameState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/25ce29052dfe4e49a635a42f7798806b1e0000/66/e5fe06b2/ScriptableObject.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -117,7 +120,7 @@
       <option name="presentableId" value="Default" />
       <updated>1756036400248</updated>
       <workItem from="1756036405700" duration="4000" />
-      <workItem from="1768643952277" duration="2540000" />
+      <workItem from="1768643952277" duration="3606000" />
     </task>
     <servers />
   </component>
