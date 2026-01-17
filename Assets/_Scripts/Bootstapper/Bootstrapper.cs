@@ -1,5 +1,5 @@
-﻿using _Scripts.Services;
-using _Scripts.Spawning;
+﻿using Services;
+using Spawning;
 using UnityEngine;
 
 public sealed class Bootstrapper : MonoBehaviour

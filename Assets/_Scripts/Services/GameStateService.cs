@@ -1,6 +1,6 @@
-﻿using _Scripts.EventBus;
+﻿using Events;
 
-namespace _Scripts.Services
+namespace Services
 {
     public class GameStateService
     {
@@ -14,9 +14,9 @@ namespace _Scripts.Services
             _targetScore = targetScore;
         }
 
-        public void Enable() => EventBus.EventBus.Subscribe(HandleGameEvent);
+        public void Enable() => EventBus.Subscribe(HandleGameEvent);
 
-        public void Disable() => EventBus.EventBus.Unsubscribe(HandleGameEvent);
+        public void Disable() => EventBus.Unsubscribe(HandleGameEvent);
 
         public void StartGame()
         {
@@ -32,7 +32,7 @@ namespace _Scripts.Services
             var add = value <= 0 ? 1 : value;
             Score += add;
 
-            EventBus.EventBus.Raise(GameEventType.ScoreChanged, Score);
+            EventBus.Raise(GameEventType.ScoreChanged, Score);
 
             if (Score >= _targetScore)
                 State = GameState.Win;

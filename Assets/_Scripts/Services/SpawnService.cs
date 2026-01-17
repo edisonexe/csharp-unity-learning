@@ -1,7 +1,7 @@
-﻿using _Scripts.EventBus;
-using _Scripts.Spawning;
+﻿using Events;
+using Spawning;
 
-namespace _Scripts.Services
+namespace Services
 {
     public class SpawnService
     {
@@ -15,9 +15,9 @@ namespace _Scripts.Services
             _interval = intervalSec;
         }
         
-        public void Enable() => EventBus.EventBus.Subscribe(HandleGameEvent);
+        public void Enable() => EventBus.Subscribe(HandleGameEvent);
         
-        public void Disable() => EventBus.EventBus.Unsubscribe(HandleGameEvent);
+        public void Disable() => EventBus.Unsubscribe(HandleGameEvent);
         
         public void Tick(float deltaTime)
         {
@@ -30,7 +30,7 @@ namespace _Scripts.Services
         private void Spawn()
         {
             _factory.SpawnOne();
-            EventBus.EventBus.Raise(GameEventType.EnemySpawned, 1);
+            EventBus.Raise(GameEventType.EnemySpawned, 1);
         }
         
         private void HandleGameEvent(GameEventType type, int value)

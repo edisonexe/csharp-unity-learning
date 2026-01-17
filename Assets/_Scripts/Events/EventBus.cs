@@ -1,4 +1,4 @@
-﻿namespace _Scripts.EventBus
+﻿namespace Events
 {
     public static class EventBus
     {
