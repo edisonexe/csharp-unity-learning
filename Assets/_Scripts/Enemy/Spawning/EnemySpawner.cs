@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Scripts.Enemy.Spawning
 {
-    public sealed class EnemySpawner : MonoBehaviour, IEnemyFactory
+    public sealed class EnemySpawner : MonoBehaviour, ISpawner
     {
         [SerializeField] private Transform _player;
         [SerializeField] private GameObject _enemyPrefab;

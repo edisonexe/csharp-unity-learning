@@ -1,6 +1,8 @@
 ﻿public enum GameEventType
 {
     ItemPicked,
+    ItemSpawned,
     EnemySpawned,
-    ScoreChanged
+    ScoreChanged,
+    Win
 }

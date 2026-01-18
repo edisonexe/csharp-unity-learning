@@ -5,21 +5,23 @@ namespace Services
 {
     public class SpawnService
     {
-        private readonly IEnemyFactory _factory;
+        private readonly ISpawner _spawner;
         private readonly float _interval;
+        private readonly GameEventType _spawnEventType;
         private float _timer;
 
-        public SpawnService(IEnemyFactory factory, float intervalSec)
+        public SpawnService(ISpawner spawner, float intervalSec, GameEventType spawnEventType)
         {
-            _factory = factory;
+            _spawner = spawner;
             _interval = intervalSec;
+            _spawnEventType = spawnEventType;
         }
         
         public void Enable() => EventBus.Subscribe(HandleGameEvent);
         
         public void Disable() => EventBus.Unsubscribe(HandleGameEvent);
         
-        public void Tick(float deltaTime)
+        public void Update(float deltaTime)
         {
             _timer += deltaTime;
             if (_timer < _interval) return;
@@ -29,8 +31,8 @@ namespace Services
 
         private void Spawn()
         {
-            _factory.SpawnOne();
-            EventBus.Raise(GameEventType.EnemySpawned, 1);
+            _spawner.SpawnOne();
+            EventBus.Raise(_spawnEventType, 1);
         }
         
         private void HandleGameEvent(GameEventType type, int value)

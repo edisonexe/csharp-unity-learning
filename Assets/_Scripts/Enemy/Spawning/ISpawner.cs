@@ -1,6 +1,6 @@
 ﻿namespace _Scripts.Enemy.Spawning
 {
-    public interface IEnemyFactory
+    public interface ISpawner
     {
         public void SpawnOne();
     }

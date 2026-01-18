@@ -5,55 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="feb37dc0-0db3-4a45-bd56-c6cdcba3d65a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Configs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Configs/EnemyConfig.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Configs/EnemyConfig.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Configs/GameConfig.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Configs/GameConfig.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/EnemyRed.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/EnemyRed.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Ground.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Ground.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/PlayerGreen.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/PlayerGreen.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemySpawner.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemySpawner.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/Arena.unity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/ChaseState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/ChaseState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/EnemyView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/EnemyView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/IEnemyState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/IEnemyState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/PatrolState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/PatrolState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Player.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerMoveService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerMoveService.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/New Material.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/New Material.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Item.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Item.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/ItemSpawner.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/ItemSpawner.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Item.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Item.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Arena.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Arena.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Arena.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper/Bootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper/Bootstrapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/ISpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/ISpawner.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Events/GameEventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Events/GameEventType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/GameConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/GameConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Services/SpawnService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/SpawnService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Spawning.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Spawning/EnemySpawner.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Spawning/EnemySpawner.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Spawning/IEnemyFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Spawning/IEnemyFactory.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/UIManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +46,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Enemy/PatrolState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Item.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Player/PlayerMoveService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Player/PlayerView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Services/GameState.cs" root0="FORCE_HIGHLIGHTING" />
@@ -172,7 +149,7 @@
       <updated>1756036400248</updated>
       <workItem from="1756036405700" duration="4000" />
       <workItem from="1768643952277" duration="6280000" />
-      <workItem from="1768733486585" duration="5040000" />
+      <workItem from="1768733486585" duration="9127000" />
     </task>
     <servers />
   </component>
