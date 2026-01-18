@@ -1,4 +1,4 @@
-﻿namespace Spawning
+﻿namespace _Scripts.Enemy.Spawning
 {
     public interface IEnemyFactory
     {
