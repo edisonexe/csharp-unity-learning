@@ -37,7 +37,7 @@ namespace Services
             if (Score >= _targetScore)
             {
                 State = GameState.Win;
-                EventBus.Raise(GameEventType.Win, 0);
+                EventBus.Raise(GameEventType.Win);
             }
         }
     }

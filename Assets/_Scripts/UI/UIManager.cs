@@ -61,7 +61,7 @@ namespace UI
         private static string FormatEntry(string time, GameEventType type, int value)
         {
             return value != 0
-                ? $"[{time}] {type} (+{value})"
+                ? $"[{time}] {type} ({value})"
                 : $"[{time}] {type}";
         }
 
