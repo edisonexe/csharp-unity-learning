@@ -9,7 +9,8 @@ namespace Services
         private readonly float _interval;
         private readonly GameEventType _spawnEventType;
         private float _timer;
-
+        private bool _enabled;
+        
         public SpawnService(ISpawner spawner, float intervalSec, GameEventType spawnEventType)
         {
             _spawner = spawner;
@@ -17,12 +18,24 @@ namespace Services
             _spawnEventType = spawnEventType;
         }
         
-        public void Enable() => EventBus.Subscribe(HandleGameEvent);
-        
-        public void Disable() => EventBus.Unsubscribe(HandleGameEvent);
-        
+        public void Enable()
+        {
+            if (_enabled) return;
+            _enabled = true;
+            EventBus.Subscribe(HandleGameEvent);
+        }
+
+        public void Disable()
+        {
+            if (!_enabled) return;
+            _enabled = false;
+            EventBus.Unsubscribe(HandleGameEvent);
+        }
+
         public void Update(float deltaTime)
         {
+            if (!_enabled) return;
+            
             _timer += deltaTime;
             if (_timer < _interval) return;
             _timer = 0f;
@@ -37,7 +50,8 @@ namespace Services
         
         private void HandleGameEvent(GameEventType type, int value)
         {
-            // Подписчик по ТЗ
+            if (type == GameEventType.Win)
+                Disable();
         }
 
     }

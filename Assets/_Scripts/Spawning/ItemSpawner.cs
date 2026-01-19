@@ -7,7 +7,7 @@ namespace Spawning
     {
         [SerializeField] private GameObject _itemPrefab;
         [SerializeField] private List<Transform> _spawnPoints;
-
+        
         public void SpawnOne()
         {
             if (_spawnPoints == null || _spawnPoints.Count == 0)
