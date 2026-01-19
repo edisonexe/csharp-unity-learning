@@ -8,7 +8,8 @@ namespace Actors.Enemy
     {
         [SerializeField] private EnemyConfig _enemyConfig;
         [SerializeField] private float _chaseDistance = 12f;
-
+        [SerializeField] private float _stoppingDistance = 2f;
+        
         private Transform _player;
 
         private IEnemyState _patrolState;
@@ -20,7 +21,7 @@ namespace Actors.Enemy
         public void SetPlayer(Transform player)
         {
             _player = player;
-            _chaseState = new ChaseState(_player, _enemyConfig.EnemyMoveSpeed);
+            _chaseState = new ChaseState(_player, _enemyConfig.EnemyMoveSpeed, _stoppingDistance);
         }
 
         public void SetPatrolPoints(List<Transform> points)
@@ -31,7 +32,7 @@ namespace Actors.Enemy
         
         private void Update()
         {
-            if (_player != null)
+            if (_player)
             {
                 float distance = Vector3.Distance(transform.position, _player.position);
                 _currentState = distance <= _chaseDistance

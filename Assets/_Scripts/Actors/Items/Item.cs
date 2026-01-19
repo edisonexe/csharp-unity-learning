@@ -6,13 +6,17 @@ namespace Actors.Items
     public sealed class Item : MonoBehaviour
     {
         [SerializeField] private int _scoreValue = 100;
-
+        private bool _picked;
+        
         private void Start() => Destroy(gameObject, 5f);
 
         private void OnTriggerEnter(Collider other)
         {
+            if (_picked) return;
             if (!other.CompareTag("Player")) return;
 
+            _picked = true;
+            
             EventBus.Raise(GameEventType.ItemPicked, _scoreValue);
             Destroy(gameObject);
         }
