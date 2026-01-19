@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Scripts.Player
+namespace Services
 {
     public sealed class PlayerMoveService
     {

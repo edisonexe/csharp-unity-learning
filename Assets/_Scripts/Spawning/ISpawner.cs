@@ -1,4 +1,4 @@
-﻿namespace _Scripts.Enemy.Spawning
+﻿namespace Spawning
 {
     public interface ISpawner
     {

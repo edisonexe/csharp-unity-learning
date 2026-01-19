@@ -1,9 +1,10 @@
-﻿using _Scripts.Enemy.Spawning;
-using _Scripts.Player;
+﻿using Player;
+using Spawning;
+using Events;
 using Services;
 using UnityEngine;
 
-namespace Bootstapper
+namespace Bootstrap
 {
     public sealed class Bootstrapper : MonoBehaviour
     {
@@ -17,8 +18,8 @@ namespace Bootstapper
         private SpawnService _itemSpawnService;
         private PlayerMoveService _playerMoveService;
     
-        private const GameEventType _enemySpawnedType = GameEventType.EnemySpawned;
-        private const GameEventType _itemSpawnedType = GameEventType.ItemSpawned;
+        private const GameEventType ENEMY_SPAWNED_T = GameEventType.EnemySpawned;
+        private const GameEventType ITEM_SPAWNED_T = GameEventType.ItemSpawned;
     
         private void Awake()
         {
@@ -26,8 +27,8 @@ namespace Bootstapper
             var itemSpawnInterval = _gameConfig.ItemSpawnInterval;
         
             _gameStateService = new GameStateService(_gameConfig.TargetScore);
-            _enemySpawnService = new SpawnService(_enemySpawner, enemySpawnInterval, _enemySpawnedType);
-            _itemSpawnService = new SpawnService(_itemSpawner, itemSpawnInterval, _itemSpawnedType);
+            _enemySpawnService = new SpawnService(_enemySpawner, enemySpawnInterval, ENEMY_SPAWNED_T);
+            _itemSpawnService = new SpawnService(_itemSpawner, itemSpawnInterval, ITEM_SPAWNED_T);
             _playerMoveService = new PlayerMoveService(_gameConfig.PlayerMoveSpeed);
         
             _gameStateService.Enable();

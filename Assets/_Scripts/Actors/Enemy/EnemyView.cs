@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using Actors.Enemy.AI;
 using UnityEngine;
 
-namespace Enemy
+namespace Actors.Enemy
 {
     public sealed class EnemyView : MonoBehaviour
     {
-        [SerializeField] private EnemyConfig enemyConfig;
-        [SerializeField] private float chaseDistance = 6f;
+        [SerializeField] private EnemyConfig _enemyConfig;
+        [SerializeField] private float _chaseDistance = 12f;
 
         private Transform _player;
 
@@ -14,20 +15,17 @@ namespace Enemy
         private IEnemyState _chaseState;
         private IEnemyState _currentState;
 
-        private void Awake()
-        {
-            _currentState = _patrolState;
-        }
+        private void Awake() => _currentState = _patrolState;
 
         public void SetPlayer(Transform player)
         {
             _player = player;
-            _chaseState = new ChaseState(_player, enemyConfig.EnemyMoveSpeed);
+            _chaseState = new ChaseState(_player, _enemyConfig.EnemyMoveSpeed);
         }
 
         public void SetPatrolPoints(List<Transform> points)
         {
-            _patrolState = new PatrolState(points, enemyConfig.EnemyMoveSpeed);
+            _patrolState = new PatrolState(points, _enemyConfig.EnemyMoveSpeed);
             if (_currentState == null) _currentState = _patrolState;
         }
         
@@ -36,7 +34,7 @@ namespace Enemy
             if (_player != null)
             {
                 float distance = Vector3.Distance(transform.position, _player.position);
-                _currentState = distance <= chaseDistance
+                _currentState = distance <= _chaseDistance
                     ? _chaseState
                     : _patrolState;
             }

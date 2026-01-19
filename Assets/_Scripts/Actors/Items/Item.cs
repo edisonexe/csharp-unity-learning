@@ -1,12 +1,11 @@
 ﻿using Events;
+using UnityEngine;
 
-namespace _Scripts
+namespace Actors.Items
 {
-    using UnityEngine;
-
     public sealed class Item : MonoBehaviour
     {
-        [SerializeField] private int scoreValue = 100;
+        [SerializeField] private int _scoreValue = 100;
 
         private void Start() => Destroy(gameObject, 5f);
 
@@ -14,7 +13,7 @@ namespace _Scripts
         {
             if (!other.CompareTag("Player")) return;
 
-            EventBus.Raise(GameEventType.ItemPicked, scoreValue);
+            EventBus.Raise(GameEventType.ItemPicked, _scoreValue);
             Destroy(gameObject);
         }
     }

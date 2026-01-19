@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy
+namespace Actors.Enemy.AI
 {
     public sealed class PatrolState : IEnemyState
     {

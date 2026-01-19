@@ -1,4 +1,4 @@
-﻿using _Scripts.Enemy.Spawning;
+﻿using Spawning;
 using Events;
 
 namespace Services

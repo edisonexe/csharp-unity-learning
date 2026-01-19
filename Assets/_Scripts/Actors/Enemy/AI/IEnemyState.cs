@@ -1,4 +1,4 @@
-﻿namespace Enemy
+﻿namespace Actors.Enemy.AI
 {
     public interface IEnemyState
     {

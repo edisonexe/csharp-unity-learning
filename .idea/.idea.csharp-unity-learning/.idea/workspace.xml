@@ -5,30 +5,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="feb37dc0-0db3-4a45-bd56-c6cdcba3d65a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/New Material.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/New Material.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Item.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Item.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/ItemSpawner.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/ItemSpawner.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Item.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Item.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Items.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Player.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Arena.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Arena.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper/Bootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper/Bootstrapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/ISpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/IEnemyFactory.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/ISpawner.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper/Bootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap/Bootstrapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstapper/Bootstrapper.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap/Bootstrapper.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/ChaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI/ChaseState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/ChaseState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI/ChaseState.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/EnemyView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/EnemyView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/EnemyView.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/EnemyView.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/IEnemyState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI/IEnemyState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/IEnemyState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI/IEnemyState.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/PatrolState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI/PatrolState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/PatrolState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Enemy/AI/PatrolState.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning/EnemySpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/EnemySpawner.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning/EnemySpawner.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/ISpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning/ISpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Enemy/Spawning/ISpawner.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning/ISpawner.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Events/GameEventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Events/GameEventType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/GameConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/GameConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/GameStateService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Items/Item.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Item.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Items/Item.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning/ItemSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/ItemSpawner.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Spawning/ItemSpawner.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerMoveService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/PlayerMoveService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerMoveService.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/PlayerMoveService.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Player/PlayerView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Player/PlayerView.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Actors/Player/PlayerView.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/EnemyConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/EnemyConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/EnemyConfig.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/EnemyConfig.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/GameConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/GameConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Scriptables/GameConfig.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/GameConfig.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Services/SpawnService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/SpawnService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +167,9 @@
       <updated>1756036400248</updated>
       <workItem from="1756036405700" duration="4000" />
       <workItem from="1768643952277" duration="6280000" />
-      <workItem from="1768733486585" duration="9127000" />
+      <workItem from="1768733486585" duration="9366000" />
+      <workItem from="1768808543208" duration="525000" />
+      <workItem from="1768810524689" duration="1050000" />
     </task>
     <servers />
   </component>

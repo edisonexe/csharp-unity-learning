@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemy
+namespace Actors.Enemy.AI
 {
     public sealed class ChaseState : IEnemyState
     {

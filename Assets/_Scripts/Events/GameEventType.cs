@@ -1,8 +1,11 @@
-﻿public enum GameEventType
+﻿namespace Events
 {
-    ItemPicked,
-    ItemSpawned,
-    EnemySpawned,
-    ScoreChanged,
-    Win
+    public enum GameEventType
+    {
+        ItemPicked,
+        ItemSpawned,
+        EnemySpawned,
+        ScoreChanged,
+        Win
+    }    
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Enemy;
+using Actors.Enemy;
 using UnityEngine;
 
-namespace _Scripts.Enemy.Spawning
+namespace Spawning
 {
     public sealed class EnemySpawner : MonoBehaviour, ISpawner
     {
