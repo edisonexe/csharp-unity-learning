@@ -1,5 +1,6 @@
 ﻿using Spawning;
 using Events;
+using UnityEngine;
 
 namespace Services
 {
@@ -44,13 +45,19 @@ namespace Services
 
         private void Spawn()
         {
+            if (_spawner == null)
+            {
+                Debug.LogError("[SpawnService] Spawner - null. Пропуск спавна.");
+                return;
+            }
+            
             _spawner.SpawnOne();
             EventBus.Raise(_spawnEventType, 1);
         }
         
         private void HandleGameEvent(GameEventType type, int value)
         {
-            if (type == GameEventType.Win)
+            if (type == GameEventType.Win || type == GameEventType.Lose || type == GameEventType.RestartRequested)
                 Disable();
         }
 

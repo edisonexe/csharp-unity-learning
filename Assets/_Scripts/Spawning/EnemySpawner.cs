@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Actors.Enemy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Spawning
 {
@@ -10,13 +12,12 @@ namespace Spawning
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private List<Transform> _spawnPoints;
         [SerializeField] private List<Transform> _patrolPoints;
-        
-        
+
         public void SpawnOne()
         {
-            if (_spawnPoints == null || _spawnPoints.Count == 0)
+            if (!_enemyPrefab || !_player || _spawnPoints == null || _spawnPoints.Count == 0)
             {
-                Debug.LogWarning("[EnemySpawner]: Нет точек спавна");
+                Debug.LogError("[EnemySpawner] EnemyPrefab/Player/Points - null. Пропуск спавна врага.");
                 return;
             }
 
@@ -24,7 +25,7 @@ namespace Spawning
             var go = Instantiate(_enemyPrefab, point.position + Vector3.up, point.rotation);
             
             var enemy = go.GetComponent<EnemyView>();
-            if (enemy != null)
+            if (enemy)
             {
                 enemy.SetPlayer(_player);
                 enemy.SetPatrolPoints(_patrolPoints);

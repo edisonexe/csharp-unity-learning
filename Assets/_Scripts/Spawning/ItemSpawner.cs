@@ -10,9 +10,9 @@ namespace Spawning
         
         public void SpawnOne()
         {
-            if (_spawnPoints == null || _spawnPoints.Count == 0)
+            if (!_itemPrefab|| _spawnPoints == null || _spawnPoints.Count == 0)
             {
-                Debug.LogWarning("[ItemSpawner]: Нет точек спавна");
+                Debug.LogWarning("[ItemSpawner]: ItemPrefab/Points - null. Пропуск спавна предмета.");
                 return;
             }
 
