@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace Actors.Enemy.AI
 {
-    public sealed class PatrolState : IEnemyState
+    public sealed class PatrolStrategy : IEnemyStrategy
     {
-        private readonly IReadOnlyList<Transform> _points;
-        private readonly float _speed;
+        private IReadOnlyList<Transform> _points;
+        private float _speed;
         private int _index;
 
-        public PatrolState(IReadOnlyList<Transform> points, float speed)
+        public void Init(Transform player, IReadOnlyList<Transform> patrolPoints, float speed, float stoppingDistance)
         {
-            _points = points;
+            _points = patrolPoints;
             _speed = speed;
             _index = 0;
         }
@@ -36,7 +36,7 @@ namespace Actors.Enemy.AI
             dir.y = 0f;
             if (dir.sqrMagnitude < 0.0001f) return;
 
-            enemy.transform.position += dir.normalized * (_speed * dt);
+            enemy.MoveBy(dir.normalized * (_speed * dt));
         }
     }   
 }

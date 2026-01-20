@@ -153,3 +153,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyConfig: {fileID: 11400000, guid: 297b43509e4ea8a42a9c28c3cba21b6e, type: 2}
   _chaseDistance: 12
+  _stoppingDistance: 1
+  _damage: 1
