@@ -2,5 +2,7 @@
 {
     Init,
     Playing,
-    Win
+    Paused,
+    Win,
+    Lose
 }

@@ -6,6 +6,12 @@
         ItemSpawned,
         EnemySpawned,
         ScoreChanged,
-        Win
+        PlayerDamaged,
+        PlayerHpChanged,
+        GamePaused,
+        GameStateChanged,
+        RestartRequested,
+        Win,
+        Lose
     }    
 }

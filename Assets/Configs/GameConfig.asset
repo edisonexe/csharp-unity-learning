@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6507e7f347afbdf43afaf72448487f90, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  _playerMoveSpeed: 6
+  _playerMoveSpeed: 7
   _enemySpawnInterval: 5
   _targetScore: 200
-  _itemSpawnInterval: 3
+  _itemSpawnInterval: 5
+  _playerMaxHp: 3
