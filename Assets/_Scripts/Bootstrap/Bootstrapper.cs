@@ -1,4 +1,5 @@
 ﻿using System;
+using _Scripts.GameFSM;
 using Player;
 using Spawning;
 using Events;
@@ -51,7 +52,6 @@ namespace Bootstrap
 
         private void Update()
         {
-            if (_gameStateService.State != GameState.Playing) return;
             _enemySpawnService.Update(Time.deltaTime);
             _itemSpawnService.Update(Time.deltaTime);
         }

@@ -1,4 +1,5 @@
-﻿using Spawning;
+﻿using _Scripts.GameFSM;
+using Spawning;
 using Events;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Services
         private readonly GameEventType _spawnEventType;
         private float _timer;
         private bool _enabled;
+        private bool _paused;
         
         public SpawnService(ISpawner spawner, float intervalSec, GameEventType spawnEventType)
         {
@@ -23,6 +25,8 @@ namespace Services
         {
             if (_enabled) return;
             _enabled = true;
+            _paused = false;
+            _timer = 0f;
             EventBus.Subscribe(HandleGameEvent);
         }
 
@@ -36,10 +40,12 @@ namespace Services
         public void Update(float deltaTime)
         {
             if (!_enabled) return;
+            if (_paused) return;
             
             _timer += deltaTime;
             if (_timer < _interval) return;
-            _timer = 0f;
+            _timer -= _interval;
+            
             Spawn();
         }
 
@@ -54,12 +60,29 @@ namespace Services
             _spawner.SpawnOne();
             EventBus.Raise(_spawnEventType, 1);
         }
-        
+
         private void HandleGameEvent(GameEventType type, int value)
         {
             if (type == GameEventType.Win || type == GameEventType.Lose || type == GameEventType.RestartRequested)
+            {
                 Disable();
-        }
+                return;
+            }
+            if (type == GameEventType.GameStateChanged)
+            {
+                var state = (GameState)value;
 
+                if (state == GameState.Playing)
+                {
+                    _paused = false;
+                }
+                else if (!_paused)
+                {
+                    _paused = true;
+                    _timer = 0f;
+                }
+            }
+
+        }
     }
 }
