@@ -22,7 +22,7 @@ namespace Actors.Enemy.AI
 
             Vector3 dir = _player.position - enemy.transform.position;
             dir.y = 0f;
-            if (dir.sqrMagnitude < _stoppingDistance) return;
+            if (dir.sqrMagnitude < _stoppingDistance * _stoppingDistance) return;
 
             enemy.MoveBy(dir.normalized * (_speed * dt));
         }

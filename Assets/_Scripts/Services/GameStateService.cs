@@ -1,22 +1,44 @@
-﻿using Events;
+﻿using System.Collections.Generic;
+using _Scripts.GameFSM;
+using Events;
+using GameFSM;
+using GameFSM.States;
 using UnityEngine;
 
 namespace Services
 {
     public class GameStateService
     {
-        public GameState State { get; private set; } = GameState.Init;
         public int Score { get; private set; }
         public int PlayerHp { get; private set; }
 
         private readonly int _targetScore;
         private readonly int _maxHp;
 
+        private GameStateMachine _gameStateMachine = new();
+        private readonly Dictionary<GameState, IGameState> _states;
+        private IGameState _currentState;
+        
+        public GameState State => _currentState.Type;
+        
         public GameStateService(int targetScore, int maxHp = 3)
         {
             _targetScore = targetScore;
             _maxHp = Mathf.Max(1, maxHp);
+            
+            _states = new Dictionary<GameState, IGameState>
+            {
+                { GameState.Init, new InitState() },
+                { GameState.Playing, new PlayingState() },
+                { GameState.Paused, new PausedState() },
+                { GameState.Win, new WinState() },
+                { GameState.Lose, new LoseState() },
+            };
+            
             PlayerHp = _maxHp;
+            _currentState = _states[GameState.Init];
+            _currentState.Enter(this);
+            RaiseStateChanged();
         }
 
         public void Enable() => EventBus.Subscribe(HandleGameEvent);
@@ -28,85 +50,51 @@ namespace Services
             EventBus.ClearHistory();
             Score = 0;
             PlayerHp = _maxHp;
-            ChangeState(GameState.Playing);
             EventBus.Raise(GameEventType.ScoreChanged, Score);
             EventBus.Raise(GameEventType.PlayerHpChanged, PlayerHp);
+            
+            ChangeState(GameState.Playing);
         }
 
-        private void HandleGameEvent(GameEventType type, int value)
+        public void ChangeState(GameState to)
         {
-            switch (type)
-            {
-                case GameEventType.ItemPicked:
-                    HandleItemPicked(value);
-                    break;
+            var from = _currentState.Type;
+            if (from == to) return;
+            if (!_gameStateMachine.CanTransition(from, to)) return;
 
-                case GameEventType.GamePaused:
-                    TogglePause();
-                    break;
+            _currentState.Exit(this);
+            _currentState = _states[to];
+            _currentState.Enter(this);
 
-                case GameEventType.PlayerDamaged:
-                    HandlePlayerDamaged(value);
-                    break;
-
-                case GameEventType.RestartRequested:
-                    ChangeState(GameState.Init);
-                    Time.timeScale = 1f;
-                    break;
-            }
+            RaiseStateChanged();
         }
         
-        private void HandleItemPicked(int value)
+        public void AddScore(int value)
         {
-            if (State != GameState.Playing) return;
-            
             var add = value <= 0 ? 1 : value;
             Score += add;
-
             EventBus.Raise(GameEventType.ScoreChanged, Score);
 
             if (Score >= _targetScore)
-            {
                 ChangeState(GameState.Win);
-                EventBus.Raise(GameEventType.Win);
-            }
         }
-        
-        private void HandlePlayerDamaged(int value)
-        {
-            if (State != GameState.Playing) return;
 
+        public void ApplyDamage(int value)
+        {
             int dmg = value <= 0 ? 1 : value;
             PlayerHp -= dmg;
+            if (PlayerHp < 0) PlayerHp = 0;
+
             EventBus.Raise(GameEventType.PlayerHpChanged, PlayerHp);
 
             if (PlayerHp <= 0)
-            {
-                PlayerHp = 0;
                 ChangeState(GameState.Lose);
-                EventBus.Raise(GameEventType.Lose);
-            }
         }
-
-        private void TogglePause()
-        {
-            if (State == GameState.Playing)
-            {
-                ChangeState(GameState.Paused);
-                Time.timeScale = 0f;
-            }
-            else if (State == GameState.Paused)
-            {
-                Time.timeScale = 1f;
-                ChangeState(GameState.Playing);
-            }
-        }
-
-        private void ChangeState(GameState newState)
-        {
-            if (State == newState) return;
-            State = newState;
-            EventBus.Raise(GameEventType.GameStateChanged, (int)newState);
-        }
+        
+        private void RaiseStateChanged()
+            => EventBus.Raise(GameEventType.GameStateChanged, (int)_currentState.Type);
+        
+        private void HandleGameEvent(GameEventType type, int value)
+            => _currentState.Update(this, type, value);
     }
 }
