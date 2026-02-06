@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Configs;
+using Weapon;
 
 namespace Characters.Player
 {
@@ -9,16 +12,17 @@ namespace Characters.Player
         public int Damage { get; }
         public float MoveSpeed { get; }
         public bool IsAlive => CurrentHp > 0;
-
+        public WeaponSet Weapons { get; }
         public event Action<int, int> HpChanged;
         public event Action Died;
 
-        public PlayerEntity(int maxHp,  int damage, float moveSpeed)
+        public PlayerEntity(PlayerConfig cfg)
         {
-            MaxHp = maxHp;
-            CurrentHp = maxHp;
-            Damage = damage;
-            MoveSpeed = moveSpeed;
+            MaxHp = cfg.MaxHp;
+            CurrentHp = cfg.MaxHp;
+            Damage = cfg.Damage;
+            MoveSpeed = cfg.MoveSpeed;
+            Weapons = CreateWeaponSet(cfg.WeaponCfgs);
         }
 
         public void TakeDamage(int amount)
@@ -32,6 +36,15 @@ namespace Characters.Player
             {
                 Died?.Invoke();
             }
+        }
+        
+        private WeaponSet CreateWeaponSet(WeaponConfig[] cfgs)
+        {
+            var models = new List<WeaponModel>(cfgs.Length);
+            foreach (var cfg in cfgs)
+                models.Add(new WeaponModel(cfg));
+
+            return new WeaponSet(models);
         }
     }
 

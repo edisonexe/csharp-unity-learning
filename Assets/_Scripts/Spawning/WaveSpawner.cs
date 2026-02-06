@@ -1,4 +1,4 @@
-﻿using Interfaces;
+﻿using System;
 
 namespace Spawning
 {
@@ -8,7 +8,9 @@ namespace Spawning
         private readonly int _countPerWave;
         private readonly int _maxWaves;
         private int _spawnedWaves;
-
+        
+        public event Action AllWavesSpawned;
+        
         public WaveSpawner(ISpawner spawner, int countPerWave, int maxWaves)
         {
             _spawner = spawner;
@@ -20,15 +22,16 @@ namespace Spawning
         
         public void SpawnWave()
         {
-            if (!CanSpawnWave()) return;
-            
-            for (var i = 0; i < _countPerWave; i++)
-            {
-                _spawner.SpawnOne();
-            }
-            
-            _spawnedWaves++;
-        }
+            if (!CanSpawnWave())
+                return;
 
+            for (var i = 0; i < _countPerWave; i++)
+                _spawner.SpawnOne();
+
+            _spawnedWaves++;
+
+            if (_spawnedWaves >= _maxWaves)
+                AllWavesSpawned?.Invoke();
+        }
     }
 }

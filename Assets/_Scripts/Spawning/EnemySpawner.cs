@@ -2,7 +2,6 @@
 using Characters.Enemy;
 using Characters.Player;
 using Game;
-using Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -47,6 +46,7 @@ namespace Spawning
             pos = hit.position;
 
             var enemy = Instantiate(prefab, pos, Quaternion.identity);
+            _run.EnemySpawned();
             enemy.ConstructEnemy(_playerEntity, _playerTransform);
             enemy.Died += OnEnemyDied;
         }
@@ -54,7 +54,7 @@ namespace Spawning
         private void OnEnemyDied(EnemyController enemy)
         {
             enemy.Died -= OnEnemyDied;
-            _run.AddKill();
+            _run.EnemyKilled();
         }
     }
 }

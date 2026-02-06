@@ -24,15 +24,9 @@ namespace Characters.Enemy
             _nextAttackTime = 0f;
         }
 
-        public bool CanAttack(float time)
-        {
-            return time >= _nextAttackTime;
-        }
+        public bool CanAttack(float time) => time >= _nextAttackTime;
 
-        public void MarkAttack(float time)
-        {
-            _nextAttackTime = time + AttackCooldown;
-        }
+        public void MarkAttack(float time) => _nextAttackTime = time + AttackCooldown;
 
         public void TakeDamage(int amount)
         {

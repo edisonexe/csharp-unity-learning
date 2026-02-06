@@ -11,11 +11,6 @@ namespace Camera
 
         private float _rotationY;
 
-        private void Awake()
-        {
-        
-        }
-
         private void LateUpdate()
         {
             if (!_target || Mouse.current == null)

@@ -12,7 +12,7 @@ namespace Characters.Player
 
         public void Show(Vector3 from, Vector3 to)
         {
-            if (_line == null) return;
+            if (!_line) return;
             _line.positionCount = 2;
             _line.SetPosition(0, from);
             _line.SetPosition(1, to);

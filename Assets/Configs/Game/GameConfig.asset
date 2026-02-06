@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2ff4795274aa09888162d3276214a, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  _enemiesPerWave: 5
-  _waveInterval: 10
+  _enemiesPerWave: 3
+  _waveInterval: 5
   _maxWaves: 3

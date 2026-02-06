@@ -113,7 +113,7 @@ namespace Characters.Enemy
         private void OnPlayerDied()
         {
             _enabled = false;
-            if (_agent != null) _agent.isStopped = true;
+            if (_agent) _agent.isStopped = true;
         }
     }
 }
