@@ -208,7 +208,7 @@ MonoBehaviour:
   _clickRayRange: 500
   _camera: {fileID: 0}
   _cameraRigRoot: {fileID: 0}
-  _yawSpeed: 0.2
+  _yawSpeed: 0.6
   _holdThreshold: 0.15
   _dragThresholdPixels: 8
   _shootingPoint: {fileID: 7502718014089224655}
@@ -219,6 +219,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 704
   _tracerPrefab: {fileID: 5289073968145064434, guid: c2c12f8f25a725c46be13d6c01e1e854, type: 3}
+  _poolHub: {fileID: 0}
 --- !u!1001 &8398501177000494119
 PrefabInstance:
   m_ObjectHideFlags: 0

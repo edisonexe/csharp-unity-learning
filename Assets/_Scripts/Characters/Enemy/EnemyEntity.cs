@@ -9,7 +9,7 @@ namespace Characters.Enemy
         public bool IsDead => CurrentHp <= 0;
         public float MoveSpeed { get; }
         public int Damage { get; }
-        public float AttackCooldown { get; }
+        private readonly float _attackCooldown;
 
         
         private float _nextAttackTime;
@@ -20,13 +20,13 @@ namespace Characters.Enemy
             CurrentHp = maxHp;
             MoveSpeed = moveSpeed;
             Damage = damage;
-            AttackCooldown = attackCooldown;
+            _attackCooldown = attackCooldown;
             _nextAttackTime = 0f;
         }
 
         public bool CanAttack(float time) => time >= _nextAttackTime;
 
-        public void MarkAttack(float time) => _nextAttackTime = time + AttackCooldown;
+        public void MarkAttack(float time) => _nextAttackTime = time + _attackCooldown;
 
         public void TakeDamage(int amount)
         {
@@ -34,5 +34,10 @@ namespace Characters.Enemy
             CurrentHp = Mathf.Max(0, CurrentHp - amount);
         }
 
+        public void ResetState()
+        {
+            CurrentHp = MaxHp;
+            _nextAttackTime = 0f;
+        }
     }
 }

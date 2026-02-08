@@ -18,3 +18,4 @@ MonoBehaviour:
   _attackCooldown: 0.5
   _attackDistance: 1
   _enemyMaterial: {fileID: 2100000, guid: 534914f419311f34cbf83d247997b239, type: 2}
+  _color: {r: 0.79851437, g: 0.3066038, b: 1, a: 1}

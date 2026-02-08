@@ -10,13 +10,13 @@ namespace Configs
         [SerializeField][Min(1f)] private int _damage = 1;
         [SerializeField][Min(0.2f)] private float _attackCooldown = 0.8f;
         [SerializeField] [Min(0.2f)] private float _attackDistance = 0.5f;
-        [SerializeField] private Material _enemyMaterial;
+        [SerializeField] private Color _color = Color.white;
 
         public int MaxHp => _maxHp;
         public float MoveSpeed => _moveSpeed;
         public int Damage => _damage;
         public float AttackCooldown => _attackCooldown;
         public float AttackDistance => _attackDistance;
-        public Material EnemyMaterial => _enemyMaterial;
+        public Color Color => _color;
     }
 }

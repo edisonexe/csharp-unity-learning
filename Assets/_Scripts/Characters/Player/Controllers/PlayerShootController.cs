@@ -1,4 +1,5 @@
 ﻿using Characters.Enemy;
+using Pooling;
 using UnityEngine;
 using Weapon;
 
@@ -9,12 +10,16 @@ namespace Characters.Player.Controllers
         private readonly Transform _shootingPoint;
         private readonly LayerMask _shootMask;
         private readonly ShootTracerView _tracerPrefab;
-
-        public PlayerShootController(Transform shootingPoint, LayerMask shootMask, ShootTracerView tracerPrefab)
+        private readonly ObjectPool<ShootTracerView> _tracerPool;
+        
+        public PlayerShootController(Transform shootingPoint, LayerMask shootMask, ShootTracerView tracerPrefab,
+            PoolHub poolHub)
         {
             _shootingPoint = shootingPoint;
             _shootMask = shootMask;
             _tracerPrefab = tracerPrefab;
+            if (_tracerPrefab && poolHub)
+                _tracerPool = poolHub.GetPool(_tracerPrefab);
         }
 
         public void Update(Input.PlayerInputReader input, WeaponModel weapon, PlayerAimController aim, 
@@ -44,18 +49,20 @@ namespace Characters.Player.Controllers
             int damage = weapon.Config.Damage;
 
             Vector3 to = from + dir * range;
-
+            
             if (Physics.Raycast(from, dir, out RaycastHit hit, range, _shootMask))
             {
                 to = hit.point;
-                hit.collider.GetComponent<EnemyController>()?.TakeDamage(damage);
+                if (hit.collider.TryGetComponent<EnemyController>(out var enemy))
+                    enemy.TakeDamage(damage);
             }
 
-            if (_tracerPrefab)
+            if (_tracerPool != null)
             {
-                var tracer = Object.Instantiate(_tracerPrefab);
-                tracer.Show(from, to);
+                var tracer = _tracerPool.Get(from, Quaternion.identity);
+                tracer.Init(_tracerPool, from, to);
             }
+
         }
     }
 }

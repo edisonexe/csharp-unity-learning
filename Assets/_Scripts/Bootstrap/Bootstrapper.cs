@@ -18,7 +18,7 @@ namespace Bootstrap
         [SerializeField] private GameConfig _gameCfg;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private HudView _hudView;
-    
+        
         private PlayerEntity _playerEntity;
         private WeaponSet _weaponSet;
         private WaveSpawner _waveSpawner;
