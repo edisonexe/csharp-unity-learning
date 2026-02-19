@@ -1,4 +1,4 @@
-﻿using _Scripts.Interfaces;
+﻿using _Scripts.Interfaces.Input;
 using UnityEngine;
 
 namespace _Scripts.Camera

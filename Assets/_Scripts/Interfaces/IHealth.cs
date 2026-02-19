@@ -11,5 +11,6 @@ namespace _Scripts.Interfaces
         public event Action Died;
 
         public void Damage(int amount);
+        public void Reset();
     }
 }
