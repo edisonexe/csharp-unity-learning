@@ -4,56 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61a67fa9-0a01-41ac-99ac-7894b2776c9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/FastSpawnModifierDefinition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/FastSpawnModifierDefinition.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/GameModifiersConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/GameModifiersConfig.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/ModifierDefinition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/ModifierDefinition.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/NoInputModifierDefinition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/NoInputModifierDefinition.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/RegenModifierDefinition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Configs/Modifiers/RegenModifierDefinition.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/FastSpawnModifier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/FastSpawnModifier.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/ModifierContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/ModifierContext.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/ModifierRunner.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/ModifierRunner.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/NoInputModifier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/NoInputModifier.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/RegenModifier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/GameModifiers/RegenModifier.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IGameModifier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IGameModifier.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/Spawn.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/Spawn/ISpawnRate.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/Spawn/ISpawnRate.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap/GameScene/SceneBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap/GameScene/SceneBootstrapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/GSM/GameOverState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/GSM/GameOverState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/GSM/GameplayState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/GSM/GameplayState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/GSM/MainMenuState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/GSM/MainMenuState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/GSM/PauseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/GSM/PauseState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/GameFlow/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/GameFlow/GameController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/GameFlow/GameSession.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/GameFlow/GameSession.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Spawning/CollectableSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Spawning/CollectableSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/ISpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/Spawn/ISpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/ISpawner.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/Spawn/ISpawner.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/View/IGameplayHud.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/View/IGameplayHud.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Models/HealthModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Models/HealthModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Services/Logging/HealthLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Services/Logging/HealthLogger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/GameOverView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/GameOverView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/GameplayHud.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/GameplayHud.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/MainMenuView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/MainMenuView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/PauseView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/PauseView.cs" afterDir="false" />
-    </list>
+    <list default="true" id="61a67fa9-0a01-41ac-99ac-7894b2776c9f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -208,7 +159,7 @@
       <workItem from="1771478420773" duration="3493000" />
       <workItem from="1771486319823" duration="9838000" />
       <workItem from="1771514520552" duration="5175000" />
-      <workItem from="1771588002384" duration="7486000" />
+      <workItem from="1771588002384" duration="7791000" />
     </task>
     <servers />
   </component>
