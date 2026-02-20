@@ -31,7 +31,7 @@ namespace _Scripts.GSM
             _view.Show();
             _view.OnRestart += RestartHandler;
             _view.OnToMenu += OnToMenuHandler;
-            _logger.Log("Enter GameOverState");
+            _logger.Log("[GameOverState]: Enter");
         }
 
         public void Exit()
@@ -39,7 +39,7 @@ namespace _Scripts.GSM
             _view.Hide();
             _view.OnRestart -= RestartHandler;
             _view.OnToMenu -= OnToMenuHandler;
-            _logger.Log("Exit GameOverState");
+            _logger.Log("[GameOverState]: Exit");
         }
 
         private void RestartHandler()

@@ -1,4 +1,5 @@
-﻿using _Scripts.GSM;
+﻿using _Scripts.Gameplay.GameModifiers;
+using _Scripts.GSM;
 using _Scripts.Interfaces;
 using UnityEngine;
 
@@ -9,9 +10,11 @@ namespace _Scripts.GameFlow
         private GameStateMachine _gsm;
         private IPauseInputService _pauseInput;
         private ILoggerService _logger;
+        private ModifierRunner _modifierRunner;
         private bool _isInitialized;
         
-        public void Init(GameStateMachine gsm, IPauseInputService pauseInput, ILoggerService logger)
+        public void Init(GameStateMachine gsm, IPauseInputService pauseInput, ILoggerService logger,
+            ModifierRunner runner)
         {
             _logger = logger;
             if (_isInitialized)
@@ -27,6 +30,7 @@ namespace _Scripts.GameFlow
             }
             _gsm = gsm;
             _pauseInput = pauseInput;
+            _modifierRunner = runner;
             
             _isInitialized = true;
         }
@@ -34,6 +38,10 @@ namespace _Scripts.GameFlow
         private void Update()
         {
             if (!_isInitialized) return;
+            
+            if (_gsm.CurrentState is GameplayState)
+                _modifierRunner?.Tick(Time.deltaTime);
+            
             if (_pauseInput.PausePressedThisFrame)
             {
                 if (_gsm.CurrentState is GameplayState)

@@ -7,10 +7,12 @@ namespace _Scripts.Interfaces
         public int Current { get; }
         public int Max { get; }
 
-        public event Action<int> Damaged;
+        // public event Action<int> Damaged;
+        public event Action<int, int> Changed;
         public event Action Died;
 
         public void Damage(int amount);
+        void Heal(int amount); 
         public void Reset();
     }
 }

@@ -31,7 +31,7 @@ namespace _Scripts.GSM
             _view.Show();
             _view.OnResume += ResumeHandler;
             _view.OnToMenu += OnToMenuHandler;
-            _logger.Log("Enter PauseState");
+            _logger.Log("[PauseState]: Enter");
         }
 
         public void Exit()
@@ -40,7 +40,7 @@ namespace _Scripts.GSM
             _view.Hide();
             _view.OnResume -= ResumeHandler;
             _view.OnToMenu -= OnToMenuHandler;
-            _logger.Log("Exit PauseState");
+            _logger.Log("[PauseState]: Exit");
         }
 
         private void ResumeHandler()

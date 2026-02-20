@@ -26,7 +26,7 @@ namespace _Scripts.GSM
             _view.Show();
             _view.OnStart += StartHandler;
             _view.OnExit += ExitHandler;
-            _logger.Log("Enter MainMenuState");
+            _logger.Log("[MainMenuState]: Enter");
         }
 
         public void Exit()
@@ -34,7 +34,7 @@ namespace _Scripts.GSM
             _view.Hide();
             _view.OnStart -= StartHandler;
             _view.OnExit -= ExitHandler;
-            _logger.Log("Exit MainMenuState");
+            _logger.Log("[MainMenuState]: Exit");
         }
 
         private void StartHandler()

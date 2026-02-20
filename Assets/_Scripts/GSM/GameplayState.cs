@@ -1,7 +1,10 @@
-﻿using _Scripts.Configs;
+﻿using System.Collections.Generic;
+using _Scripts.Configs;
 using _Scripts.GameFlow;
+using _Scripts.Gameplay.GameModifiers;
 using _Scripts.Interfaces;
 using _Scripts.Interfaces.Input;
+using _Scripts.Interfaces.Spawn;
 using _Scripts.Interfaces.View;
 
 namespace _Scripts.GSM
@@ -18,10 +21,13 @@ namespace _Scripts.GSM
         private readonly GameRulesConfig _gameCfg;
         private readonly IGameResult _gameResult;
         private readonly IInputToggle _inputToggle;
+        private readonly ModifierRunner _modifierRunner;
+        private readonly IReadOnlyList<string> _modifierNames;
 
         public GameplayState(ILoggerService logger, IGameplayHud hud, GameStateMachine gsm, ISpawner spawner,
             IInputModeProvider inputMode, IHealth health, IScore score, GameRulesConfig gameCfg, 
-            IGameResult gameResult, IInputToggle inputToggle)
+            IGameResult gameResult, IInputToggle inputToggle, ModifierRunner modifierRunner, 
+            IReadOnlyList<string> modifierNames)
         {
             _hud = hud;
             _gsm = gsm;
@@ -33,38 +39,45 @@ namespace _Scripts.GSM
             _gameCfg = gameCfg;
             _gameResult = gameResult;
             _inputToggle = inputToggle;
+            _modifierRunner = modifierRunner;
+            _modifierNames = modifierNames;
         }
         
         public void Enter()
         {
             _inputToggle.Enable();
+            
+            _health.Changed += HealthHandler;
+            _health.Died += DeathHandler;
+            _score.Changed += ScoreHandler;
+            _hud.SetModifiers(_modifierNames);
+            
             _hud.Show();
+            
             _hud.SetHp(_health.Current, _health.Max);
             _hud.SetScore(_score.Current);
             _hud.SetInputMode(_inputMode.CurrentMode.ToString());
-
-            _health.Damaged += HealthHandler;
-            _health.Died += DeathHandler;
-            _score.Changed += ScoreHandler;
-            _logger.Log("Enter GameplayState");
-            _spawner.StartSpawning();
             
+            _modifierRunner.Activate();
+            
+            _spawner.StartSpawning();
+            _logger.Log("[GameplayState]: Enter");
         }
 
         public void Exit()
         {
-            _health.Damaged -= HealthHandler;
+            _spawner.StopSpawning();
+            _modifierRunner.Deactivate();
+            
+            _health.Changed -= HealthHandler;
             _health.Died -= DeathHandler;
             _score.Changed -= ScoreHandler;
-            _spawner.StopSpawning();
+            
             _hud.Hide();
-            _logger.Log("Exit GameplayState");
+            _logger.Log("[GameplayState]: Exit");
         }
 
-        private void HealthHandler(int amount)
-        {
-            _hud.SetHp(_health.Current, _health.Max);
-        }
+        private void HealthHandler(int cur, int max) => _hud.SetHp(cur, max);
 
         private void DeathHandler()
         {

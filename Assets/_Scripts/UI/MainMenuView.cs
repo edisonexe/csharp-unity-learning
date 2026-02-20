@@ -35,6 +35,7 @@ namespace _Scripts.UI
             _startBtn.onClick.AddListener(() => OnStart?.Invoke());
             _exitBtn.onClick.AddListener(() => OnExit?.Invoke());
             
+            Hide();
             _isInitialized = true;
         }
         

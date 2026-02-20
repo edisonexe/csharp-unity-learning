@@ -1,4 +1,4 @@
-﻿namespace _Scripts.Interfaces
+﻿namespace _Scripts.Interfaces.Spawn
 {
     public interface ISpawner
     {

@@ -35,6 +35,7 @@ namespace _Scripts.UI
             _resumeBtn.onClick.AddListener(() => OnResume?.Invoke());
             _toMenuBtn.onClick.AddListener(() => OnToMenu?.Invoke());
             
+            Hide();
             _isInitialized = true;
         }
         

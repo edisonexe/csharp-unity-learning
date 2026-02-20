@@ -1,12 +1,16 @@
-﻿using _Scripts.Camera;
+﻿using System.Collections.Generic;
+using _Scripts.Camera;
 using _Scripts.Configs;
+using _Scripts.Configs.Modifiers;
 using _Scripts.GameFlow;
 using _Scripts.Gameplay.Factories;
+using _Scripts.Gameplay.GameModifiers;
 using _Scripts.Gameplay.Spawning;
 using _Scripts.Gameplay.World;
 using _Scripts.GSM;
 using _Scripts.Interfaces;
 using _Scripts.Interfaces.Input;
+using _Scripts.Interfaces.Spawn;
 using _Scripts.Models;
 using _Scripts.Player;
 using _Scripts.Services.Input;
@@ -23,6 +27,7 @@ namespace _Scripts.Bootstrap.GameScene
         [Header("Configs")]
         [SerializeField] private PlayerConfig _playerCfg;
         [SerializeField] private GameRulesConfig _gameCfg;
+        [SerializeField] private GameModifiersConfig _modifiersConfig;
 
         [Header("Scene Refs")]
         [SerializeField] private PlayerController _player;
@@ -46,7 +51,7 @@ namespace _Scripts.Bootstrap.GameScene
 
         [Header("Controllers")]
         [SerializeField] private GameController _gameController;
-
+        
         private IInputService _input;
         private bool _installed;
 
@@ -92,6 +97,21 @@ namespace _Scripts.Bootstrap.GameScene
 
             ILookInputService lookInput = _input as ILookInputService;
             
+            var modifierContext = new ModifierContext(logger, health, inputToggle, _collectableSpawner as ISpawnRate);
+            
+            var modifiers = new List<IGameModifier>();
+            var modifierNames = new List<string>();
+            if (_modifiersConfig != null)
+            {
+                foreach (var def in _modifiersConfig.Modifiers)
+                {
+                    if (!def) continue;
+                    modifiers.Add(def.Create(modifierContext));
+                    modifierNames.Add(def.DisplayName);
+                }
+            }
+            var modifierRunner = new ModifierRunner(modifiers);
+            
             _cameraRig.Init(lookInput, _player.transform);
             _player.Init(_input, movement, cameraDir, logger);
 
@@ -110,11 +130,11 @@ namespace _Scripts.Bootstrap.GameScene
 
             gsm.Register(new MainMenuState(logger, _mainMenuView, gsm, inputToggle));
             gsm.Register(new GameplayState(logger, _gameplayHud, gsm, _collectableSpawner, inputModeProvider, 
-                health, score, _gameCfg, gameResult, inputToggle));
+                health, score, _gameCfg, gameResult, inputToggle, modifierRunner, modifierNames));
             gsm.Register(new PauseState(logger, _pauseView, gsm, time, inputToggle, session));
             gsm.Register(new GameOverState(logger, _gameOverView, gsm, gameResult, inputToggle, session));
 
-            _gameController.Init(gsm, pauseInput, logger);
+            _gameController.Init(gsm, pauseInput, logger, modifierRunner);
 
             gsm.ChangeState<MainMenuState>();
         }

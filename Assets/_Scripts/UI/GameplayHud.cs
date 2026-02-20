@@ -1,4 +1,5 @@
-﻿using _Scripts.Interfaces;
+﻿using System.Collections.Generic;
+using _Scripts.Interfaces;
 using _Scripts.Interfaces.View;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace _Scripts.UI
         [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private TMP_Text _hpText;
         [SerializeField] private TMP_Text _inputModeText;
+        [SerializeField] private TMP_Text _modifiersText;
         
         private ILoggerService _logger;
         private bool _isInitialized;
@@ -27,6 +29,9 @@ namespace _Scripts.UI
             {
                 _logger.Error("Score or Hp text not set");
             }
+            
+            Hide();
+            _isInitialized = true;
         }
 
         public void SetHp(int current, int max)
@@ -52,6 +57,21 @@ namespace _Scripts.UI
         public void Hide()
         {
             gameObject.SetActive(false);
+        }
+        
+        public void SetModifiers(IReadOnlyList<string> modifiers)
+        {
+            if (modifiers == null || modifiers.Count == 0)
+            {
+                _modifiersText.SetText("Modifiers: None");
+                return;
+            }
+
+            var result = "Modifiers:\n";
+            foreach (var mod in modifiers)
+                result += $"• {mod}\n";
+
+            _modifiersText.SetText(result);
         }
     }
 }

@@ -44,6 +44,7 @@ namespace _Scripts.UI
             _restartBtn.onClick.AddListener(() => OnRestart?.Invoke());
             _toMenuBtn.onClick.AddListener(() => OnToMenu?.Invoke());
             
+            Hide();
             _isInitialized = true;
         }
 

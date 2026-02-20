@@ -7,7 +7,7 @@ namespace _Scripts.Models
     {
         public int Current { get; private set; }
         public int Max { get; }
-        public event Action<int> Damaged;
+        public event Action<int, int> Changed;
         public event Action Died;
         private ILoggerService _logger; 
     
@@ -20,7 +20,7 @@ namespace _Scripts.Models
         public void Damage(int amount)
         {
             Current = Math.Max(0, Current - amount);
-            Damaged?.Invoke(amount);
+            Changed?.Invoke(Current, Max);
         
             if (Current <= 0)
             {
@@ -29,6 +29,17 @@ namespace _Scripts.Models
             }
         }
 
-        public void Reset() => Current = Max;
+        public void Reset()
+        {
+            Current = Max;
+            Changed?.Invoke(Current, Max);
+        }
+
+        public void Heal(int amount)
+        {
+            if (Current == Max) return;
+            Current = Math.Min(Max, Current + amount);
+            Changed?.Invoke(Current, Max);
+        }
     }
 }

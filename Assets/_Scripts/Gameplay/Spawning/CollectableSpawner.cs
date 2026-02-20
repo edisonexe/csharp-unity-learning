@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using _Scripts.Configs;
 using _Scripts.Interfaces;
+using _Scripts.Interfaces.Spawn;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.Spawning
 {
-    public sealed class CollectableSpawner : MonoBehaviour, ISpawner
+    public sealed class CollectableSpawner : MonoBehaviour, ISpawner, ISpawnRate
     {
         [SerializeField] private SpawnerConfig _cfg;
         [SerializeField] private Transform[] _spawnPoints;
 
+        public float IntervalMultiplier { get; set; } = 1f;
+        
         private int _totalSpawned;
         
         private ICollectableFactory _factory;
@@ -88,7 +91,7 @@ namespace _Scripts.Gameplay.Spawning
         {
             while (_totalSpawned < _cfg.MaxTotal)
             {
-                yield return new WaitForSeconds(_cfg.Interval);
+                yield return new WaitForSeconds(_cfg.Interval / Mathf.Max(0.01f, IntervalMultiplier));
                 
                 if (_spawnPoints == null || _spawnPoints.Length == 0)
                     continue;
@@ -105,6 +108,5 @@ namespace _Scripts.Gameplay.Spawning
             }
             _routine = null;
         }
-        
     }
 }
