@@ -3,7 +3,7 @@ using _Project._Scripts.Interfaces;
 using _Project._Scripts.Network;
 using Mirror;
 
-namespace _Project._Scripts.Controllers.Lobby
+namespace _Project._Scripts.UI.Controllers
 {
     public class ConnectionController : IDisposable
     {
@@ -18,9 +18,9 @@ namespace _Project._Scripts.Controllers.Lobby
             ILobbyView lobbyView,
             RoomNetworkManager networkManager)
         {
-            _connectionBarView = connectionBarView;
-            _lobbyView = lobbyView;
-            _networkManager = networkManager;
+            _connectionBarView = connectionBarView ?? throw new ArgumentNullException(nameof(connectionBarView));
+            _lobbyView = lobbyView ?? throw new ArgumentNullException(nameof(lobbyView));
+            _networkManager = networkManager ?? throw new ArgumentNullException(nameof(networkManager));
 
             Subscribe();
             InitializeView();

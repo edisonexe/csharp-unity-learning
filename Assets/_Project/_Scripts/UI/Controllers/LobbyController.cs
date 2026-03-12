@@ -5,7 +5,7 @@ using _Project._Scripts.Network;
 using Mirror;
 using UnityEngine;
 
-namespace _Project._Scripts.Controllers.Lobby
+namespace _Project._Scripts.UI.Controllers
 {
     public class LobbyController : IDisposable
     {
@@ -14,11 +14,11 @@ namespace _Project._Scripts.Controllers.Lobby
 
         private RoomPlayer _localPlayer;
         private bool _disposed;
-
+        
         public LobbyController(ILobbyView lobbyView, RoomNetworkManager networkManager)
         {
-            _lobbyView = lobbyView;
-            _networkManager = networkManager;
+            _lobbyView = lobbyView ?? throw new ArgumentNullException(nameof(lobbyView));
+            _networkManager = networkManager ?? throw new ArgumentNullException(nameof(networkManager));
 
             Subscribe();
 
@@ -33,7 +33,7 @@ namespace _Project._Scripts.Controllers.Lobby
             _lobbyView.ReadyClicked += OnReadyClicked;
             _lobbyView.StartGameClicked += OnStartGameClicked;
 
-            _networkManager.RoomPlayersChanged += OnPlayersChanged;
+            _networkManager.PlayersChanged += OnPlayersChanged;
         }
 
         private void UnsubscribeLocalPlayer()
@@ -65,30 +65,39 @@ namespace _Project._Scripts.Controllers.Lobby
             UnsubscribeLocalPlayer();
             _localPlayer = player;
             SubscribeLocalPlayer(_localPlayer);
+
+            if (_localPlayer)
+            {
+                _localPlayer.CmdSetDefaultNickname();
+            }
         }
 
+        private RoomPlayer GetCachedLocalPlayer()
+        {
+            return _localPlayer ? _localPlayer : GetLocalPlayer();
+        }
+        
         private void OnNicknameChanged(string nickname)
         {
-            var localPlayer = GetLocalPlayer();
-
-            if (!localPlayer) return;
+            var localPlayer = GetCachedLocalPlayer();
+            if (!localPlayer)
+                return;
 
             localPlayer.CmdSetNickname(nickname);
         }
 
         private void OnColorChanged(Color color)
         {
-            RoomPlayer localPlayer = GetLocalPlayer();
-
-            if (!localPlayer) return;
+            var localPlayer = GetCachedLocalPlayer();
+            if (!localPlayer)
+                return;
 
             localPlayer.CmdSetColor(color);
         }
 
         private void OnReadyClicked()
         {
-            var localPlayer = GetLocalPlayer();
-
+            var localPlayer = GetCachedLocalPlayer();
             if (!localPlayer)
                 return;
 
@@ -97,8 +106,7 @@ namespace _Project._Scripts.Controllers.Lobby
 
         private void OnStartGameClicked()
         {
-            RoomPlayer localPlayer = GetLocalPlayer();
-
+            var localPlayer = GetCachedLocalPlayer();
             if (!localPlayer)
                 return;
 
@@ -125,14 +133,20 @@ namespace _Project._Scripts.Controllers.Lobby
         private void RefreshLobby()
         {
             List<RoomPlayer> players = _networkManager.GetRoomPlayers();
+            var localPlayer = GetCachedLocalPlayer();
 
             _lobbyView.SetPlayers(players, _networkManager.IsHost);
-            RefreshControls(players);
+            RefreshControls(players, localPlayer);
+
+            if (!localPlayer)
+                return;
+
+            _lobbyView.SetNickname(localPlayer.Nickname);
+            _lobbyView.SetSelectedColor(localPlayer.Color);
         }
 
-        private void RefreshControls(List<RoomPlayer> players)
+        private void RefreshControls(List<RoomPlayer> players, RoomPlayer localPlayer)
         {
-            var localPlayer = _localPlayer ?? GetLocalPlayer();
             var isHost = _networkManager.IsHost(localPlayer);
 
             _lobbyView.SetStartGameVisible(isHost);
@@ -173,7 +187,7 @@ namespace _Project._Scripts.Controllers.Lobby
             _lobbyView.ReadyClicked -= OnReadyClicked;
             _lobbyView.StartGameClicked -= OnStartGameClicked;
 
-            _networkManager.RoomPlayersChanged -= OnPlayersChanged;
+            _networkManager.PlayersChanged -= OnPlayersChanged;
         }
     }
 }

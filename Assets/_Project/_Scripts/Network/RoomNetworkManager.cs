@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project._Scripts.Network.Player;
 using Mirror;
 using UnityEngine;
 
@@ -17,30 +18,51 @@ namespace _Project._Scripts.Network
 
         public event Action<string> StatusChanged;
         public event Action<string> ErrorOccurred;
-        public event Action RoomPlayersChanged;
-
+        public event Action PlayersChanged;
+        public event Action NetworkStateChanged;
+        
         public override void OnStartHost()
         {
             base.OnStartHost();
             StatusChanged?.Invoke("Starting host");
+            NotifyNetworkStateChanged();
         }
 
+        public override void OnStopHost()
+        {
+            base.OnStopHost();
+            NotifyNetworkStateChanged();
+            NotifyPlayersChanged();
+        }
+        
         public override void OnStartClient()
         {
             base.OnStartClient();
             StatusChanged?.Invoke("Connecting");
+            NotifyNetworkStateChanged();
         }
 
+        public override void OnStopClient()
+        {
+            base.OnStopClient();
+            NotifyNetworkStateChanged();
+            NotifyPlayersChanged();
+        }
+        
         public override void OnClientConnect()
         {
             base.OnClientConnect();
             StatusChanged?.Invoke("Connected");
+            NotifyNetworkStateChanged();
+            NotifyPlayersChanged();
         }
 
         public override void OnClientDisconnect()
         {
             base.OnClientDisconnect();
             StatusChanged?.Invoke("Disconnected");
+            NotifyNetworkStateChanged();
+            NotifyPlayersChanged();
         }
 
         public override void OnClientError(TransportError error, string reason)
@@ -57,13 +79,16 @@ namespace _Project._Scripts.Network
         public override void OnRoomServerAddPlayer(NetworkConnectionToClient conn)
         {
             base.OnRoomServerAddPlayer(conn);
+        
             NotifyPlayersChanged();
+            NotifyNetworkStateChanged();
         }
 
         public override void OnRoomServerDisconnect(NetworkConnectionToClient conn)
         {
             base.OnRoomServerDisconnect(conn);
             NotifyPlayersChanged();
+            NotifyNetworkStateChanged();
         }
 
         public override void OnRoomServerPlayersReady()
@@ -126,7 +151,7 @@ namespace _Project._Scripts.Network
                 return false;
             }
 
-            gamePlayer.Initialize(roomPlayer.Nickname, roomPlayer.PlayerColor);
+            gamePlayer.Initialize(roomPlayer.Nickname, roomPlayer.Color);
             return true;
         }
 
@@ -178,7 +203,14 @@ namespace _Project._Scripts.Network
 
         public void NotifyPlayersChanged()
         {
-            RoomPlayersChanged?.Invoke();
+            PlayersChanged?.Invoke();
         }
+        
+        private void NotifyNetworkStateChanged()
+        {
+            NetworkStateChanged?.Invoke();
+        }
+        
+        
     }
 }

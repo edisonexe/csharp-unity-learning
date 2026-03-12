@@ -16,7 +16,9 @@ namespace _Project._Scripts.Interfaces
         void SetStartGameAvailable(bool available);
         void SetStartGameVisible(bool value);
         void SetReadyButtonText(string text);
-
+        void SetNickname(string nickname);
+        void SetSelectedColor(Color color);
+        
         void Show();
         void Hide();
     }

@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Project._Scripts.UI
+namespace _Project._Scripts.UI.Views
 {
     public class LobbyView : MonoBehaviour, ILobbyView
     {
@@ -20,15 +20,14 @@ namespace _Project._Scripts.UI
         [SerializeField] private PlayerListItemView _playerItemPrefab;
 
         [SerializeField] private TMP_Dropdown _colorDropdown;
-        private readonly Color[] _colors = 
+        private static readonly Color[] _colors =
         {
-            Color.white, 
-            Color.black, 
-            Color.yellow, 
-            Color.green, 
+            Color.white,
+            Color.black,
+            Color.yellow,
+            Color.green,
             Color.red
         };
-
         public event Action ReadyClicked;
         public event Action StartGameClicked;
         public event Action<string> NicknameChanged;
@@ -81,6 +80,8 @@ namespace _Project._Scripts.UI
                 return false;
             }
 
+            PopulateColorDropdown();
+            
             _readyButton.onClick.AddListener(() => ReadyClicked?.Invoke());
             _startGameButton.onClick.AddListener(() => StartGameClicked?.Invoke());
             _nicknameField.onEndEdit.AddListener(v => NicknameChanged?.Invoke(v));
@@ -148,6 +149,29 @@ namespace _Project._Scripts.UI
             gameObject.SetActive(false);
         }
 
+        public void SetNickname(string nickname)
+        {
+            if (!_nicknameField)
+                return;
+
+            _nicknameField.SetTextWithoutNotify(nickname ?? string.Empty);
+        }
+        
+        public void SetSelectedColor(Color color)
+        {
+            if (!_colorDropdown)
+                return;
+
+            for (int i = 0; i < _colors.Length; i++)
+            {
+                if (_colors[i] == color)
+                {
+                    _colorDropdown.SetValueWithoutNotify(i);
+                    return;
+                }
+            }
+        }
+        
         private void OnColorChanged(int index)
         {
             if (_colors.Length == 0)
@@ -163,6 +187,31 @@ namespace _Project._Scripts.UI
             }
 
             ColorChanged?.Invoke(_colors[index]);
+        }
+        
+        private string ColorToName(Color color)
+        {
+            if (color == Color.white) return "White";
+            if (color == Color.black) return "Black";
+            if (color == Color.yellow) return "Yellow";
+            if (color == Color.green) return "Green";
+            if (color == Color.red) return "Red";
+
+            return color.ToString();
+        }
+        
+        private void PopulateColorDropdown()
+        {
+            _colorDropdown.ClearOptions();
+
+            var options = new List<TMP_Dropdown.OptionData>();
+
+            foreach (var color in _colors)
+            {
+                options.Add(new TMP_Dropdown.OptionData(ColorToName(color)));
+            }
+
+            _colorDropdown.AddOptions(options);
         }
     }
 }

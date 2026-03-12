@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Project._Scripts.UI
+namespace _Project._Scripts.UI.Views
 {
     public class ConnectionBarView : MonoBehaviour, IConnectionBarView
     {

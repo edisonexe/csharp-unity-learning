@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Project._Scripts.UI
+namespace _Project._Scripts.UI.Views
 {
     public class PlayerListItemView : MonoBehaviour
     {
@@ -73,7 +73,7 @@ namespace _Project._Scripts.UI
                 return;
 
             SetNickname(_player.Nickname);
-            SetColor(_player.PlayerColor);
+            SetColor(_player.Color);
             SetReady(_player.IsReady);
             SetHost(_isHost != null && _isHost(_player));
         }

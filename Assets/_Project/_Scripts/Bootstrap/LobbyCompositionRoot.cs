@@ -1,6 +1,6 @@
-﻿using _Project._Scripts.Controllers.Lobby;
-using _Project._Scripts.Network;
-using _Project._Scripts.UI;
+﻿using _Project._Scripts.Network;
+using _Project._Scripts.UI.Controllers;
+using _Project._Scripts.UI.Views;
 using Mirror;
 using UnityEngine;
 

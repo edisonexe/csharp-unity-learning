@@ -11,13 +11,13 @@ namespace _Project._Scripts.Network
 
         [SyncVar(hook = nameof(OnColorChanged))]
         private Color _color = Color.white;
-
+        
         public string Nickname => _nickname;
-        public Color PlayerColor => _color;
+        public Color Color => _color;
         public bool IsReady => readyToBegin;
 
         public event Action DataChanged;
-
+        
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -42,6 +42,7 @@ namespace _Project._Scripts.Network
         {
             base.ReadyStateChanged(oldReadyState, newReadyState);
             RaiseChanged();
+            NotifyLobbyPlayersChanged();
         }
 
         public override void IndexChanged(int oldIndex, int newIndex)
@@ -90,6 +91,15 @@ namespace _Project._Scripts.Network
         {
             if (NetworkManager.singleton is RoomNetworkManager manager)
                 manager.NotifyPlayersChanged();
+        }
+        
+        [Command]
+        public void CmdSetDefaultNickname()
+        {
+            if (!string.IsNullOrWhiteSpace(_nickname) && _nickname != "Player")
+                return;
+
+            _nickname = $"Player{index + 1}";
         }
     }
 }
