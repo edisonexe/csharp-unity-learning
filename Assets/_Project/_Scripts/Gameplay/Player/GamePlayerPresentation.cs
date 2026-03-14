@@ -1,7 +1,6 @@
-﻿using _Project._Scripts.Gameplay.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _Project._Scripts.Network.Player
+namespace _Project._Scripts.Gameplay.Player
 {
     public sealed class GamePlayerPresentation
     {
@@ -14,7 +13,7 @@ namespace _Project._Scripts.Network.Player
 
         public void Apply(string nickname, Color color, bool isLocalPlayer)
         {
-            if (_view == null)
+            if (!_view)
                 return;
 
             _view.SetNickname(nickname);
@@ -30,6 +29,16 @@ namespace _Project._Scripts.Network.Player
         public void SetColor(Color color)
         {
             _view?.SetColor(color);
+        }
+
+        public void SetAlive(bool alive)
+        {
+            _view?.SetAliveState(alive);
+        }
+
+        public void SetWeaponPitch(float pitch)
+        {
+            _view?.SetWeaponPitch(pitch);
         }
     }
 }

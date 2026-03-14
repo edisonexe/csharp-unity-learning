@@ -9,18 +9,35 @@ namespace _Project._Scripts.Gameplay.Player
         [SerializeField] private Transform _pitchRoot;
 
         [Header("Position")]
-        [SerializeField] private float _positionLerpSpeed = 12f;
+        [SerializeField, Min(0.01f)] private float _positionLerpSpeed = 12f;
         [SerializeField] private float _snapDistance = 3f;
 
         [Header("Rotation")]
-        [SerializeField] private float _yawDegreesPerSecond = 540f;
-        [SerializeField] private float _pitchDegreesPerSecond = 540f;
+        [SerializeField, Min(0.01f)] private float _yawDegreesPerSecond = 540f;
+        [SerializeField, Min(0.01f)] private float _pitchDegreesPerSecond = 540f;
 
         private Vector3 _targetPosition;
         private float _targetYaw;
         private float _targetPitch;
         private bool _hasTarget;
 
+        private void Awake()
+        {
+            if (!_positionRoot)
+            {
+                Debug.LogError("[RemotePlayerInterpolator] PositionRoot is not assigned.", this);
+                enabled = false;
+                return;
+            }
+
+            if (!_pitchRoot)
+            {
+                Debug.LogError("[RemotePlayerInterpolator] PitchRoot is not assigned.", this);
+                enabled = false;
+                return;
+            }
+        }
+        
         public void SetTarget(Vector3 position, float yaw, float pitch)
         {
             _targetPosition = position;
@@ -41,7 +58,7 @@ namespace _Project._Scripts.Gameplay.Player
 
             _hasTarget = true;
         }
-
+        
         private void Update()
         {
             if (!_hasTarget || !_positionRoot)

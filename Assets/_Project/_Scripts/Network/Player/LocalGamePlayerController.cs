@@ -1,6 +1,6 @@
 ﻿using System;
-using _Project._Scripts.Gameplay;
 using _Project._Scripts.Gameplay.Camera;
+using _Project._Scripts.Gameplay.Combat;
 using _Project._Scripts.Gameplay.Movement;
 using _Project._Scripts.Gameplay.Player;
 using _Project._Scripts.Input;
@@ -13,21 +13,26 @@ namespace _Project._Scripts.Network.Player
         private readonly GamePlayerView _view;
         private readonly MouseLookController _lookController;
         private readonly RemotePlayerInterpolator _remoteInterpolator;
+        private readonly Weapon _weapon;
 
         private InputActionsPlayerInputReader _inputReader;
-        private NetworkPlayerMovementController _movementController;
+        private LocalPlayerMovementInputController _movementInputController;
+        private LocalPlayerCombatController _combatController;
 
         private bool _initialized;
         private bool _disposed;
+        private bool _controlEnabled = true;
 
         public LocalGamePlayerController(
             GamePlayerView view,
             MouseLookController lookController,
-            RemotePlayerInterpolator remoteInterpolator)
+            RemotePlayerInterpolator remoteInterpolator,
+            Weapon weapon)
         {
             _view = view;
             _lookController = lookController;
             _remoteInterpolator = remoteInterpolator;
+            _weapon = weapon;
         }
 
         public void Initialize(Action<PlayerNetworkInput> sendInput)
@@ -42,14 +47,22 @@ namespace _Project._Scripts.Network.Player
             }
 
             _initialized = true;
+            _controlEnabled = true;
 
             _view?.SetLocalState(true);
 
             _inputReader = new InputActionsPlayerInputReader();
-            _movementController = new NetworkPlayerMovementController(
+
+            _movementInputController = new LocalPlayerMovementInputController(
                 _inputReader,
                 _lookController,
                 sendInput);
+
+            _combatController = new LocalPlayerCombatController(
+                _inputReader,
+                _view,
+                _lookController,
+                _weapon);
 
             if (_remoteInterpolator != null)
                 _remoteInterpolator.enabled = false;
@@ -58,12 +71,20 @@ namespace _Project._Scripts.Network.Player
             Cursor.visible = false;
         }
 
+        public void SetControlEnabled(bool enabled)
+        {
+            _controlEnabled = enabled;
+            Cursor.lockState = enabled ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !enabled;
+        }
+
         public void Tick()
         {
-            if (!_initialized || _disposed)
+            if (!_initialized || _disposed || !_controlEnabled)
                 return;
 
-            _movementController?.Tick();
+            _movementInputController?.Tick();
+            _combatController?.Tick();
         }
 
         public void Dispose()
@@ -78,7 +99,8 @@ namespace _Project._Scripts.Network.Player
 
             _inputReader?.Dispose();
             _inputReader = null;
-            _movementController = null;
+            _movementInputController = null;
+            _combatController = null;
         }
     }
 }

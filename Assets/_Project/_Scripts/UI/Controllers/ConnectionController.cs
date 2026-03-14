@@ -2,6 +2,7 @@
 using _Project._Scripts.Interfaces;
 using _Project._Scripts.Network;
 using Mirror;
+using UnityEngine;
 
 namespace _Project._Scripts.UI.Controllers
 {
@@ -11,6 +12,8 @@ namespace _Project._Scripts.UI.Controllers
         private readonly ILobbyView _lobbyView;
         private readonly RoomNetworkManager _networkManager;
 
+        private bool _isConnecting;
+        private bool _hasConnectionError;
         private bool _disposed;
 
         public ConnectionController(
@@ -46,6 +49,24 @@ namespace _Project._Scripts.UI.Controllers
             _networkManager.ErrorOccurred += OnErrorOccurred;
         }
 
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+
+            _disposed = true;
+
+            _connectionBarView.HostClicked -= OnHostClicked;
+            _connectionBarView.ClientClicked -= OnClientClicked;
+            _connectionBarView.StopClicked -= OnStopClicked;
+
+            if (_networkManager)
+            {
+                _networkManager.StatusChanged -= OnStatusChanged;
+                _networkManager.ErrorOccurred -= OnErrorOccurred;
+            }
+        }
+        
         private void ApplyIdleState()
         {
             _connectionBarView.SetAddressInteractable(true);
@@ -64,20 +85,56 @@ namespace _Project._Scripts.UI.Controllers
 
         private void OnHostClicked()
         {
+            _hasConnectionError = false;
+            _isConnecting = true;
+
             _connectionBarView.ClearError();
             ApplyConnectingState();
 
             _networkManager.networkAddress = _connectionBarView.Address;
-            _networkManager.StartHost();
+
+            try
+            {
+                _networkManager.StartHost();
+            }
+            catch (Exception ex)
+            {
+                _hasConnectionError = true;
+                _isConnecting = false;
+
+                ApplyIdleState();
+                _lobbyView.Hide();
+
+                _connectionBarView.ShowStatus("Disconnected");
+                _connectionBarView.ShowError(GetReadableHostStartError(ex));
+            }
         }
 
         private void OnClientClicked()
         {
+            _hasConnectionError = false;
+            _isConnecting = true;
+
             _connectionBarView.ClearError();
             ApplyConnectingState();
 
             _networkManager.networkAddress = _connectionBarView.Address;
-            _networkManager.StartClient();
+
+            try
+            {
+                _networkManager.StartClient();
+            }
+            catch (Exception ex)
+            {
+                _hasConnectionError = true;
+                _isConnecting = false;
+
+                ApplyIdleState();
+                _lobbyView.Hide();
+
+                _connectionBarView.ShowStatus("Disconnected");
+                _connectionBarView.ShowError($"Failed to start client. {ex.GetBaseException().Message}");
+            }
         }
 
         private void OnStopClicked()
@@ -96,19 +153,32 @@ namespace _Project._Scripts.UI.Controllers
 
             if (status == "Connected")
             {
+                _hasConnectionError = false;
+                _isConnecting = true;
+                
                 ApplyConnectingState();
                 _connectionBarView.ClearError();
                 _lobbyView.Show();
             }
-            else if (status == "Disconnected")
+            if (status == "Disconnected")
             {
                 ApplyIdleState();
                 _lobbyView.Hide();
+
+                if (_isConnecting && !_hasConnectionError)
+                {
+                    _connectionBarView.ShowError("Failed to connect to host.");
+                }
+
+                _isConnecting = false;
             }
         }
 
         private void OnErrorOccurred(string error)
         {
+            _hasConnectionError = true;
+            _isConnecting = false;
+            
             ApplyIdleState();
             _lobbyView.Hide();
 
@@ -116,22 +186,21 @@ namespace _Project._Scripts.UI.Controllers
             _connectionBarView.ShowStatus("Disconnected");
         }
 
-        public void Dispose()
+        private static string GetReadableHostStartError(Exception exception)
         {
-            if (_disposed)
-                return;
+            if (exception == null)
+                return "Failed to start host.";
 
-            _disposed = true;
+            Exception root = exception.GetBaseException();
+            string message = root.Message;
 
-            _connectionBarView.HostClicked -= OnHostClicked;
-            _connectionBarView.ClientClicked -= OnClientClicked;
-            _connectionBarView.StopClicked -= OnStopClicked;
-
-            if (_networkManager != null)
+            if (message.Contains("Only one usage of each socket address", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("обычно разрешается только одно использование адреса сокета", StringComparison.OrdinalIgnoreCase))
             {
-                _networkManager.StatusChanged -= OnStatusChanged;
-                _networkManager.ErrorOccurred -= OnErrorOccurred;
+                return "Failed to start host. The port is already in use.";
             }
+
+            return $"Failed to start host. {message}";
         }
     }
 }

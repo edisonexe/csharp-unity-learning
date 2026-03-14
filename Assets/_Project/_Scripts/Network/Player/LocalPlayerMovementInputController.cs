@@ -1,18 +1,16 @@
 ﻿using System;
 using _Project._Scripts.Interfaces;
-using _Project._Scripts.Network;
-using _Project._Scripts.Network.Player;
 using UnityEngine;
 
-namespace _Project._Scripts.Gameplay.Movement
+namespace _Project._Scripts.Network.Player
 {
-    public sealed class NetworkPlayerMovementController
+    public sealed class LocalPlayerMovementInputController
     {
         private readonly IPlayerInputReader _inputReader;
         private readonly ILookController _lookController;
         private readonly Action<PlayerNetworkInput> _sendInputToServer;
 
-        public NetworkPlayerMovementController(
+        public LocalPlayerMovementInputController(
             IPlayerInputReader inputReader,
             ILookController lookController,
             Action<PlayerNetworkInput> sendInputToServer)

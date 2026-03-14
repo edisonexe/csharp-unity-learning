@@ -16,6 +16,30 @@ namespace _Project._Scripts.Gameplay.Camera
         public float Pitch => _pitch;
         public float Yaw => _yawRoot ? _yawRoot.eulerAngles.y : 0f;
 
+        private void Awake()
+        {
+            if (!_yawRoot)
+            {
+                Debug.LogError("[MouseLookController] YawRoot is not assigned.", this);
+                enabled = false;
+                return;
+            }
+
+            if (!_pitchRoot)
+            {
+                Debug.LogError("[MouseLookController] PitchRoot is not assigned.", this);
+                enabled = false;
+                return;
+            }
+
+            if (_minPitch > _maxPitch)
+            {
+                Debug.LogError("[MouseLookController] PitchMin cannot be greater than PitchMax.", this);
+                enabled = false;
+                return;
+            }
+        }
+        
         public void Apply(float yawDelta, float pitchDelta)
         {
             if (!_yawRoot || !_pitchRoot)

@@ -18,6 +18,13 @@ namespace _Project._Scripts.Gameplay.Movement
 
         public void Construct(CharacterController characterController)
         {
+            if (!characterController)
+            {
+                Debug.LogError("[CharacterControllerMotor] CharacterController is null.", this);
+                enabled = false;
+                return;
+            }
+            
             _characterController = characterController;
         }
 
