@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Views;
 using _Project._Scripts.Network;
 using _Project._Scripts.Network.Player;
 using Mirror;

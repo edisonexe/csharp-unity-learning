@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Project._Scripts.Interfaces
+namespace _Project._Scripts.Interfaces.Gameplay.Movement
 {
     public interface IMotor
     {

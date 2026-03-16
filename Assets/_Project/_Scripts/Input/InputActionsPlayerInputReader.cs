@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Gameplay.Input;
 using UnityEngine;
 
 namespace _Project._Scripts.Input
@@ -13,7 +14,10 @@ namespace _Project._Scripts.Input
         public Vector2 LookDelta => _actions.Player.Look.ReadValue<Vector2>();
         public bool JumpPressedThisFrame => _actions.Player.Jump.triggered;
         public bool FireHeld => _actions.Player.Fire.IsPressed();
-        
+        public bool PickupPressedThisFrame => _actions.Player.Pickup.triggered;
+        public bool UseMedkitPressedThisFrame => _actions.Player.UseMedkit.triggered;
+        public bool ThrowGrenadePressedThisFrame => _actions.Player.ThrowGrenade.triggered;
+
         public InputActionsPlayerInputReader()
         {
             _actions = new PlayerInputActions();

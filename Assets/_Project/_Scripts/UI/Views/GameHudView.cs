@@ -1,7 +1,7 @@
 ﻿using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Views;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace _Project._Scripts.UI.Views
 {
@@ -10,10 +10,7 @@ namespace _Project._Scripts.UI.Views
         [SerializeField] private TMP_Text _modeText;
         [SerializeField] private TMP_Text _playersText;
         [SerializeField] private TMP_Text _pingText;
-        [SerializeField] private TMP_Text _hpText;
-        [SerializeField] private Image _hpFill;
-
-
+        
         private void Awake()
         {
             if (!_modeText)
@@ -36,20 +33,6 @@ namespace _Project._Scripts.UI.Views
                 enabled = false;
                 return;
             }
-
-            if (!_hpText)
-            {
-                Debug.LogError("[GameHudView] HpText is not assigned.", this);
-                enabled = false;
-                return;
-            }
-
-            if (!_hpFill)
-            {
-                Debug.LogError("[GameHudView] HpFill is not assigned.", this);
-                enabled = false;
-                return;
-            }
         }
         
         public void SetMode(string mode)
@@ -68,17 +51,6 @@ namespace _Project._Scripts.UI.Views
         {
             if (_pingText)
                 _pingText.text = $"Ping: {pingMs} ms";
-        }
-
-        public void SetHp(int cur, int max)
-        {
-            float ratio = (float)cur / max;
-
-            if (_hpFill) 
-                _hpFill.fillAmount = ratio;
-
-            if (_hpText)
-                _hpText.text = $"{cur} / {max}";
         }
     }
 }

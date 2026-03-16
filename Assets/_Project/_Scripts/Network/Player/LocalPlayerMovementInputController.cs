@@ -1,5 +1,7 @@
 ﻿using System;
 using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Gameplay.Camera;
+using _Project._Scripts.Interfaces.Gameplay.Input;
 using UnityEngine;
 
 namespace _Project._Scripts.Network.Player

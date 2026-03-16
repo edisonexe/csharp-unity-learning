@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Views;
 using _Project._Scripts.Network;
 using Mirror;
 using UnityEngine;

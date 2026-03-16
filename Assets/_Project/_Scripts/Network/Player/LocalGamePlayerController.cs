@@ -18,7 +18,10 @@ namespace _Project._Scripts.Network.Player
         private InputActionsPlayerInputReader _inputReader;
         private LocalPlayerMovementInputController _movementInputController;
         private LocalPlayerCombatController _combatController;
-
+        private LocalPlayerItemsController _itemsController;
+        private readonly PlayerItemCollector _itemCollector;
+        private readonly PlayerConsumableService _consumableService;
+        
         private bool _initialized;
         private bool _disposed;
         private bool _controlEnabled = true;
@@ -27,22 +30,26 @@ namespace _Project._Scripts.Network.Player
             GamePlayerView view,
             MouseLookController lookController,
             RemotePlayerInterpolator remoteInterpolator,
-            Weapon weapon)
+            Weapon weapon,
+            PlayerItemCollector itemCollector,
+            PlayerConsumableService consumableService)
         {
             _view = view;
             _lookController = lookController;
             _remoteInterpolator = remoteInterpolator;
             _weapon = weapon;
+            _itemCollector = itemCollector;
+            _consumableService = consumableService;
         }
-
+        
         public void Initialize(Action<PlayerNetworkInput> sendInput)
         {
             if (_initialized)
                 return;
 
-            if (_lookController == null)
+            if (!_lookController || !_view || !_weapon || !_itemCollector || !_consumableService)
             {
-                Debug.LogError("[LocalGamePlayerController] MouseLookController is not assigned.");
+                Debug.LogError("[LocalGamePlayerController] Required dependencies are missing.");
                 return;
             }
 
@@ -52,19 +59,11 @@ namespace _Project._Scripts.Network.Player
             _view?.SetLocalState(true);
 
             _inputReader = new InputActionsPlayerInputReader();
-
-            _movementInputController = new LocalPlayerMovementInputController(
-                _inputReader,
-                _lookController,
-                sendInput);
-
-            _combatController = new LocalPlayerCombatController(
-                _inputReader,
-                _view,
-                _lookController,
-                _weapon);
-
-            if (_remoteInterpolator != null)
+            _movementInputController = new LocalPlayerMovementInputController(_inputReader, _lookController, sendInput);
+            _combatController = new LocalPlayerCombatController(_inputReader, _view, _lookController, _weapon);
+            _itemsController = new LocalPlayerItemsController(_inputReader, _itemCollector, _consumableService, _view.PlayerCamera);
+            
+            if (_remoteInterpolator)
                 _remoteInterpolator.enabled = false;
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -85,6 +84,7 @@ namespace _Project._Scripts.Network.Player
 
             _movementInputController?.Tick();
             _combatController?.Tick();
+            _itemsController?.Tick();
         }
 
         public void Dispose()

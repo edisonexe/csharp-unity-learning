@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using _Project._Scripts.Network;
 using UnityEngine;
 
-namespace _Project._Scripts.Interfaces
+namespace _Project._Scripts.Interfaces.Views
 {
     public interface ILobbyView
     {

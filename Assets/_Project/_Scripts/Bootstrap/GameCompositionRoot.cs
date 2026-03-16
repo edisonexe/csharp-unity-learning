@@ -10,7 +10,7 @@ namespace _Project._Scripts.Bootstrap
     public sealed class GameCompositionRoot : MonoBehaviour
     {
         [SerializeField] private GameHudView _gameHudView;
-
+        [SerializeField] private PlayerHudView  _playerHudView;
         private GameHudController _gameHudController;
 
         private void OnEnable()
@@ -37,16 +37,16 @@ namespace _Project._Scripts.Bootstrap
 
         private void OnLocalPlayerSpawned(GamePlayer player)
         {
-            if (player == null)
+            if (!player)
                 return;
 
-            if (_gameHudView == null)
+            if (!_playerHudView)
             {
-                Debug.LogWarning("[GameCompositionRoot] GameHudView is missing.");
+                Debug.LogWarning("[GameCompositionRoot] PlayerHudView is missing.");
                 return;
             }
 
-            player.ConstructLocal(_gameHudView);
+            player.ConstructLocal(_playerHudView);
         }
 
         private void Update()

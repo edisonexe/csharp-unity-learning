@@ -1,4 +1,4 @@
-﻿namespace _Project._Scripts.Interfaces
+﻿namespace _Project._Scripts.Interfaces.Gameplay.Camera
 {
     public interface ILookController
     {

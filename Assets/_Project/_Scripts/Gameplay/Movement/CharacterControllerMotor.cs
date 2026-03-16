@@ -1,4 +1,5 @@
 ﻿using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Gameplay.Movement;
 using UnityEngine;
 
 namespace _Project._Scripts.Gameplay.Movement

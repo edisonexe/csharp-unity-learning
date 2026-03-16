@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Gameplay.Combat;
 using _Project._Scripts.Network.Player;
 using Mirror;
 using UnityEngine;
@@ -8,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace _Project._Scripts.Gameplay.Combat
 {
     [RequireComponent(typeof(GamePlayer))]
-    public class Health : NetworkBehaviour
+    public class Health : NetworkBehaviour, IHealable, IDamageable
     {
         [Header("Health")]
         [SerializeField] private int _maxHp = 100;
@@ -59,7 +61,7 @@ namespace _Project._Scripts.Gameplay.Combat
             _currentHp = _maxHp;
             _isDead = false;
         }
-
+        
         [Server]
         public void TakeDamage(int damage, GamePlayer attacker)
         {
@@ -73,7 +75,18 @@ namespace _Project._Scripts.Gameplay.Combat
         }
 
         [Server]
-        public void RestoreFull()
+        public int Restore(int amount)
+        {
+            if (_isDead || amount <= 0)
+                return 0;
+
+            int oldHp = _currentHp;
+            _currentHp = Mathf.Min(_maxHp, _currentHp + amount);
+            return _currentHp - oldHp;
+        }
+        
+        [Server]
+        private void RestoreFull()
         {
             _currentHp = _maxHp;
             _isDead = false;

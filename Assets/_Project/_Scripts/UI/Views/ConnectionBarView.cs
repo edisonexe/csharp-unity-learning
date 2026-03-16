@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Views;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

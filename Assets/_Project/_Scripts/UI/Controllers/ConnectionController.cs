@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Views;
 using _Project._Scripts.Network;
 using Mirror;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace _Project._Scripts.UI.Controllers
         private readonly RoomNetworkManager _networkManager;
 
         private bool _isConnecting;
+        private bool _isStopping;
         private bool _hasConnectionError;
         private bool _disposed;
 
@@ -139,12 +141,17 @@ namespace _Project._Scripts.UI.Controllers
 
         private void OnStopClicked()
         {
+            _isStopping = true;
+            _hasConnectionError = false;
+
             if (NetworkServer.active && NetworkClient.isConnected)
                 _networkManager.StopHost();
             else if (NetworkClient.isConnected)
                 _networkManager.StopClient();
             else if (NetworkServer.active)
                 _networkManager.StopServer();
+            else
+                _isStopping = false;
         }
 
         private void OnStatusChanged(string status)
@@ -153,23 +160,30 @@ namespace _Project._Scripts.UI.Controllers
 
             if (status == "Connected")
             {
+                _isStopping = false;
                 _hasConnectionError = false;
                 _isConnecting = true;
                 
                 ApplyConnectingState();
                 _connectionBarView.ClearError();
                 _lobbyView.Show();
+                return;
             }
             if (status == "Disconnected")
             {
                 ApplyIdleState();
                 _lobbyView.Hide();
 
-                if (_isConnecting && !_hasConnectionError)
+                if (_isStopping)
+                {
+                    _connectionBarView.ClearError();
+                }
+                else if (_isConnecting && !_hasConnectionError)
                 {
                     _connectionBarView.ShowError("Failed to connect to host.");
                 }
 
+                _isStopping = false;
                 _isConnecting = false;
             }
         }

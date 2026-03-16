@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using _Project._Scripts.Gameplay.Camera;
 using _Project._Scripts.Gameplay.Combat;
+using _Project._Scripts.Gameplay.Inventory;
 using _Project._Scripts.Gameplay.Movement;
 using _Project._Scripts.Gameplay.Player;
+using _Project._Scripts.Interfaces;
+using _Project._Scripts.Interfaces.Views;
+using _Project._Scripts.UI.Controllers;
 using _Project._Scripts.UI.Views;
 using Mirror;
 using UnityEngine;
@@ -17,6 +21,9 @@ namespace _Project._Scripts.Network.Player
     [RequireComponent(typeof(RemotePlayerInterpolator))]
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(Weapon))]
+    [RequireComponent(typeof(PlayerInventory))]
+    [RequireComponent(typeof(PlayerItemCollector))]
+    [RequireComponent(typeof(PlayerConsumableService))]
     public sealed class GamePlayer : NetworkBehaviour
     {
         private Health _health;
@@ -30,8 +37,13 @@ namespace _Project._Scripts.Network.Player
 
         private GamePlayerPresentation _presentation;
         private LocalGamePlayerController _localController;
+        
+        private PlayerInventory _inventory;
+        private PlayerItemCollector _itemCollector;
+        private PlayerConsumableService _consumableService;
+        private PlayerHudPresenter _hudPresenter;
 
-        private GameHudView _hudView;
+        private IPlayerHudView _hudView;
         private bool _localDependenciesInjected;
 
         private static readonly List<GamePlayer> _players = new();
@@ -64,6 +76,10 @@ namespace _Project._Scripts.Network.Player
             _remoteInterpolator = GetComponent<RemotePlayerInterpolator>();
             _health = GetComponent<Health>();
             _weapon = GetComponent<Weapon>();
+            
+            _inventory = GetComponent<PlayerInventory>();
+            _itemCollector = GetComponent<PlayerItemCollector>();
+            _consumableService = GetComponent<PlayerConsumableService>();
 
             if (!_characterController || !_motor || !_lookController || !_playerView || !_remoteInterpolator || !_health || !_weapon)
             {
@@ -76,29 +92,35 @@ namespace _Project._Scripts.Network.Player
             _presentation = new GamePlayerPresentation(_playerView);
         }
         
-        public void ConstructLocal(GameHudView hudView)
+        public void ConstructLocal(IPlayerHudView hudView)
         {
-            if (!hudView)
+            if (hudView == null)
             {
                 Debug.LogError("[GamePlayer] Local HUD view is not assigned.", this);
                 return;
             }
-            
+
             if (_localDependenciesInjected)
                 return;
 
             _hudView = hudView;
             _localDependenciesInjected = true;
-
-            if (_health)
-            {
-                _health.HpChanged -= OnHpChanged;
-                _health.HpChanged += OnHpChanged;
-                
-                _hudView?.SetHp(_health.CurrentHp, _health.MaxHp);
-            }
+            
+            _hudPresenter = new PlayerHudPresenter(_hudView, _health, _inventory);
+            
+            if (_isAlive)
+                _hudView.Show();
+            else
+                _hudView.Hide();
         }
 
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+
+            gameObject.name = $"GamePlayer_{netId}";
+        }
+        
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -106,8 +128,10 @@ namespace _Project._Scripts.Network.Player
             if (!_players.Contains(this))
                 _players.Add(this);
 
+            gameObject.name = $"GamePlayer_{netId}";
+            
             PlayerCountChanged?.Invoke();
-
+            
             _presentation?.Apply(_nickname, _color, isLocalPlayer);
             _presentation?.SetAlive(_isAlive);
         }
@@ -127,17 +151,14 @@ namespace _Project._Scripts.Network.Player
             if (!enabled)
                 return;
 
-            _localController ??= new LocalGamePlayerController(
-                _playerView,
-                _lookController,
-                _remoteInterpolator,
-                _weapon);
+            _localController ??= new LocalGamePlayerController(_playerView, _lookController, _remoteInterpolator,
+                _weapon, _itemCollector, _consumableService);
 
             _localController.Initialize(CmdSendInput);
 
             _playerView?.SetLocalState(true);
             _playerView?.SetAliveState(_isAlive);
-            
+
             LocalPlayerSpawned?.Invoke(this);
         }
 
@@ -167,6 +188,9 @@ namespace _Project._Scripts.Network.Player
         {
             _isAlive = alive;
 
+            if (!alive)
+                _inventory?.ClearConsumables();
+            
             if (_characterController)
                 _characterController.enabled = alive;
         }
@@ -238,24 +262,27 @@ namespace _Project._Scripts.Network.Player
         private void OnAliveChanged(bool oldAlive, bool newAlive)
         {
             if (isLocalPlayer)
+            {
                 _localController?.SetControlEnabled(newAlive);
+                
+                if (_hudView != null)
+                {
+                    if (newAlive)
+                        _hudView.Show();
+                    else
+                        _hudView.Hide();
+                }
+            }
 
             _presentation?.SetAlive(newAlive);
             _playerView?.SetLocalState(isLocalPlayer);
         }
-
-        private void OnHpChanged(int current, int max)
-        {
-            _hudView?.SetHp(current, max);
-        }
-
+        
         private void OnDestroy()
         {
-            if (_health != null)
-                _health.HpChanged -= OnHpChanged;
-
             _localController?.Dispose();
             _localController = null;
+            _hudPresenter?.Dispose();
         }
     }
 }

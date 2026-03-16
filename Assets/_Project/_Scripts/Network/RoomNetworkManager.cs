@@ -156,7 +156,7 @@ namespace _Project._Scripts.Network
         }
 
         [Server]
-        public bool CanStartGame()
+        private bool CanStartGame()
         {
             List<RoomPlayer> players = GetRoomPlayers();
 

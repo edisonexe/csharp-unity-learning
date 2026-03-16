@@ -21,7 +21,9 @@ namespace _Project._Scripts.Gameplay.Combat
     
         private GamePlayer _player;
         private double _nextFireTime;
-    
+        private double _nextLocalFireTime;
+
+        
         private void Awake()
         {
             _player = GetComponent<GamePlayer>();
@@ -75,6 +77,11 @@ namespace _Project._Scripts.Gameplay.Combat
             if (direction.sqrMagnitude <= 0.0001f)
                 return;
 
+            if (NetworkTime.time < _nextLocalFireTime)
+                return;
+            
+            _nextLocalFireTime = NetworkTime.time + _cfg.FireRate;
+            
             PlayLocalShotSound();
         
             CmdShoot(direction.normalized);
