@@ -1,9 +1,7 @@
 ﻿using System;
-using _Project._Scripts.Interfaces;
 using _Project._Scripts.Interfaces.Views;
 using _Project._Scripts.Network;
 using Mirror;
-using UnityEngine;
 
 namespace _Project._Scripts.UI.Controllers
 {
@@ -30,15 +28,13 @@ namespace _Project._Scripts.UI.Controllers
             Subscribe();
             InitializeView();
         }
-
+        
         private void InitializeView()
         {
             _connectionBarView.Show();
-            _lobbyView.Hide();
-
-            ApplyIdleState();
             _connectionBarView.ClearError();
-            _connectionBarView.ShowStatus("Disconnected");
+
+            RefreshNetworkState();
         }
 
         private void Subscribe()
@@ -49,6 +45,7 @@ namespace _Project._Scripts.UI.Controllers
 
             _networkManager.StatusChanged += OnStatusChanged;
             _networkManager.ErrorOccurred += OnErrorOccurred;
+            _networkManager.NetworkStateChanged += OnNetworkStateChanged;
         }
 
         public void Dispose()
@@ -66,6 +63,7 @@ namespace _Project._Scripts.UI.Controllers
             {
                 _networkManager.StatusChanged -= OnStatusChanged;
                 _networkManager.ErrorOccurred -= OnErrorOccurred;
+                _networkManager.NetworkStateChanged -= OnNetworkStateChanged;
             }
         }
         
@@ -163,12 +161,17 @@ namespace _Project._Scripts.UI.Controllers
                 _isStopping = false;
                 _hasConnectionError = false;
                 _isConnecting = true;
-                
-                ApplyConnectingState();
+
+                _connectionBarView.SetAddressInteractable(false);
+                _connectionBarView.SetConnectButtonsInteractable(false);
+                _connectionBarView.SetStopButtonVisible(true);
+                _connectionBarView.SetStopButtonInteractable(true);
+
                 _connectionBarView.ClearError();
                 _lobbyView.Show();
                 return;
             }
+
             if (status == "Disconnected")
             {
                 ApplyIdleState();
@@ -199,7 +202,34 @@ namespace _Project._Scripts.UI.Controllers
             _connectionBarView.ShowError(error);
             _connectionBarView.ShowStatus("Disconnected");
         }
+        
+        private void OnNetworkStateChanged()
+        {
+            RefreshNetworkState();
+        }
+        
+        private void RefreshNetworkState()
+        {
+            bool isConnected = NetworkClient.isConnected || NetworkServer.active;
+            bool isHost = NetworkServer.active && NetworkClient.isConnected;
 
+            if (isConnected)
+            {
+                _connectionBarView.SetAddressInteractable(false);
+                _connectionBarView.SetConnectButtonsInteractable(false);
+                _connectionBarView.SetStopButtonVisible(true);
+                _connectionBarView.SetStopButtonInteractable(true);
+
+                _connectionBarView.ShowStatus(isHost ? "Host in lobby" : "Connected to lobby");
+                _lobbyView.Show();
+                return;
+            }
+
+            ApplyIdleState();
+            _connectionBarView.ShowStatus("Disconnected");
+            _lobbyView.Hide();
+        }
+        
         private static string GetReadableHostStartError(Exception exception)
         {
             if (exception == null)

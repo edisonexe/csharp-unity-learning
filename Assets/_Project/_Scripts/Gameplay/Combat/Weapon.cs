@@ -1,4 +1,5 @@
 ﻿using _Project._Scripts.Configs;
+using _Project._Scripts.Gameplay.Match;
 using _Project._Scripts.Network.Player;
 using Mirror;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace _Project._Scripts.Gameplay.Combat
         [SerializeField] private WeaponConfig _cfg;
         [SerializeField] private LayerMask _hitMask = ~0;
         [SerializeField] private Transform _muzzlePoint;
-    
+
         [Header("Local Effect")]
         [SerializeField] private AudioSource _shotAudio;
         [SerializeField] private AudioClip _shotClip;
@@ -18,16 +19,15 @@ namespace _Project._Scripts.Gameplay.Combat
         [Header("Shared Effect")]
         [SerializeField] private LineRenderer _tracerPrefab;
         [SerializeField] private float _tracerLifetime = 0.05f;
-    
+
         private GamePlayer _player;
         private double _nextFireTime;
         private double _nextLocalFireTime;
 
-        
         private void Awake()
         {
             _player = GetComponent<GamePlayer>();
-        
+
             if (!_player)
             {
                 Debug.LogError("[Weapon] GamePlayer component not found.", this);
@@ -55,7 +55,7 @@ namespace _Project._Scripts.Gameplay.Combat
                 enabled = false;
                 return;
             }
-        
+
             if (!_muzzlePoint)
             {
                 Debug.LogError("[Weapon] MuzzlePoint is not assigned.", this);
@@ -65,13 +65,13 @@ namespace _Project._Scripts.Gameplay.Combat
         }
 
         public Vector3 GetMuzzlePosition() => _muzzlePoint.position;
-    
+
         public void LocalRequestShoot(Vector3 direction)
         {
             if (!isLocalPlayer)
                 return;
 
-            if (!_player || !_player.IsAlive)
+            if (!_player || !_player.IsAlive || _player.IsGameplayBlocked)
                 return;
 
             if (direction.sqrMagnitude <= 0.0001f)
@@ -79,11 +79,10 @@ namespace _Project._Scripts.Gameplay.Combat
 
             if (NetworkTime.time < _nextLocalFireTime)
                 return;
-            
+
             _nextLocalFireTime = NetworkTime.time + _cfg.FireRate;
-            
+
             PlayLocalShotSound();
-        
             CmdShoot(direction.normalized);
         }
 
@@ -92,11 +91,17 @@ namespace _Project._Scripts.Gameplay.Combat
             if (_shotAudio && _shotClip)
                 _shotAudio.PlayOneShot(_shotClip);
         }
-    
+
         [Command]
         private void CmdShoot(Vector3 direction)
         {
-            if (!_player || !_player.IsAlive)
+            if (!_player || !_player.IsAlive || _player.IsGameplayBlocked)
+                return;
+
+            _player.EnsureMatchManagerAssigned();
+
+            MatchManager matchManager = _player.MatchManager;
+            if (!matchManager || !matchManager.CanUseGameplayActions(_player))
                 return;
 
             if (NetworkTime.time < _nextFireTime)
@@ -130,7 +135,11 @@ namespace _Project._Scripts.Gameplay.Combat
             RpcSpawnTracer(origin, hitPoint);
         }
 
-        [Server] private Vector3 GetServerShotOrigin() => _muzzlePoint.position;
+        [Server]
+        private Vector3 GetServerShotOrigin()
+        {
+            return _muzzlePoint.position;
+        }
 
         [ClientRpc]
         private void RpcSpawnTracer(Vector3 origin, Vector3 hitPoint)
@@ -143,10 +152,9 @@ namespace _Project._Scripts.Gameplay.Combat
             if (!_tracerPrefab)
                 return;
 
-            LineRenderer tracer = Instantiate(_tracerPrefab);
+            LineRenderer tracer = Instantiate(_tracerPrefab, Vector3.zero, Quaternion.identity);
             tracer.SetPosition(0, origin);
             tracer.SetPosition(1, hitPoint);
-
             Destroy(tracer.gameObject, _tracerLifetime);
         }
     }

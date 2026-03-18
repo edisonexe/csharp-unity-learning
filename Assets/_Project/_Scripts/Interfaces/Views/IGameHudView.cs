@@ -5,5 +5,6 @@
         void SetMode(string mode);
         void SetPlayersCount(int count);
         void SetPing(int pingMs);
+        void SetMatchTimer(string value);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using _Project._Scripts.Interfaces;
 using _Project._Scripts.Interfaces.Views;
 using TMPro;
 using UnityEngine;
@@ -32,24 +31,13 @@ namespace _Project._Scripts.UI.Views
                 return true;
             }
 
-            if (!_addressField)
+            if (!_hostButton || !_clientButton || !_stopButton || !_addressField || !_statusText || !_errorText)
             {
-                Debug.LogError("[ConnectionBarView] Address field is not assigned.");
+                Debug.LogError("[ConnectionBarView] References are not assigned.", this);
+                enabled = false;
                 return false;
             }
             
-            if (!_hostButton || !_clientButton || !_stopButton)
-            {
-                Debug.LogError("[ConnectionBarView] Buttons are not assigned");
-                return false;
-            }
-
-            if (!_statusText || !_errorText)
-            {
-                Debug.LogError("[ConnectionBarView] Status/Error text is not assigned");
-                return false;
-            }
-
             ClearLogs();
 
             _hostButton.onClick.AddListener(() => HostClicked?.Invoke());

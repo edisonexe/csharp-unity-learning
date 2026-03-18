@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using _Project._Scripts.Gameplay.Match;
 using _Project._Scripts.Interfaces;
 using _Project._Scripts.Interfaces.Gameplay.Combat;
 using _Project._Scripts.Network.Player;
@@ -13,8 +14,8 @@ namespace _Project._Scripts.Gameplay.Combat
     public class Health : NetworkBehaviour, IHealable, IDamageable
     {
         [Header("Health")]
-        [SerializeField] private int _maxHp = 100;
-        [SerializeField] private float _respawnDelay = 4f;
+        [SerializeField, Min(1)] private int _maxHp = 100;
+        [SerializeField, Min(0.01f)] private float _respawnDelay = 4f;
 
         [SyncVar(hook = nameof(OnHpChanged))]
         private int _currentHp;
@@ -40,20 +41,6 @@ namespace _Project._Scripts.Gameplay.Combat
                 enabled = false;
                 return;
             }
-
-            if (_maxHp <= 0)
-            {
-                Debug.LogError("[Health] MaxHp must be greater than 0.", this);
-                enabled = false;
-                return;
-            }
-
-            if (_respawnDelay < 0f)
-            {
-                Debug.LogError("[Health] RespawnDelay cannot be negative.", this);
-                enabled = false;
-                return;
-            }
         }
 
         public override void OnStartServer()
@@ -66,6 +53,16 @@ namespace _Project._Scripts.Gameplay.Combat
         public void TakeDamage(int damage, GamePlayer attacker)
         {
             if (_isDead)
+                return;
+
+            _player.EnsureMatchManagerAssigned();
+            attacker?.EnsureMatchManagerAssigned();
+
+            MatchManager matchManager = _player.MatchManager;
+            if (!matchManager)
+                return;
+
+            if (!matchManager.CanDealDamage(attacker, _player))
                 return;
 
             _currentHp = Mathf.Max(0, _currentHp - damage);
@@ -100,12 +97,19 @@ namespace _Project._Scripts.Gameplay.Combat
 
             _isDead = true;
 
-            Debug.Log($"[Health] {gameObject.name} died. Killer: {(attacker ? attacker.name : "unknown")}");
+            _player.EnsureMatchManagerAssigned();
+            attacker?.EnsureMatchManagerAssigned();
 
+            MatchManager matchManager = _player.MatchManager;
+            matchManager?.RegisterKill(attacker, _player);
+
+            Debug.Log($"[Health] {gameObject.name} died. Killer: {(attacker ? attacker.name : "unknown")}");
+            
             if (_player)
                 _player.ServerSetAliveState(false);
 
-            StartCoroutine(ServerRespawnRoutine());
+            if (matchManager != null && matchManager.CurrentState == MatchState.InProgress)
+                StartCoroutine(ServerRespawnRoutine());
         }
 
         [Server]
@@ -113,24 +117,22 @@ namespace _Project._Scripts.Gameplay.Combat
         {
             yield return new WaitForSeconds(_respawnDelay);
 
+            _player.EnsureMatchManagerAssigned();
+
+            MatchManager matchManager = _player.MatchManager;
+            if (matchManager == null || matchManager.CurrentState != MatchState.InProgress)
+                yield break;
+
             Transform spawn = GetRespawnPoint();
             if (spawn && _player)
-            {
                 _player.ServerRespawnAt(spawn.position, spawn.rotation);
-            }
-            else
-            {
-                Debug.LogWarning("[Health] Respawn point not found.");
-            }
 
             RestoreFull();
 
             if (_player)
                 _player.ServerSetAliveState(true);
-
-            Debug.Log($"[Health] {gameObject.name} respawned with full HP.");
         }
-
+        
         [Server]
         private Transform GetRespawnPoint()
         {

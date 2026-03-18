@@ -37,48 +37,29 @@ namespace _Project._Scripts.UI.Views
         private readonly List<PlayerListItemView> _playerItems = new();
         private bool _isInitialized;
 
+        private void Awake()
+        {
+            if (!_nicknameField || !_readyButton || !_readyBtnText || !_startGameButton ||
+                !_playersListRoot || !_playerItemPrefab || !_colorDropdown)
+            {
+                Debug.LogError("[LobbyView] References are not assigned.", this);
+                enabled = false;
+                return;
+            }
+
+            if (_colors == null || _colors.Length == 0)
+            {
+                Debug.LogError("[LobbyView] Colors array is empty.", this);
+                enabled = false;
+            }
+        }
+        
         public bool Init()
         {
             if (_isInitialized)
             {
                 Debug.LogWarning("[LobbyView] Already initialized");
                 return true;
-            }
-
-            if (!_nicknameField)
-            {
-                Debug.LogError("[LobbyView] Nickname field is not assigned.");
-                return false;
-            }
-
-            if (!_colorDropdown)
-            {
-                Debug.LogError("[LobbyView] Color dropdown is not assigned.");
-                return false;
-            }
-
-            if (_colors.Length == 0)
-            {
-                Debug.LogError("[LobbyView] Colors array is empty.");
-                return false;
-            }
-
-            if (!_playerItemPrefab)
-            {
-                Debug.LogError("[LobbyView] Player item prefab is not assigned.");
-                return false;
-            }
-
-            if (!_startGameButton || !_readyButton || !_readyBtnText)
-            {
-                Debug.LogError("[LobbyView] Buttons are not assigned.");
-                return false;
-            }
-
-            if (!_playersListRoot)
-            {
-                Debug.LogError("[LobbyView] Players list root is not assigned.");
-                return false;
             }
 
             PopulateColorDropdown();

@@ -66,11 +66,6 @@ namespace _Project._Scripts.UI.Controllers
             UnsubscribeLocalPlayer();
             _localPlayer = player;
             SubscribeLocalPlayer(_localPlayer);
-
-            if (_localPlayer)
-            {
-                _localPlayer.CmdSetDefaultNickname();
-            }
         }
 
         private RoomPlayer GetCachedLocalPlayer()

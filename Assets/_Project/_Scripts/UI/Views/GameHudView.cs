@@ -10,28 +10,14 @@ namespace _Project._Scripts.UI.Views
         [SerializeField] private TMP_Text _modeText;
         [SerializeField] private TMP_Text _playersText;
         [SerializeField] private TMP_Text _pingText;
+        [SerializeField] private TMP_Text _timerText;
         
         private void Awake()
         {
-            if (!_modeText)
+            if (!_modeText || !_playersText || !_pingText || !_timerText)
             {
-                Debug.LogError("[GameHudView] ModeText is not assigned.", this);
+                Debug.LogError("[GameHudView] References are not assigned.", this);
                 enabled = false;
-                return;
-            }
-
-            if (!_playersText)
-            {
-                Debug.LogError("[GameHudView] PlayersText is not assigned.", this);
-                enabled = false;
-                return;
-            }
-
-            if (!_pingText)
-            {
-                Debug.LogError("[GameHudView] PingText is not assigned.", this);
-                enabled = false;
-                return;
             }
         }
         
@@ -51,6 +37,11 @@ namespace _Project._Scripts.UI.Views
         {
             if (_pingText)
                 _pingText.text = $"Ping: {pingMs} ms";
+        }
+        
+        public void SetMatchTimer(string value)
+        {
+            _timerText.text = $"{value}";
         }
     }
 }

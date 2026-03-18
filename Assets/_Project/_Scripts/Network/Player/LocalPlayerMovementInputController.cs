@@ -1,5 +1,4 @@
 ﻿using System;
-using _Project._Scripts.Interfaces;
 using _Project._Scripts.Interfaces.Gameplay.Camera;
 using _Project._Scripts.Interfaces.Gameplay.Input;
 using UnityEngine;
@@ -24,16 +23,26 @@ namespace _Project._Scripts.Network.Player
 
         public void Tick()
         {
+            UpdateLook();
+            SendMovementInput();
+        }
+
+        private void UpdateLook()
+        {
             Vector2 lookDelta = _inputReader.LookDelta;
             _lookController.Apply(lookDelta.x, lookDelta.y);
+        }
 
-            Vector2 moveInput = _inputReader.Move;
-            if (moveInput.sqrMagnitude > 1f)
-                moveInput.Normalize();
+        private void SendMovementInput()
+        {
+            Vector2 move = _inputReader.Move;
+
+            if (move.sqrMagnitude > 1f)
+                move.Normalize();
 
             PlayerNetworkInput input = new PlayerNetworkInput
             {
-                Move = moveInput,
+                Move = move,
                 JumpPressed = _inputReader.JumpPressedThisFrame,
                 Yaw = _lookController.Yaw,
                 Pitch = _lookController.Pitch

@@ -155,6 +155,12 @@ namespace _Project._Scripts.Network
             return true;
         }
 
+        public override void OnServerSceneChanged(string sceneName)
+        {
+            base.OnServerSceneChanged(sceneName);
+            NotifyNetworkStateChanged();
+        }
+        
         [Server]
         private bool CanStartGame()
         {

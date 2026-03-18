@@ -1,4 +1,5 @@
-﻿using _Project._Scripts.Network;
+﻿using _Project._Scripts.Gameplay.Match;
+using _Project._Scripts.Network;
 using _Project._Scripts.Network.Player;
 using _Project._Scripts.UI.Controllers;
 using _Project._Scripts.UI.Views;
@@ -9,9 +10,13 @@ namespace _Project._Scripts.Bootstrap
 {
     public sealed class GameCompositionRoot : MonoBehaviour
     {
+        [SerializeField] private MatchManager _matchManager;
         [SerializeField] private GameHudView _gameHudView;
-        [SerializeField] private PlayerHudView  _playerHudView;
+        [SerializeField] private PlayerHudView _playerHudView;
+        [SerializeField] private MatchResultsView _matchResultsView;
+
         private GameHudController _gameHudController;
+        private MatchHudController _matchHudController;
 
         private void OnEnable()
         {
@@ -25,26 +30,25 @@ namespace _Project._Scripts.Bootstrap
 
         private void Start()
         {
-            if (!_gameHudView || !NetworkManager.singleton)
+            if (NetworkManager.singleton is not RoomNetworkManager networkManager)
                 return;
 
-            var networkManager = NetworkManager.singleton as RoomNetworkManager;
-            if (!networkManager)
-                return;
+            if (_gameHudView)
+                _gameHudController = new GameHudController(_gameHudView, networkManager);
 
-            _gameHudController = new GameHudController(_gameHudView, networkManager);
+            if (_gameHudView && _matchResultsView && _matchManager)
+            {
+                _matchHudController = new MatchHudController(
+                    _gameHudView,
+                    _matchResultsView,
+                    _matchManager);
+            }
         }
 
         private void OnLocalPlayerSpawned(GamePlayer player)
         {
-            if (!player)
+            if (!player || !_playerHudView)
                 return;
-
-            if (!_playerHudView)
-            {
-                Debug.LogWarning("[GameCompositionRoot] PlayerHudView is missing.");
-                return;
-            }
 
             player.ConstructLocal(_playerHudView);
         }
@@ -57,6 +61,7 @@ namespace _Project._Scripts.Bootstrap
         private void OnDestroy()
         {
             _gameHudController?.Dispose();
+            _matchHudController?.Dispose();
         }
     }
 }

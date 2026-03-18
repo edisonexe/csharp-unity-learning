@@ -40,7 +40,6 @@ namespace _Project._Scripts.UI.Views
             {
                 Debug.LogError("[PlayerHudView] GrenadesText is not assigned.", this);
                 enabled = false;
-                return;
             }
         }
 

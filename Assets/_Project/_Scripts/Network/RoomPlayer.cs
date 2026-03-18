@@ -18,6 +18,13 @@ namespace _Project._Scripts.Network
 
         public event Action DataChanged;
         
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            _nickname = $"Player {netId}";
+        }
+        
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -91,15 +98,6 @@ namespace _Project._Scripts.Network
         {
             if (NetworkManager.singleton is RoomNetworkManager manager)
                 manager.NotifyPlayersChanged();
-        }
-        
-        [Command]
-        public void CmdSetDefaultNickname()
-        {
-            if (!string.IsNullOrWhiteSpace(_nickname) && _nickname != "Player")
-                return;
-
-            _nickname = $"Player{index + 1}";
         }
     }
 }
