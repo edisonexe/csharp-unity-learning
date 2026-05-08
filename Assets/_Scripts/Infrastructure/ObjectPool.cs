@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Interfaces;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace _Scripts.Infrastructure
 {
@@ -10,9 +9,13 @@ namespace _Scripts.Infrastructure
         private readonly T _prefab;
         private readonly Transform _transform;
         private readonly Queue<T> _pool = new();
+
+        private int _totalCreated;
+        private int _reusedCount;
+
         public T Prefab => _prefab;
-        public int TotalCreated { get; private set; }
-        public int ReusedCount { get; private set; }
+        public int TotalCreated => _totalCreated;
+        public int ReusedCount => _reusedCount;
         public int AvailableCount => _pool.Count;
 
         public ObjectPool(T prefab, Transform transform, int prewarmCount)
@@ -22,7 +25,7 @@ namespace _Scripts.Infrastructure
 
             for (var i = 0; i < prewarmCount; i++)
             {
-                CreateNew();
+                _pool.Enqueue(CreateInternal());
             }
         }
 
@@ -32,12 +35,13 @@ namespace _Scripts.Infrastructure
             if (_pool.Count > 0)
             {
                 item = _pool.Dequeue();
-                ReusedCount++;
+                _reusedCount++;
             }
             else
             {
-                item = CreateNew();
+                item = CreateInternal();
             }
+
             item.gameObject.SetActive(true);
             item.OnSpawn();
             return item;
@@ -49,13 +53,12 @@ namespace _Scripts.Infrastructure
             item.gameObject.SetActive(false);
             _pool.Enqueue(item);
         }
-        
-        private T CreateNew()
+
+        private T CreateInternal()
         {
             T item = Object.Instantiate(_prefab, _transform);
             item.gameObject.SetActive(false);
-            _pool.Enqueue(item);
-            TotalCreated++;
+            _totalCreated++;
             return item;
         }
     }

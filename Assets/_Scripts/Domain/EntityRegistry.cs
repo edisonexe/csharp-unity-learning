@@ -8,34 +8,30 @@ namespace _Scripts.Domain
     {
         public event Action OnChanged;
 
-        private readonly List<Projectile> _projectiles = new ();
-        private readonly List<Target> _targets = new ();
+        private readonly HashSet<Projectile> _projectiles = new();
+        private readonly HashSet<Target> _targets = new();
 
-        public List<Projectile> Projectiles => _projectiles;
-        public List<Target> Targets => _targets;
+        public HashSet<Projectile> Projectiles => _projectiles;
+        public HashSet<Target> Targets => _targets;
 
         public void AddProjectile(Projectile p)
         {
-            _projectiles.Add(p);
-            OnChanged?.Invoke();
+            if (_projectiles.Add(p)) OnChanged?.Invoke();
         }
 
         public void RemoveProjectile(Projectile p)
         {
-            _projectiles.Remove(p);
-            OnChanged?.Invoke();
+            if (_projectiles.Remove(p)) OnChanged?.Invoke();
         }
 
         public void AddTarget(Target t)
         {
-            _targets.Add(t);
-            OnChanged?.Invoke();
+            if (_targets.Add(t)) OnChanged?.Invoke();
         }
 
         public void RemoveTarget(Target t)
         {
-            _targets.Remove(t);
-            OnChanged?.Invoke();
+            if (_targets.Remove(t)) OnChanged?.Invoke();
         }
 
         public void Clear()

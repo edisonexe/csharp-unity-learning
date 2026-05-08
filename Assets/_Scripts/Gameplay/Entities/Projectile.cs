@@ -23,6 +23,8 @@ namespace _Scripts.Gameplay.Entities
         
         public void Init(Vector3 position, Quaternion rotation, Vector3 dir, Action<Projectile> onDespawn)
         {
+            if (onDespawn == null) Debug.LogError("[Projectile] onDespawn Action is missing!");
+            
             transform.position = position;
             transform.rotation = rotation;
             _direction = dir;

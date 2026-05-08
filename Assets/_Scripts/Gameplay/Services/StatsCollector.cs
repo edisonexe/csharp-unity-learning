@@ -6,23 +6,46 @@ using StressTest.Enums;
 
 namespace _Scripts.Gameplay.Services
 {
-    public class StatsCollector : IStatsProvider
+    public class StatsCollector : IStatsProvider, IUpdatableSystem
     {
+        private const float UPDATE_INTERVAL = 0.1f;
+
         private readonly PoolSystem _pools;
         private readonly EntityRegistry _registry;
         private readonly EntityFactory _entityFactory;
+        
         private ExecutionMode _currentMode;
+        private float _timer;
+        private bool _isDirty;
+
         public event Action<SimulationStats> OnStatsChanged;
 
         public StatsCollector(PoolSystem pools, EntityRegistry registry, EntityFactory entityFactory)
         {
-            _pools = pools;
-            _registry = registry;
-            _entityFactory = entityFactory;
-            _registry.OnChanged += UpdateStats;
+            _pools = pools ?? throw new ArgumentNullException(nameof(pools));
+            _registry = registry ?? throw new ArgumentNullException(nameof(registry));
+            _entityFactory = entityFactory ?? throw new ArgumentNullException(nameof(entityFactory));
+
+            _registry.OnChanged += SetDirty;
         }
 
-        public void SetMode(ExecutionMode mode) { _currentMode = mode; UpdateStats(); }
+        public void SetMode(ExecutionMode mode)
+        {
+            _currentMode = mode;
+            SetDirty();
+        }
+
+        public void OnTick(float deltaTime)
+        {
+            _timer += deltaTime;
+
+            if (_isDirty && _timer >= UPDATE_INTERVAL)
+            {
+                UpdateStats();
+                _timer = 0;
+                _isDirty = false;
+            }
+        }
 
         public void UpdateStats()
         {
@@ -31,19 +54,22 @@ namespace _Scripts.Gameplay.Services
             int totalTargets = isPool ? _pools.TargetPool.TotalCreated : _entityFactory.TargetNaiveCounter;
 
             var stats = new SimulationStats(
-                _currentMode, 
-                _registry.Projectiles.Count, 
-                _registry.Targets.Count, 
+                _currentMode,
+                _registry.Projectiles.Count,
+                _registry.Targets.Count,
                 totalProjs,
                 totalTargets,
-                _pools.ProjectilePool.TotalCreated, 
+                _pools.ProjectilePool.TotalCreated,
                 _pools.TargetPool.TotalCreated,
-                _pools.ProjectilePool.AvailableCount, 
+                _pools.ProjectilePool.AvailableCount,
                 _pools.TargetPool.AvailableCount,
                 _pools.ProjectilePool.ReusedCount,
                 _pools.TargetPool.ReusedCount
             );
+
             OnStatsChanged?.Invoke(stats);
         }
+
+        private void SetDirty() => _isDirty = true;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Text;
-using _Scripts.Domain;
+﻿using _Scripts.Domain;
 using _Scripts.Interfaces;
 using StressTest.Enums;
 using TMPro;
@@ -27,38 +26,36 @@ namespace _Scripts.UI
         [SerializeField] private TMP_Text _reusedTargetsText;
 
         [Header("Settings")]
-        [SerializeField] private float _updateInterval = 0.1f;
-
         [SerializeField] private Button _toggleBtn;
         
         private IStatsProvider _statsProvider;
         private ISimulationController _controller;
         private SimulationStats _latestStats;
-        private float _timer;
         
-        private readonly StringBuilder _sb = new(64);
+        private static readonly string[] _modeDisplayStrings = { "Mode: Naive", "Mode: Pool" };
         
-        private const string MODE_L = "Mode: ";
-        private const string ACT_P_L = "Active Proj: ";
-        private const string ACT_T_L = "Active Targets: ";
-        private const string TOT_P_L = "Total Created Proj: ";
-        private const string TOT_T_L = "Total Created Targets: ";
+        private const string ACT_P_F = "Active Proj: {0}";
+        private const string ACT_T_F = "Active Targets: {0}";
+        private const string TOT_P_F = "Total Created Proj: {0}";
+        private const string TOT_T_F = "Total Created Targets: {0}";
         
-        private const string P_SIZE_L = "Proj Pool Size: ";
-        private const string T_SIZE_L = "Target Pool Size: ";
-        private const string P_AVAIL_L = "Available Proj: ";
-        private const string T_AVAIL_L = "Available Targets: ";
-        private const string P_REUSED_L = "Reused Proj: ";
-        private const string T_REUSED_L = "Reused Targets: ";
+        private const string P_SIZE_F = "Proj Pool Size: {0}";
+        private const string T_SIZE_F = "Target Pool Size: {0}";
+        private const string P_AVAIL_F = "Available Proj: {0}";
+        private const string T_AVAIL_F = "Available Targets: {0}";
+        private const string P_REUSED_F = "Reused Proj: {0}";
+        private const string T_REUSED_F = "Reused Targets: {0}";
         
         private const string NA_VALUE = "N/A";
 
         public void Init(IStatsProvider statsProvider, ISimulationController controller)
         {
-            _statsProvider = statsProvider;
-            _controller = controller;
-            _statsProvider.OnStatsChanged += (s) => _latestStats = s;
+            _statsProvider = statsProvider ?? throw new System.ArgumentNullException(nameof(statsProvider));
+            _controller = controller ?? throw new System.ArgumentNullException(nameof(controller));
+            
+            _statsProvider.OnStatsChanged += OnStatsUpdated;
             _toggleBtn?.onClick.AddListener(_controller.ToggleMode);
+            
             _statsProvider.UpdateStats();
         }
 
@@ -66,56 +63,42 @@ namespace _Scripts.UI
         {
             if (_statsProvider != null)
                 _statsProvider.OnStatsChanged -= OnStatsUpdated;
-            _toggleBtn?.onClick.RemoveAllListeners();
+            
+            if (_toggleBtn)
+                _toggleBtn.onClick.RemoveAllListeners();
         }
         
-        private void OnStatsUpdated(SimulationStats stats) => _latestStats = stats;
-
-        private void Update()
+        private void OnStatsUpdated(SimulationStats stats)
         {
-            _timer += Time.deltaTime;
-            if (_timer >= _updateInterval)
-            {
-                _timer = 0;
-                RefreshVisuals();
-            }
+            _latestStats = stats;
+            RefreshVisuals();
         }
 
         private void RefreshVisuals()
         {
-            SetTextWithLabel(_execModeText, MODE_L, _latestStats.Mode.ToString());
+            _execModeText.text = _modeDisplayStrings[(int)_latestStats.Mode];
             
-            SetTextWithInt(_activeProjsText, ACT_P_L, _latestStats.ActiveProjs);
-            SetTextWithInt(_activeTargetsText, ACT_T_L, _latestStats.ActiveTargets);
-            SetTextWithInt(_totalCreatedProjsText, TOT_P_L, _latestStats.TotalProjs);
-            SetTextWithInt(_totalCreatedTargetsText, TOT_T_L, _latestStats.TotalTargets);
+            _activeProjsText.SetText(ACT_P_F, _latestStats.ActiveProjs);
+            _activeTargetsText.SetText(ACT_T_F, _latestStats.ActiveTargets);
+            _totalCreatedProjsText.SetText(TOT_P_F, _latestStats.TotalProjs);
+            _totalCreatedTargetsText.SetText(TOT_T_F, _latestStats.TotalTargets);
 
             bool isPool = _latestStats.Mode == ExecutionMode.Pool;
             
-            SetPoolInfo(_projsPoolSizeText, P_SIZE_L, _latestStats.ProjPoolSize, isPool);
-            SetPoolInfo(_targetsPoolSizeText, T_SIZE_L, _latestStats.TargetPoolSize, isPool);
-            SetPoolInfo(_availableProjsText, P_AVAIL_L, _latestStats.ProjAvailable, isPool);
-            SetPoolInfo(_availableTargetsText, T_AVAIL_L, _latestStats.TargetAvailable, isPool);
-            SetPoolInfo(_reusedProjsText, P_REUSED_L, _latestStats.ProjReused, isPool);
-            SetPoolInfo(_reusedTargetsText, T_REUSED_L, _latestStats.TargetReused, isPool);
+            UpdatePoolInfo(_projsPoolSizeText, P_SIZE_F, _latestStats.ProjPoolSize, isPool);
+            UpdatePoolInfo(_targetsPoolSizeText, T_SIZE_F, _latestStats.TargetPoolSize, isPool);
+            UpdatePoolInfo(_availableProjsText, P_AVAIL_F, _latestStats.ProjAvailable, isPool);
+            UpdatePoolInfo(_availableTargetsText, T_AVAIL_F, _latestStats.TargetAvailable, isPool);
+            UpdatePoolInfo(_reusedProjsText, P_REUSED_F, _latestStats.ProjReused, isPool);
+            UpdatePoolInfo(_reusedTargetsText, T_REUSED_F, _latestStats.TargetReused, isPool);
         }
 
-        private void SetPoolInfo(TMP_Text tmp, string label, int value, bool isPool)
+        private void UpdatePoolInfo(TMP_Text tmp, string format, int value, bool isPool)
         {
-            if (isPool) SetTextWithInt(tmp, label, value);
-            else SetTextWithLabel(tmp, label, NA_VALUE);
-        }
-
-        private void SetTextWithInt(TMP_Text tmp, string label, int value)
-        {
-            _sb.Clear().Append(label).Append(value);
-            tmp.SetText(_sb);
-        }
-
-        private void SetTextWithLabel(TMP_Text tmp, string label, string value)
-        {
-            _sb.Clear().Append(label).Append(value);
-            tmp.SetText(_sb);
+            if (isPool) 
+                tmp.SetText(format, value);
+            else 
+                tmp.text = NA_VALUE;
         }
     }
 }

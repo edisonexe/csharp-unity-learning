@@ -6,27 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="efc06115-39a6-4eeb-a51d-4ece10d846cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.csharp-unity-learning/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/Ground.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/Ground.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Projectile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Projectile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Target.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Target.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Turret Root.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Turret Root.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/StressScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StressScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core/GameCompositionRoot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core/GameCompositionRoot.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core/ObjectPool.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core/ObjectPool.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core/SimulationStats.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Core/SimulationStats.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/PoolSystem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/PoolSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Projectile.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Projectile.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Target.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Target.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/TargetSpawner.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/TargetSpawner.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/TurretController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/TurretController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IPoolable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IPoolable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IStatsProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interfaces/IStatsProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap/GameCompositionRoot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Bootstrap/GameCompositionRoot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Domain/EntityRegistry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Domain/EntityRegistry.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Controllers/TurretController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Controllers/TurretController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Entities/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Entities/Projectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Services/EntityFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Services/EntityFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Services/SimulationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Services/SimulationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Services/StatsCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Services/StatsCollector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Systems/ProjectileManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Systems/ProjectileManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Systems/TargetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Gameplay/Systems/TargetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Infrastructure/ObjectPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Infrastructure/ObjectPool.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scripts/UI/StressTestUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/UI/StressTestUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,26 +35,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Core/EntityRegistry.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Core/GameCompositionRoot.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Core/ObjectPool.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Core/SimulationStats.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Enums/ExecutionMode.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/EntityFactory.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/PoolSystem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/Projectile.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/ProjectileManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/SimulationController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/StatsCollector.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/Target.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/TargetManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/TargetSpawner.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Gameplay/TurretController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Interfaces/IPoolable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Interfaces/ISimulationController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Interfaces/IStatsProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Interfaces/IUpdatableSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Scripts/UI/StressTestUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/25ce29052dfe4e49a635a42f7798806b1e0000/0a/6092f435/FixedUpdate.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -166,7 +150,8 @@
       <workItem from="1756036405700" duration="4000" />
       <workItem from="1777446685699" duration="3054000" />
       <workItem from="1778148663013" duration="12371000" />
-      <workItem from="1778221428847" duration="10967000" />
+      <workItem from="1778221428847" duration="11050000" />
+      <workItem from="1778237178068" duration="11786000" />
     </task>
     <servers />
   </component>

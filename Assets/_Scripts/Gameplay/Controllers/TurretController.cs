@@ -14,84 +14,94 @@ namespace _Scripts.Gameplay.Controllers
 
         [Header("Settings")]
         [SerializeField] private float _fireRate = 0.01f;
-        [SerializeField] private float _rotationSpeed = 270f; 
+        [SerializeField] private float _rotationSpeed = 270f;
         [SerializeField] private float _fovAngle = 120f;
 
         private EntityFactory _factory;
-        private List<Target> _activeTargets;
+        private HashSet<Target> _activeTargets;
         private Target _currentTarget;
         private float _fireTimer;
         private Quaternion _lookRotation;
+        private Transform _yawTransform;
 
-        public void Init(EntityFactory factory, List<Target> activeTargets)
+        public void Init(EntityFactory factory, HashSet<Target> activeTargets)
         {
-            _factory = factory;
-            _activeTargets = activeTargets;
-            _lookRotation = _yawRoot.rotation;
+            _factory = factory ?? throw new System.ArgumentNullException(nameof(factory));
+            _activeTargets = activeTargets ?? throw new System.ArgumentNullException(nameof(activeTargets));
+            
+            _yawTransform = _yawRoot;
+            _lookRotation = _yawTransform.rotation;
+
+            if (!_yawRoot) Debug.LogError("[TurretController] YawRoot is null!", this);
         }
 
         private void Update()
         {
-            if (!IsTargetValid(_currentTarget)) _currentTarget = FindBestTarget();
+            Vector3 gunPos = _yawTransform.position;
+            Vector3 gunForward = _yawTransform.forward;
+
+            if (!IsTargetValid(_currentTarget, gunPos, gunForward))
+                _currentTarget = FindBestTarget(gunPos, gunForward);
 
             if (_currentTarget)
             {
-                UpdateTargetRotation(_currentTarget.transform.position);
-                
-                if (Quaternion.Angle(_yawRoot.rotation, _lookRotation) < 15f) HandleFireTiming();
+                UpdateTargetRotation(_currentTarget.transform.position, gunPos);
+
+                if (Quaternion.Angle(_yawTransform.rotation, _lookRotation) < 15f)
+                    HandleFireTiming(gunForward);
             }
 
-            _yawRoot.rotation = Quaternion.RotateTowards(
-                _yawRoot.rotation, 
-                _lookRotation, 
+            _yawTransform.rotation = Quaternion.RotateTowards(
+                _yawTransform.rotation,
+                _lookRotation,
                 _rotationSpeed * Time.deltaTime
             );
         }
 
-        private bool IsTargetValid(Target target)
+        private bool IsTargetValid(Target target, Vector3 myPos, Vector3 myForward)
         {
             if (!target || !target.gameObject.activeSelf) return false;
-            
-            Vector3 dirToTarget = (target.transform.position - _yawRoot.position).normalized;
-            float angle = Vector3.Angle(transform.forward, dirToTarget); 
-            
-            return angle < _fovAngle * 0.5f;
+
+            Vector3 dirToTarget = (target.transform.position - myPos).normalized;
+            return Vector3.Angle(myForward, dirToTarget) < _fovAngle * 0.5f;
         }
 
-        private void UpdateTargetRotation(Vector3 targetPos)
+        private void UpdateTargetRotation(Vector3 targetPos, Vector3 myPos)
         {
-            Vector3 direction = (targetPos - _yawRoot.position).normalized;
+            Vector3 direction = (targetPos - myPos).normalized;
             direction.y = 0;
             if (direction != Vector3.zero) _lookRotation = Quaternion.LookRotation(direction);
         }
 
-        private void HandleFireTiming()
+        private void HandleFireTiming(Vector3 shootDirection)
         {
             _fireTimer += Time.deltaTime;
             if (_fireTimer >= _fireRate)
             {
                 _fireTimer = 0;
-                _factory.CreateProjectile(_shootingPoint.position, _yawRoot.rotation, _yawRoot.forward);
+                _factory.CreateProjectile(_shootingPoint.position, _yawTransform.rotation, shootDirection);
             }
         }
 
-        private Target FindBestTarget()
+        private Target FindBestTarget(Vector3 myPos, Vector3 myForward)
         {
             Target best = null;
             float minScore = float.MaxValue;
-
-            for (int i = 0; i < _activeTargets.Count; i++)
+            float halfFov = _fovAngle * 0.5f;
+            
+            foreach (var t in _activeTargets)
             {
-                Target t = _activeTargets[i];
                 if (!t || !t.gameObject.activeSelf) continue;
 
-                Vector3 dirToTarget = (t.transform.position - _yawRoot.position).normalized;
-                float angle = Vector3.Angle(transform.forward, dirToTarget);
-                
-                if (angle > _fovAngle * 0.5f) continue;
-                
-                float dist = Vector3.Distance(transform.position, t.transform.position);
-                float score = dist + angle; 
+                Vector3 diff = t.transform.position - myPos;
+                float sqrDist = diff.sqrMagnitude;
+
+                Vector3 dirToTarget = diff.normalized;
+                float angle = Vector3.Angle(myForward, dirToTarget);
+
+                if (angle > halfFov) continue;
+
+                float score = sqrDist + angle;
 
                 if (score < minScore)
                 {

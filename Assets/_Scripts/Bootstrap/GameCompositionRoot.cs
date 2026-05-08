@@ -2,6 +2,7 @@
 using _Scripts.Gameplay.Controllers;
 using _Scripts.Gameplay.Services;
 using _Scripts.Gameplay.Systems;
+using _Scripts.Interfaces;
 using _Scripts.UI;
 using UnityEngine;
 
@@ -17,6 +18,11 @@ namespace _Scripts.Bootstrap
         
         [SerializeField] private ProjectileManager _projectileManager;
         [SerializeField] private TargetManager _targetManager;
+        
+        private EntityRegistry _entityRegistry;
+        private StatsCollector _statsCollector;
+        private EntityFactory _entityFactory;
+        private ISimulationController _simulationController;
 
         private void Awake()
         {
@@ -36,19 +42,19 @@ namespace _Scripts.Bootstrap
 
         private void Bootstrap()
         {
-            var registry = new EntityRegistry();
+            _entityRegistry = new EntityRegistry();
             _poolSystem.Init();
             
-            var factory = new EntityFactory(_poolSystem, registry);
-            var collector = new StatsCollector(_poolSystem, registry, factory);
-            var controller = new SimulationController(factory, collector, _targetSpawner);
+            _entityFactory = new EntityFactory(_poolSystem, _entityRegistry);
+            _statsCollector = new StatsCollector(_poolSystem, _entityRegistry, _entityFactory);
+            _simulationController = new SimulationController(_entityFactory, _statsCollector, _targetSpawner);
             
-            _projectileManager.Init(registry.Projectiles);
-            _targetManager.Init(registry.Targets);
+            _projectileManager.Init(_entityRegistry.Projectiles);
+            _targetManager.Init(_entityRegistry.Targets);
             
-            _turret.Init(factory, registry.Targets);
-            _targetSpawner.Init(factory);
-            _ui.Init(collector, controller);
+            _turret.Init(_entityFactory, _entityRegistry.Targets);
+            _targetSpawner.Init(_entityFactory);
+            _ui.Init(_statsCollector, _simulationController);
             
             _targetSpawner.StartSpawning(); 
         }
@@ -59,6 +65,7 @@ namespace _Scripts.Bootstrap
             
             _projectileManager.OnTick(dt);
             _targetManager.OnTick(dt);
+            _statsCollector.OnTick(dt);
         }
     }
 }
