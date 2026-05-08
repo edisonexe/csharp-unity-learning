@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using StressTest.Interfaces;
+using _Scripts.Interfaces;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace StressTest.Core
+namespace _Scripts.Infrastructure
 {
     public class ObjectPool<T> where T : MonoBehaviour, IPoolable
     {
         private readonly T _prefab;
         private readonly Transform _transform;
-        private readonly Queue<T> _pool =  new();
-
+        private readonly Queue<T> _pool = new();
+        public T Prefab => _prefab;
         public int TotalCreated { get; private set; }
         public int ReusedCount { get; private set; }
         public int AvailableCount => _pool.Count;
@@ -58,6 +58,5 @@ namespace StressTest.Core
             TotalCreated++;
             return item;
         }
-        
     }
 }

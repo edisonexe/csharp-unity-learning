@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Gameplay.Entities;
+using _Scripts.Gameplay.Services;
 using UnityEngine;
 
-namespace StressTest.Gameplay
+namespace _Scripts.Gameplay.Controllers
 {
+    [AddComponentMenu("StressTest/Controllers/Turret Controller")]
     public class TurretController : MonoBehaviour
     {
         [Header("References")]
@@ -10,38 +13,32 @@ namespace StressTest.Gameplay
         [SerializeField] private Transform _shootingPoint;
 
         [Header("Settings")]
-        [SerializeField] private float _fireRate = 0.02f;
+        [SerializeField] private float _fireRate = 0.01f;
         [SerializeField] private float _rotationSpeed = 270f; 
         [SerializeField] private float _fovAngle = 120f;
 
-        private PoolSystem _poolSystem;
+        private EntityFactory _factory;
         private List<Target> _activeTargets;
         private Target _currentTarget;
         private float _fireTimer;
         private Quaternion _lookRotation;
 
-        public void Init(PoolSystem poolSystem, List<Target> activeTargets)
+        public void Init(EntityFactory factory, List<Target> activeTargets)
         {
-            _poolSystem = poolSystem;
+            _factory = factory;
             _activeTargets = activeTargets;
             _lookRotation = _yawRoot.rotation;
         }
 
         private void Update()
         {
-            if (!IsTargetValid(_currentTarget))
-            {
-                _currentTarget = FindBestTarget();
-            }
+            if (!IsTargetValid(_currentTarget)) _currentTarget = FindBestTarget();
 
             if (_currentTarget)
             {
                 UpdateTargetRotation(_currentTarget.transform.position);
                 
-                if (Quaternion.Angle(_yawRoot.rotation, _lookRotation) < 15f)
-                {
-                    HandleFireTiming();
-                }
+                if (Quaternion.Angle(_yawRoot.rotation, _lookRotation) < 15f) HandleFireTiming();
             }
 
             _yawRoot.rotation = Quaternion.RotateTowards(
@@ -74,7 +71,7 @@ namespace StressTest.Gameplay
             if (_fireTimer >= _fireRate)
             {
                 _fireTimer = 0;
-                _poolSystem.SpawnProjectile(_shootingPoint.position, _yawRoot.forward);
+                _factory.CreateProjectile(_shootingPoint.position, _yawRoot.rotation, _yawRoot.forward);
             }
         }
 

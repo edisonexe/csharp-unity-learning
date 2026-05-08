@@ -1,7 +1,7 @@
 ﻿using System;
-using StressTest.Core;
+using _Scripts.Domain;
 
-namespace StressTest.Interfaces
+namespace _Scripts.Interfaces
 {
     public interface IStatsProvider
     {

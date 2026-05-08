@@ -1,4 +1,4 @@
-﻿namespace StressTest.Interfaces
+﻿namespace _Scripts.Interfaces
 {
     public interface IPoolable
     {

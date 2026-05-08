@@ -1,12 +1,14 @@
 ﻿using System.Text;
-using StressTest.Core;
+using _Scripts.Domain;
+using _Scripts.Interfaces;
 using StressTest.Enums;
-using StressTest.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace StressTest.UI
+namespace _Scripts.UI
 {
+    [AddComponentMenu("StressTest/UI/Stress Test UI")]
     public class StressTestUI : MonoBehaviour
     {
         [Header("General Stats")]
@@ -27,11 +29,14 @@ namespace StressTest.UI
         [Header("Settings")]
         [SerializeField] private float _updateInterval = 0.1f;
 
+        [SerializeField] private Button _toggleBtn;
+        
         private IStatsProvider _statsProvider;
+        private ISimulationController _controller;
         private SimulationStats _latestStats;
         private float _timer;
         
-        private readonly StringBuilder _sb = new(64); 
+        private readonly StringBuilder _sb = new(64);
         
         private const string MODE_L = "Mode: ";
         private const string ACT_P_L = "Active Proj: ";
@@ -48,10 +53,12 @@ namespace StressTest.UI
         
         private const string NA_VALUE = "N/A";
 
-        public void Init(IStatsProvider statsProvider)
+        public void Init(IStatsProvider statsProvider, ISimulationController controller)
         {
-            _statsProvider = statsProvider ?? throw new System.ArgumentNullException(nameof(statsProvider));
-            _statsProvider.OnStatsChanged += OnStatsUpdated;
+            _statsProvider = statsProvider;
+            _controller = controller;
+            _statsProvider.OnStatsChanged += (s) => _latestStats = s;
+            _toggleBtn?.onClick.AddListener(_controller.ToggleMode);
             _statsProvider.UpdateStats();
         }
 
@@ -59,12 +66,10 @@ namespace StressTest.UI
         {
             if (_statsProvider != null)
                 _statsProvider.OnStatsChanged -= OnStatsUpdated;
+            _toggleBtn?.onClick.RemoveAllListeners();
         }
         
-        private void OnStatsUpdated(SimulationStats stats)
-        {
-            _latestStats = stats;
-        }
+        private void OnStatsUpdated(SimulationStats stats) => _latestStats = stats;
 
         private void Update()
         {
@@ -97,23 +102,19 @@ namespace StressTest.UI
 
         private void SetPoolInfo(TMP_Text tmp, string label, int value, bool isPool)
         {
-            if (isPool) 
-                SetTextWithInt(tmp, label, value);
-            else 
-                SetTextWithLabel(tmp, label, NA_VALUE);
+            if (isPool) SetTextWithInt(tmp, label, value);
+            else SetTextWithLabel(tmp, label, NA_VALUE);
         }
 
         private void SetTextWithInt(TMP_Text tmp, string label, int value)
         {
-            _sb.Clear();
-            _sb.Append(label).Append(value);
+            _sb.Clear().Append(label).Append(value);
             tmp.SetText(_sb);
         }
 
         private void SetTextWithLabel(TMP_Text tmp, string label, string value)
         {
-            _sb.Clear();
-            _sb.Append(label).Append(value);
+            _sb.Clear().Append(label).Append(value);
             tmp.SetText(_sb);
         }
     }
